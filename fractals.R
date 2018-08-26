@@ -25,7 +25,7 @@ make_complex_plane <- function(width, height, re_lim, im_lim) {
 
 
 save_as_image <- function(fractal_set, file_name, color_fun) {
-    # Saves the fractal as an .png-image.
+    # Saves the fractal as a .png-image.
     #
     # Args:
     #   fractal_set: The matrix containing the fractal.

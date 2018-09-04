@@ -1,9 +1,8 @@
 
-# https://en.wikipedia.org/wiki/Dragon_curve
 # TODO:
-# - Make tests
-# - convert the coordinate matrix into a pixel matrix where 0 is empty space and 1 is the curve
-#   so it can be plottet like the other fractals
+# - Make proper tests and remove the ones here.
+# - Convert the coordinate matrix into a pixel matrix where 0 is empty space and 1 is the curve
+#   so it can be plottet like the other fractals.
 
 
 make_turns <- function(order, limit = 20) {

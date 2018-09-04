@@ -1,3 +1,12 @@
+
+# TODO:
+# - Find a better solution for the color palette argument. less verbose for the user.
+# - Look at zlim argument of image function. could be usefull for color normalization.
+# - Check out the other arguments to colorRampPalette.
+# - Try out the viridis colour package https://github.com/sjmgarnier/viridis.
+# - Implement interesting constants and coordinates as function calls.
+
+
 nice_gradients <- list(
     dark_rainbow = c("black", "red", "yellow", "green", "blue", "white"),
     black_cyan = c("black", "cyan"),

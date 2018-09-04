@@ -1,3 +1,2 @@
-*.png
 .Rproj.user
-!/mandelbrot_zoom/*
+example_pictures/

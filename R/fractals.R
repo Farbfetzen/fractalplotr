@@ -263,12 +263,3 @@ fractal_jm <- function(fractal_type,
 
     return(num_iterations)
 }
-
-
-# TODO: find a better solution for the color palette argument. less verbose
-# for the user.
-# TODO: look at zlim argument of image function. could be usefull for
-# color normalization.
-# TODO: Check out the other arguments to colorRampPalette.
-# TODO: try out the viridis colour package https://github.com/sjmgarnier/viridis
-# TODO: Implement interesting constants and coordinates as function calls.

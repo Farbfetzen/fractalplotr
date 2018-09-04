@@ -1,10 +1,8 @@
-# Fractals
+# fractalplotr
 
-Fractals are fascinating. With this project I can create different kinds of fractals with various color schemes. It is also possible to control the image dimensions, the boundaries of the sets, and the zoom levels.
+The goal of this package is to provide the means to create and plot various different fractals. This is my first R package so expect some roughness around the edges.
 
-implemented:
+What's already somewhat implemented:
 - Julia sets
 - Mandelbrot set
-
-planned:
 - dragon curve

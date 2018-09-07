@@ -9,6 +9,6 @@ Description: Plot beautiful fractals in R. This package lets you crate fractals
     It provides functions for plotting them with many colorful defaults. You 
     can easily customize the plots with your own color palettes and even create 
     zoomed-in plots of some fractals.
-License: MIT + file LICENSE.txt
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

@@ -1,5 +1,32 @@
 
-make_turns <- function(order, limit = 20) {
+#' Fold the dragon curve
+#'
+#' \code{fold_dragon} creates a vector which indicates in which direction each
+#' corner of the dragon curve turns.
+#'
+#' This function is supposed to be used in combination with
+#' \code{\link{get_path_coordinates}} for which it creates the input.
+#'
+#' @param order The order of the dragon curve. Must be a positive
+#'   integer <= \code{limit}.
+#' @param limit The maximum allowed value for \code{order}. This is to prevent
+#'   accidental creation of very big results which can consume cpu and memory.
+#'   Defaults to 20. Be aware that the resulting vector will have a length of
+#'   2^\code{order}-1 and the coordinate matrix returned by
+#'   \code{get_path_coordinates} will be twice that object size.
+#'
+#' @return A numeric vector of length 2^\code{order}-1. The values are either
+#'   1 for left turns or -1 for right turns.
+#'
+#' @export
+#'
+#' @family dragon curve functions
+#'
+#' @examples
+#' fold_dragon(1)
+#' fold_dragon(3)
+#' fold_dragon(5)
+fold_dragon <- function(order, limit = 20) {
   # Note: The length of the curve will be 2 ^ order - 1.
   stopifnot(exprs = {
     is.numeric(order)
@@ -24,6 +51,33 @@ make_turns <- function(order, limit = 20) {
 }
 
 
+#' Calculate the coordinates for the corners of the dragon curve
+#'
+#' \code{get_path_coordinates} accepts a vector of turn directions and returns
+#' the coordinates of the folds in the associated curve.
+#'
+#' This function is supposed to be used in combination with
+#' \code{\link{fold_dragon}}. Of course, it can also return a path for other
+#' vectors of turns if they conform to the input format.
+#'
+#' @param turns A numeric vector consisting solely of the values 1 and -1. A 1
+#'   results in a left turn and a -1 makes a right turn.
+#'
+#' @return A numeric matrix with two columns x and y containing the coordinates
+#'   of the folds in the dragon curve.
+#'
+#' @export
+#'
+#' @family dragon curve functions
+#'
+#' @examples
+#' folds <- fold_dragon(3)
+#' get_path_coordinates(folds)
+#'
+#' # The matrix can be used easily plot the dragon curve:
+#' folds <- fold_dragon(8)
+#' coords <- get_path_coordinates(folds)
+#' plot(coords, type = "l", asp = 1)
 get_path_coordinates <- function(turns) {
   stopifnot(exprs = {
     is.numeric(turns)
@@ -54,6 +108,8 @@ get_path_coordinates <- function(turns) {
 # notes and stuff, remove later -------------------------------------------
 
 # TODO:
+# - Decide if I want to call it "turns" or "folds" or a mix of both. Either
+#   way the nomenclature should be consistent.
 # - Make proper tests and remove the ones here.
 # - Convert the coordinate matrix into a pixel matrix where 0 is empty space
 #   and 1 is the curveso it can be plottet like the other fractals.
@@ -61,17 +117,17 @@ get_path_coordinates <- function(turns) {
 
 
 # # These should generate errors:
-# make_turns(c(2, 3))
-# make_turns("3")
-# make_turns(-1)
-# make_turns(0)
-# make_turns(100)
+# fold_dragon(c(2, 3))
+# fold_dragon("3")
+# fold_dragon(-1)
+# fold_dragon(0)
+# fold_dragon(100)
 #
 # # These should work:
-# make_turns(1)
-# make_turns(2)
-# make_turns(3)
-# make_turns(4)
+# fold_dragon(1)
+# fold_dragon(2)
+# fold_dragon(3)
+# fold_dragon(4)
 
 
 # # plots:
@@ -79,7 +135,7 @@ get_path_coordinates <- function(turns) {
 #
 # par(mfrow = c(4, 4), mar = c(0, 0, 0, 0))
 # for (i in 1:16) {
-#   plot(get_path_coordinates(make_turns(i)), type = "l", asp = 1, axes = FALSE,
+#   plot(get_path_coordinates(fold_dragon(i)), type = "l", asp = 1, axes = FALSE,
 #        ann = FALSE)
 #   legend("topleft", legend = i, bty = "n")
 #   box()
@@ -90,7 +146,7 @@ get_path_coordinates <- function(turns) {
 # # only does one color for the whole curve.
 #
 # i <- 16
-# coords <- get_path_coordinates(make_turns(i))
+# coords <- get_path_coordinates(fold_dragon(i))
 # xrange <- range(coords[, "x"])
 # yrange <- range(coords[, "y"])
 #

@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^example_pictures$
+^readme\.md$
+^\.gitignore$

@@ -27,7 +27,7 @@ make_turns <- function(order, limit = 20) {
     curve_2[middle_index] <- -1
     curve <- c(curve, 1, curve_2)
   }
-  return(curve)
+  curve
 }
 
 
@@ -67,7 +67,7 @@ get_path_coordinates <- function(turns) {
     coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
     i <- i + 1
   }
-  return(coordinates)
+  coordinates
 }
 
 

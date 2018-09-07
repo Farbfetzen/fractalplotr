@@ -1,11 +1,4 @@
 
-# TODO:
-# - Make proper tests and remove the ones here.
-# - Convert the coordinate matrix into a pixel matrix where 0 is empty space
-#   and 1 is the curveso it can be plottet like the other fractals.
-# - Write a function for plotting the dragon with nice defaults.
-
-
 make_turns <- function(order, limit = 20) {
   # Note: The length of the curve will be 2 ^ order - 1.
   stopifnot(exprs = {
@@ -29,20 +22,6 @@ make_turns <- function(order, limit = 20) {
   }
   curve
 }
-
-
-# # These should generate errors:
-# make_turns(c(2, 3))
-# make_turns("3")
-# make_turns(-1)
-# make_turns(0)
-# make_turns(100)
-#
-# # These should work:
-# make_turns(1)
-# make_turns(2)
-# make_turns(3)
-# make_turns(4)
 
 
 get_path_coordinates <- function(turns) {
@@ -70,6 +49,29 @@ get_path_coordinates <- function(turns) {
   apply(coordinates, 2, function(column) column - min(column))
 }
 
+
+
+# notes and stuff, remove later -------------------------------------------
+
+# TODO:
+# - Make proper tests and remove the ones here.
+# - Convert the coordinate matrix into a pixel matrix where 0 is empty space
+#   and 1 is the curveso it can be plottet like the other fractals.
+# - Write a function for plotting the dragon with nice defaults.
+
+
+# # These should generate errors:
+# make_turns(c(2, 3))
+# make_turns("3")
+# make_turns(-1)
+# make_turns(0)
+# make_turns(100)
+#
+# # These should work:
+# make_turns(1)
+# make_turns(2)
+# make_turns(3)
+# make_turns(4)
 
 
 # # plots:

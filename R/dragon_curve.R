@@ -1,5 +1,5 @@
 
-#' Fold the dragon curve
+#' Fold the Dragon Curve
 #'
 #' \code{fold_dragon} creates a vector which indicates in which direction each
 #' corner of the dragon curve turns.
@@ -51,7 +51,7 @@ fold_dragon <- function(order, limit = 20) {
 }
 
 
-#' Calculate the coordinates for the corners of the dragon curve
+#' Calculate the Coordinates for the Corners of the Dragon Curve
 #'
 #' \code{get_path_coordinates} accepts a vector of turn directions and returns
 #' the coordinates of the folds in the associated curve.
@@ -99,6 +99,36 @@ get_path_coordinates <- function(turns) {
     direction <- (direction + turn) %% 4
     coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
     i <- i + 1
+  }
+  coordinates
+}
+
+
+#' Flip the Dragon Curve
+#'
+#' Mirror the dragon curve either horizontally or vertically.
+#'
+#' @param coordinates A matrix with two columns specifying the x and y
+#'   coordinates of the folds in the curve. Usually created by
+#'   \code{get_path_coordinates}.
+#' @param direction The direction of the flip. Possible values are "horizontal"
+#'   and "vertical".
+#'
+#' @return The mirrored dragon curve coordinates.
+#' @export
+#'
+#' @examples
+flip_dragon <- function(coordinates, direction) {
+  stopifnot(exprs = {
+    is.character(direction)
+    length(direction) == 1
+    direction %in% c("horizontal", "vertical")
+    # TODO: check "coordinates" input
+  })
+  if (direction == "horizontal") {
+    coordinates[, "x"] <- coordinates[, "x"] * -1
+  } else {
+    coordinates[, "y"] <- coordinates[, "y"] * -1
   }
   coordinates
 }

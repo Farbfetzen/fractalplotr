@@ -100,7 +100,7 @@ get_path_coordinates <- function(turns) {
     coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
     i <- i + 1
   }
-  apply(coordinates, 2, function(column) column - min(column))
+  coordinates
 }
 
 

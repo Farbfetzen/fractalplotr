@@ -2,7 +2,7 @@
 % Please edit documentation in R/dragon_curve.R
 \name{fold_dragon}
 \alias{fold_dragon}
-\title{Fold the dragon curve}
+\title{Fold the Dragon Curve}
 \usage{
 fold_dragon(order, limit = 20)
 }

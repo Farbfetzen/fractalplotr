@@ -2,7 +2,7 @@
 % Please edit documentation in R/dragon_curve.R
 \name{get_path_coordinates}
 \alias{get_path_coordinates}
-\title{Calculate the coordinates for the corners of the dragon curve}
+\title{Calculate the Coordinates for the Corners of the Dragon Curve}
 \usage{
 get_path_coordinates(turns)
 }

@@ -27,3 +27,9 @@ Rotate dragon curve coordinates 90° to the right (clockwise) or left
 ragon_curve <- get_path_coordinates(fold_dragon(2))
 rotate_dragon(dragon_curve, "left", 1)
 }
+\seealso{
+Other dragon curve functions: \code{\link{flip_dragon}},
+  \code{\link{fold_dragon}},
+  \code{\link{get_path_coordinates}}
+}
+\concept{dragon curve functions}

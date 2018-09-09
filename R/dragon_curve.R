@@ -117,6 +117,8 @@ get_path_coordinates <- function(turns) {
 #' @return The mirrored dragon curve coordinates.
 #' @export
 #'
+#' @family dragon curve functions
+#'
 #' @examples
 #' dragon_curve <- get_path_coordinates(fold_dragon(3))
 #' flip_dragon(dragon_curve, "horizontal")
@@ -150,6 +152,8 @@ flip_dragon <- function(coordinates, direction) {
 #'
 #' @return A matrix containing the rotated coordinates.
 #' @export
+#'
+#' @family dragon curve functions
 #'
 #' @examples
 #' ragon_curve <- get_path_coordinates(fold_dragon(2))

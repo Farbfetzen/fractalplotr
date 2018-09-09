@@ -34,6 +34,8 @@ fold_dragon(3)
 fold_dragon(5)
 }
 \seealso{
-Other dragon curve functions: \code{\link{get_path_coordinates}}
+Other dragon curve functions: \code{\link{flip_dragon}},
+  \code{\link{get_path_coordinates}},
+  \code{\link{rotate_dragon}}
 }
 \concept{dragon curve functions}

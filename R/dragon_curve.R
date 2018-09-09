@@ -110,7 +110,7 @@ get_path_coordinates <- function(turns) {
 #'
 #' @param coordinates A matrix with two columns specifying the x and y
 #'   coordinates of the folds in the curve. Usually created by
-#'   \code{get_path_coordinates}.
+#'   \code{\link{get_path_coordinates}}.
 #' @param direction The direction of the flip. Possible values are "horizontal"
 #'   and "vertical".
 #'
@@ -118,6 +118,8 @@ get_path_coordinates <- function(turns) {
 #' @export
 #'
 #' @examples
+#' dragon_curve <- get_path_coordinates(fold_dragon(3))
+#' flip_dragon(dragon_curve, "horizontal")
 flip_dragon <- function(coordinates, direction) {
   stopifnot(exprs = {
     is.character(direction)

@@ -24,3 +24,9 @@ Mirror a dragon curve either horizontally or vertically.
 dragon_curve <- get_path_coordinates(fold_dragon(3))
 flip_dragon(dragon_curve, "horizontal")
 }
+\seealso{
+Other dragon curve functions: \code{\link{fold_dragon}},
+  \code{\link{get_path_coordinates}},
+  \code{\link{rotate_dragon}}
+}
+\concept{dragon curve functions}

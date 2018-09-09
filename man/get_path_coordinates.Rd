@@ -33,6 +33,7 @@ coords <- get_path_coordinates(folds)
 plot(coords, type = "l", asp = 1)
 }
 \seealso{
-Other dragon curve functions: \code{\link{fold_dragon}}
+Other dragon curve functions: \code{\link{flip_dragon}},
+  \code{\link{fold_dragon}}, \code{\link{rotate_dragon}}
 }
 \concept{dragon curve functions}

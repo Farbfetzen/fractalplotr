@@ -2,23 +2,23 @@
 % Please edit documentation in R/dragon_curve.R
 \name{flip_dragon}
 \alias{flip_dragon}
-\title{Flip the Dragon Curve}
+\title{Flip a Dragon Curve}
 \usage{
 flip_dragon(coordinates, direction)
 }
 \arguments{
-\item{coordinates}{A matrix with two columns specifying the x and y
-coordinates of the folds in the curve. Usually created by
+\item{coordinates}{A matrix with two columns for the x and y coordinates of
+the folds in the curve. Usually created by
 \code{\link{get_path_coordinates}}.}
 
-\item{direction}{The direction of the flip. Possible values are "horizontal"
-and "vertical".}
+\item{direction}{A string specifying the direction of the flip. Possible
+values are "horizontal" and "vertical".}
 }
 \value{
 The mirrored dragon curve coordinates.
 }
 \description{
-Mirror the dragon curve either horizontally or vertically.
+Mirror a dragon curve either horizontally or vertically.
 }
 \examples{
 dragon_curve <- get_path_coordinates(fold_dragon(3))

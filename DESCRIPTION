@@ -1,7 +1,7 @@
 Package: fractalplotr
 Type: Package
 Title: Plot Beautiful Fractals
-Version: 0.1.0
+Version: 0.1
 Authors@R: person("Sebastian", "Henz", role = c("aut", "cre"),
                   email = "sebastian.henz@gmx.de")
 Maintainer: The package maintainer <yourself@somewhere.net>
@@ -10,7 +10,7 @@ Description: Plot beautiful fractals in R. This package lets you crate fractals
     It provides functions for plotting them with many colorful defaults. You 
     can easily customize the plots with your own color palettes and even create 
     zoomed-in plots of some fractals.
-License: MIT + file LICENSE
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0

@@ -1,4 +1,8 @@
 
+# TODO: Write function combining the code from fold_dragon and
+#       get_path_coordinates. Only export that and remove the two others.
+
+
 #' Fold the Dragon Curve
 #'
 #' \code{fold_dragon} creates a vector which indicates in which direction each
@@ -28,16 +32,11 @@
 #' fold_dragon(5)
 fold_dragon <- function(order, limit = 20) {
   # Note: The length of the curve will be 2 ^ order - 1.
-  stopifnot(exprs = {
-    is.numeric(order)
-    length(order) == 1
-    order > 0
-  })
   if (order > limit) {
     stop("The order exceeds the limit and the resulting vector would ",
          "probably be very big in memory. This is because the length is ",
-         "2 ^ order - 1. Change the value of \"limit\" to get higher order ","
-         dragon curves.", call. = FALSE)
+         "2 ^ order - 1. Change the value of \"limit\" to get higher order ",
+         "dragon curves.", call. = FALSE)
   }
   if (order == 1) return(1)
   curve <- 1
@@ -79,11 +78,6 @@ fold_dragon <- function(order, limit = 20) {
 #' coords <- get_path_coordinates(folds)
 #' plot(coords, type = "l", asp = 1)
 get_path_coordinates <- function(turns) {
-  stopifnot(exprs = {
-    is.numeric(turns)
-    length(turns) > 0
-    all(turns %in% c(-1, 1))
-  })
   coordinates <- matrix(rep(0, (length(turns) + 2) * 2), ncol = 2)
   colnames(coordinates) <- c("x", "y")
   coordinates[2, ] <- c(1, 0)

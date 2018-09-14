@@ -134,12 +134,6 @@ get_path_coordinates <- function(turns) {
 #' dragon_curve <- get_path_coordinates(fold_dragon(3))
 #' flip_dragon(dragon_curve, "horizontal")
 flip_dragon <- function(coordinates, direction) {
-  stopifnot(exprs = {
-    is.character(direction)
-    length(direction) == 1
-    direction %in% c("horizontal", "vertical")
-    # TODO: check "coordinates" input with custom function
-  })
   if (direction == "horizontal") {
     coordinates[, "x"] <- coordinates[, "x"] * -1
   } else {
@@ -170,14 +164,6 @@ flip_dragon <- function(coordinates, direction) {
 #' ragon_curve <- get_path_coordinates(fold_dragon(2))
 #' rotate_dragon(dragon_curve, "left", 1)
 rotate_dragon <- function(coordinates, direction, times = 1) {
-  stopifnot(exprs = {
-    is.character(direction)
-    length(direction) == 1
-    direction %in% c("left", "right", "clockwise", "counterclockwise")
-    as.integer(times) == times
-    times >= 1
-    # TODO: CHeck "coordinates" input with custom function
-  })
   for (i in seq_len(times)) {
     if (direction %in% c("right", "clockwise")) {
       x <- coordinates[, "y"]
@@ -202,20 +188,6 @@ rotate_dragon <- function(coordinates, direction, times = 1) {
 # - Convert the coordinate matrix into a pixel matrix where 0 is empty space
 #   and 1 is the curveso it can be plottet like the other fractals.
 # - Write a function for plotting the dragon with nice defaults.
-
-
-# # These should generate errors:
-# fold_dragon(c(2, 3))
-# fold_dragon("3")
-# fold_dragon(-1)
-# fold_dragon(0)
-# fold_dragon(100)
-#
-# # These should work:
-# fold_dragon(1)
-# fold_dragon(2)
-# fold_dragon(3)
-# fold_dragon(4)
 
 
 # # plots:

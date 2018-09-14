@@ -12,7 +12,7 @@ the folds in the curve. Usually created by
 \code{\link{get_path_coordinates}}.}
 
 \item{direction}{A string specifying the direction of rotation. Possible
-values are "left", "right", "clockwise" and "anticlockwise".}
+values are "left", "right", "clockwise" and "counterclockwise".}
 
 \item{times}{A single positive number spcifying how often to rotate by 90°.}
 }
@@ -21,7 +21,7 @@ A matrix containing the rotated coordinates.
 }
 \description{
 Rotate dragon curve coordinates 90° to the right (clockwise) or left
-(anticlockwise) once or multiple times.
+(counterclockwise) once or multiple times.
 }
 \examples{
 ragon_curve <- get_path_coordinates(fold_dragon(2))

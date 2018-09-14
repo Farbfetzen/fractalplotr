@@ -1,10 +1,10 @@
 Package: fractalplotr
 Type: Package
-Title: Plot Beautiful Fractals
+Title: Plot Beautiful Fractals with R
 Version: 0.1
 Authors@R: person("Sebastian", "Henz", role = c("aut", "cre"),
                   email = "bastihz.dev@posteo.de")
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: Sebastian Henz <bastihz.dev@posteo.de>
 Description: Plot beautiful fractals in R. This package lets you crate fractals 
     of various types, for example Mandelbrot sets, Julia sets or dragon curves. 
     It provides functions for plotting them with many colorful defaults. You 

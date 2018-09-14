@@ -1,7 +1,7 @@
 rotate_matrix <- function(m, direction, times) {
   stopifnot(exprs = {
     class(m) == "matrix"
-    direction %in% c("left", "right", "clockwise", "anticlockwise")
+    direction %in% c("left", "right", "clockwise", "counterclockwise")
     times > 0
   })
   for (i in seq_len(times)) {

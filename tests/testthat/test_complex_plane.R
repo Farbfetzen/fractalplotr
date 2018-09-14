@@ -26,14 +26,14 @@ test_that("matrix is rotated clockwise", {
   expect_identical(m, rotate_matrix(m, "clockwise", 4))
 })
 
-test_that("matrix is rotated anticlockwise", {
+test_that("matrix is rotated counterclockwise", {
   ml1 <- apply(t(m), 2, rev)
   ml2 <- apply(t(ml1), 2, rev)
   ml3 <- apply(t(ml2), 2, rev)
   expect_identical(ml1, rotate_matrix(m, "left", 1))
-  expect_identical(ml2, rotate_matrix(m, "anticlockwise", 2))
+  expect_identical(ml2, rotate_matrix(m, "counterclockwise", 2))
   expect_identical(ml3, rotate_matrix(m, "left", 3))
-  expect_identical(m, rotate_matrix(m, "anticlockwise", 4))
+  expect_identical(m, rotate_matrix(m, "counterclockwise", 4))
 })
 
 test_that("matrix is flipped as expected", {

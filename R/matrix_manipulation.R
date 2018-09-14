@@ -15,7 +15,7 @@
 # along with this program. If not, see http://www.gnu.org/licenses.
 
 
-rotate_matrix <- function(m, direction, times) {
+rotate_matrix <- function(m, direction, times = 1) {
   for (i in seq_len(times)) {
     if (direction %in% c("right", "clockwise")) {
       m <- t(m[nrow(m):1, ])

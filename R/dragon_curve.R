@@ -185,8 +185,7 @@ rotate_dragon <- function(coordinates, direction, times = 1) {
 # - Decide if I want to call it "turns" or "folds" or a mix of both. Either
 #   way the nomenclature should be consistent.
 # - Make proper tests and remove the ones here.
-# - Convert the coordinate matrix into a pixel matrix where 0 is empty space
-#   and 1 is the curveso it can be plottet like the other fractals.
+# - Function for plotting dragon using raster() with arguments x and y.
 # - Write a function for plotting the dragon with nice defaults.
 
 

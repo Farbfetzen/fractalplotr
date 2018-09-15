@@ -22,3 +22,22 @@ mandelbrot <- function(width, height, re_min= -2, re_max = 1,
   }
   n_steps
 }
+
+
+plot_mandelbrot <- function(m, filename) {
+  # Picture dimension = matrix dimension in pixels
+  # Plots it as a png.
+
+  # TODO: Accept a color palette for this function and remove the color_fun
+  # and color_palette lines. Maybe remove also the color_matrix and
+  # create it elsewhere.
+
+
+  color_fun <- colorRampPalette(c("black", "red", "yellow", "green", "blue", "white"))
+  color_palette <- color_fun(max(m))
+  color_matrix <- matrix(color_palette[m], nrow = nrow(m))
+
+  on.exit(dev.off())
+  png(filename, width = ncol(m), height = nrow(m))
+  grid.raster(color_matrix, interpolate = FALSE)
+}

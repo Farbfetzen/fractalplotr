@@ -31,10 +31,23 @@ mandelbrot <- function(width, height, re_min= -2, re_max = 1,
     nrow = nrow(complex_plane),
     ncol = ncol(complex_plane)
   )
-  repeat {
-    todo <- n_steps < max_iterations & abs(z) < threshold
-    z[todo] <- z[todo] ^ 2 + complex_plane[todo]
+
+  # Check which points are inside the cardioid or the period-2 bulb:
+  x <- Re(complex_plane)
+  y <- Im(complex_plane)
+  q <- (x - 0.25)^2 + y^2
+  inside <- q * (q + (x - 0.25)) < 0.25 * y^2
+  n_steps[inside] <- as.integer(max_iterations)
+
+  # Note to future me: I tried to implement periodicity checking but
+  # it didn't improve performance.
+
+  todo <- !inside
+
+  for (i in 1:max_iterations) {
+    todo[todo] <- abs(z[todo]) < threshold
     n_steps[todo] <- n_steps[todo] + 1L
+    z[todo] <- z[todo] ^ 2 + complex_plane[todo]
     if (!any(todo)) break
   }
   n_steps

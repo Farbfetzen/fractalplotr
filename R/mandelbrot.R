@@ -63,7 +63,8 @@ plot_mandelbrot <- function(m, filename) {
   # create it elsewhere.
 
 
-  color_fun <- colorRampPalette(c("black", "red", "yellow", "green", "blue", "white"))
+  color_fun <- colorRampPalette(c(rgb(0, 0, 0.5), "white", rgb(1, 0.75, 0),
+                                  "darkred", "black"))
   color_palette <- color_fun(max(m))
   color_matrix <- matrix(color_palette[m], nrow = nrow(m))
 

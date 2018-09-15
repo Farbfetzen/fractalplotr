@@ -48,3 +48,25 @@
 # })
 #
 # identical(orig, new)
+
+
+# For the continuois color interpolation (see wikipedia):
+
+
+blubb <- colorRampPalette(c("red", "green"))(5)
+# "#FF0000" "#BF3F00" "#7F7F00" "#3FBF00" "#00FF00"
+
+foo <- sub("#", "", blubb)
+foo <- strsplit(foo, "")
+foo <- lapply(foo, function(x) paste0(x[c(TRUE, FALSE)], x[c(FALSE, TRUE)]))
+foo <- lapply(foo, strtoi, base = 16)
+foo <- do.call(rbind, foo)
+
+# say I want to interpolate between the first two colors in foo at 0.7 between them:
+c1 <- foo[1, ]
+c2 <- foo[2, ]
+d <- 0.7
+c_i <- apply(rbind(c1, c2), 2, function(x) min(x) + diff(range(x)) * d)
+c_i <- pmin(255, pmax(0, round(c_i)))
+c_i <- paste0("#", paste(as.hexmode(c_i), collapse = ""))
+

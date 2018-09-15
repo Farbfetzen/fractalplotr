@@ -1,45 +1,50 @@
-# foo <- mandelbrot(1200, 800)
-#
-# opar <- par(no.readonly = TRUE)
-#
-#
-# foo_norm <- (foo - min(foo)) / (max(foo) - min(foo))
-# rasterImage(foo_norm, xleft = 0, ybottom = 0)
-#
-# grid.raster(foo_norm, interpolate = FALSE, x = 0, y = 0)
+# w <- 1200
+# h <- 800
+# mi <- 1000
 #
 #
-# foo_r <- rotate_matrix(foo, "right")
+# mandelbrot_new <- function(width, height, re_min= -2, re_max = 1,
+#                        im_min = -1i, im_max = 1i,
+#                        center = -0.5+0i, re_width, im_height,
+#                        max_iterations = 128, threshold = 2,
+#                        prevent_distortion = TRUE) {
+#   complex_plane <- make_complex_plane(width, height,
+#                                       re_min, re_max,
+#                                       im_min, im_max)
+#   n_steps <- z <- matrix(
+#     0L,
+#     nrow = nrow(complex_plane),
+#     ncol = ncol(complex_plane)
+#   )
 #
-# color_fun <- colorRampPalette(c("black", "red", "yellow", "green", "blue", "white"))
-# color_palette <- color_fun(max(foo))
+#   # Check which points are inside the cardioid or the period-2 bulb:
+#   x <- Re(complex_plane)
+#   y <- Im(complex_plane)
+#   q <- (x - 0.25)^2 + y^2
+#   inside <- q * (q + (x - 0.25)) < 0.25 * y^2
+#   n_steps[inside] <- as.integer(max_iterations)
+#
+#   # Note for future me: I tried to implement periodicity checking but
+#   # it didn't improve performance.
+#
+#   todo <- !inside
+#
+#   for (i in 1:max_iterations) {
+#     todo[todo] <- abs(z[todo]) < threshold
+#     n_steps[todo] <- n_steps[todo] + 1L
+#     z[todo] <- z[todo] ^ 2 + complex_plane[todo]
+#     if (!any(todo)) break
+#   }
+#   n_steps
+# }
+#
 #
 # system.time({
-# png("test1.png", width = ncol(foo), height = nrow(foo))
-# par(mar = c(0, 0, 0, 0))
-# image(foo_r, col = color_palette, useRaster = TRUE, axes = FALSE, ann = FALSE)
-# dev.off()
+#   orig <- mandelbrot(w, h, max_iterations = mi)
 # })
-#
-# library(grid)
-# bla <- matrix(color_palette[foo], nrow = nrow(foo))
 #
 # system.time({
-# png("test2.png", width = ncol(foo), height = nrow(foo))
-# par(mar = c(0, 0, 0, 0))
-# grid.raster(bla, interpolate = FALSE)
-# dev.off()
+#   new <- mandelbrot_new(w, h, max_iterations = mi)
 # })
 #
-#
-# a <- matrix(1:4, nrow = 2, byrow = TRUE)
-# a
-#
-# matrix(letters[a], nrow = nrow(a))
-#
-#
-# # Conclusion: use grid.raster from the grid package because it is faster and
-# # more convenient. Convert the numbers to colors beforehand. Try to implement
-# # smooth scaling to avoyd the colored bands. Maybe the mandelbrot() function
-# # should also return either z or a matrix of color strings?
-# # Always use interpolate = TRUE.
+# identical(orig, new)

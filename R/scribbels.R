@@ -100,7 +100,7 @@ mandelbrot <- function(width, height, re_min= -2, re_max = 1,
 m2 <- mandelbrot(1200, 800, threshold = 2, max_iterations = 500)
 
 png("test_smooth_5.png", width = ncol(m2), height = nrow(m2))
-grid.raster(m2, interpolate = FALSE)
+grid::grid.raster(m2, interpolate = FALSE)
 dev.off()
 
 

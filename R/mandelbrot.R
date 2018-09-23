@@ -105,42 +105,23 @@ mandelbrot_color_continuous <- function(color_fun, n_steps, z, max_iterations) {
   # interpolation. Make sure to test the speed difference.
 
   outside <- n_steps < max_iterations
-  n_steps[outside] <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
+  n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
+  result <- matrix("", nrow = nrow(outside), ncol = ncol(outside))
 
-  color_palette <- t(col2rgb(color_fun(max_iterations)))
+  color_palette <- color_fun(max_iterations)
+  result[!outside] <- tail(color_palette, 1)
+  color_palette <- t(col2rgb(color_palette))
+  color_1 <- color_palette[floor(n_steps_outside), ]
+  color_2 <- color_palette[ceiling(n_steps_outside), ]
+  d <- n_steps_outside %% 1  # fractional part
 
-  color_1 <- color_palette[floor(n_steps), ]
-  color_2 <- color_palette[ceiling(n_steps), ]
-  d <- n_steps %% 1  # fractional part
-
-  # TODO: Is there any way to make the following part less ugly?
-  # These don't need to be matrices.
-
-  # Color interpolation:
-  color_1_r <- matrix(color_palette[floor(n_steps), 1], nrow = nrow(d))
-  color_2_r <- matrix(color_palette[ceiling(n_steps), 1], nrow = nrow(d))
-  color_1_g <- matrix(color_palette[floor(n_steps), 2], nrow = nrow(d))
-  color_2_g <- matrix(color_palette[ceiling(n_steps), 2], nrow = nrow(d))
-  color_1_b <- matrix(color_palette[floor(n_steps), 3], nrow = nrow(d))
-  color_2_b <- matrix(color_palette[ceiling(n_steps), 3], nrow = nrow(d))
-
-  col_min <- pmin(color_1_r, color_2_r)
-  col_max <- pmax(color_1_r, color_2_r)
-  col_ip_r <- round(col_min + (col_max - col_min) * d)
-
-  col_min <- pmin(color_1_g, color_2_g)
-  col_max <- pmax(color_1_g, color_2_g)
-  col_ip_g <- round(col_min + (col_max - col_min) * d)
-
-  col_min <- pmin(color_1_b, color_2_b)
-  col_max <- pmax(color_1_b, color_2_b)
-  col_ip_b <- round(col_min + (col_max - col_min) * d)
-  col_ip <- paste0(
-    "#",
-    paste0(as.hexmode(col_ip_r), as.hexmode(col_ip_g), as.hexmode(col_ip_b))
-  )
-  col_ip <- matrix(col_ip, nrow = nrow(d))
-  col_ip
+  color_min <- pmin(color_1, color_2)
+  color_max <- pmax(color_1, color_2)
+  color_ip <- round(color_min + (color_max - color_min) * d)
+  color_ip <- format.hexmode(color_ip, width = 2)
+  color_ip <- paste0("#", color_ip[, 1], color_ip[, 2], color_ip[, 3])
+  result[outside] <- color_ip
+  result
 }
 
 

@@ -3,4 +3,6 @@
 export(flip_dragon)
 export(fold_dragon)
 export(get_path_coordinates)
+export(mandelbrot)
+export(plot_mandelbrot)
 export(rotate_dragon)

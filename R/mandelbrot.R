@@ -96,14 +96,6 @@ mandelbrot_color_continuous <- function(color_fun, n_steps, z, max_iterations) {
   # Don't ask me how it works.
   # Needs a high threshold to produce results with invisible steps.
 
-  # TODO: use the [outside] subset more below to maybe speed things up? So that
-  # not the whole million element matrix interpolates colors.
-  # Most of these don't need to be matrices. Only the end result has to be.
-  # Make a vector with all values from n_steps in outside then do the
-  # interpolation for that. Afterwards create the result by making a matrix
-  # where outside results in the max color and the rest comes from the
-  # interpolation. Make sure to test the speed difference.
-
   outside <- n_steps < max_iterations
   n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
   result <- matrix("", nrow = nrow(outside), ncol = ncol(outside))

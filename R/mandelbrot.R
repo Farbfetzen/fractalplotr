@@ -73,7 +73,7 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
   # Note to future me: I tried to implement periodicity checking but
   # it didn't improve performance.
 
-  for (i in 1:max_iterations) {
+  for (i in seq_len(max_iterations)) {
     todo[todo] <- abs(z[todo]) < threshold
     n_steps[todo] <- n_steps[todo] + 1L
     z[todo] <- z[todo] ^ 2 + complex_plane[todo]

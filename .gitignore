@@ -1,3 +1,6 @@
 .Rproj.user
 example_pictures/
 inst/doc
+
+# KDE directory preferences
+.directory

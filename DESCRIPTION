@@ -5,7 +5,7 @@ Version: 0.1
 Authors@R: person("Sebastian", "Henz", role = c("aut", "cre"),
                   email = "bastihz.dev@posteo.de")
 Maintainer: Sebastian Henz <bastihz.dev@posteo.de>
-Description: Plot beautiful fractals in R. This package lets you crate fractals 
+Description: Plot beautiful fractals in R. This package lets you create fractals 
     of various types, for example Mandelbrot sets, Julia sets or dragon curves. 
     It provides functions for plotting them with many colorful defaults. You 
     can easily customize the plots with your own color palettes and even create 

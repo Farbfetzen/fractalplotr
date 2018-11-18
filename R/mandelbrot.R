@@ -16,7 +16,7 @@
 
 
 #' @export
-mandelbrot <- function(width, height, re_min= -2, re_max = 1,
+mandelbrot <- function(width, height, re_min = -2, re_max = 1,
                        im_min = -1i, im_max = 1i,
                        center = -0.5+0i, re_width, im_height,
                        max_iterations = 128, threshold = 2,
@@ -118,10 +118,10 @@ mandelbrot_color_continuous <- function(color_fun, n_steps, z, max_iterations) {
 
 
 #' @export
-plot_mandelbrot <- function(color_matrix, filename = "") {
-  if (filename != "") {
+plot_mandelbrot <- function(color_matrix, file = "") {
+  if (file != "") {
     on.exit(dev.off())
-    png(filename, width = ncol(color_matrix), height = nrow(color_matrix))
+    png(file, width = ncol(color_matrix), height = nrow(color_matrix))
   }
   grid::grid.raster(color_matrix, interpolate = FALSE)
 }

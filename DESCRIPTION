@@ -1,7 +1,7 @@
 Package: fractalplotr
 Type: Package
 Title: Plot Beautiful Fractals with R
-Version: 0.1
+Version: 0.2
 Authors@R: person("Sebastian", "Henz", role = c("aut", "cre"),
                   email = "bastihz.dev@posteo.de")
 Maintainer: Sebastian Henz <bastihz.dev@posteo.de>

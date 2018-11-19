@@ -73,6 +73,10 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
   # Note to future me: I tried to implement periodicity checking but
   # it didn't improve performance.
 
+  # FIXME: Make the todo variable an integer vector by doing which()
+  # and keeping arr.ind = FALSE.
+  # Testing has shown that this can be twice as fast as using a logical vector.
+
   for (i in seq_len(max_iterations)) {
     todo[todo] <- abs(z[todo]) < threshold
     n_steps[todo] <- n_steps[todo] + 1L

@@ -15,7 +15,7 @@
 # along with this program. If not, see http://www.gnu.org/licenses.
 
 
-# This script is for scribbels, notes, playing around with ideas.
+# This is a temporary script for use during development.
 
 
 # w <- 1500

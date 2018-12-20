@@ -28,16 +28,16 @@
 #' This function is supposed to be used in combination with
 #' \code{\link{get_path_coordinates}} for which it creates the input.
 #'
-#' @param order The order of the dragon curve. Must be a positive
-#'   integer <= \code{limit}.
+#' @param order The order of the dragon curve. Must be a positive integer <=
+#'   \code{limit}.
 #' @param limit The maximum allowed value for \code{order}. This is to prevent
 #'   accidental creation of very big results which can consume cpu and memory.
 #'   Defaults to 20. Be aware that the resulting vector will have a length of
 #'   2^\code{order}-1 and the coordinate matrix returned by
 #'   \code{get_path_coordinates} will be twice that object size.
 #'
-#' @return A numeric vector of length 2^\code{order}-1. The values are either
-#'   1 for left turns or -1 for right turns.
+#' @return A numeric vector of length 2^\code{order}-1. The values are either 1
+#'   for left turns or -1 for right turns.
 #'
 #' @export
 #'
@@ -48,22 +48,22 @@
 #' fold_dragon(3)
 #' fold_dragon(5)
 fold_dragon <- function(order, limit = 20) {
-  # Note: The length of the curve will be 2 ^ order - 1.
-  if (order > limit) {
-    stop("The order exceeds the limit and the resulting vector would ",
-         "probably be very big in memory. This is because the length is ",
-         "2 ^ order - 1. Change the value of \"limit\" to get higher order ",
-         "dragon curves.", call. = FALSE)
-  }
-  if (order == 1) return(1)
-  curve <- 1
-  for (i in 2:order) {
-    middle_index <- ceiling(length(curve) / 2)
-    curve_2 <- curve
-    curve_2[middle_index] <- -1
-    curve <- c(curve, 1, curve_2)
-  }
-  curve
+    # Note: The length of the curve will be 2 ^ order - 1.
+    if (order > limit) {
+        stop("The order exceeds the limit and the resulting vector would ",
+             "probably be very big in memory. This is because the length is ",
+             "2 ^ order - 1. Change the value of \"limit\" to get higher ",
+             "order dragon curves.", call. = FALSE)
+    }
+    if (order == 1) return(1)
+    curve <- 1
+    for (i in 2:order) {
+        middle_index <- ceiling(length(curve) / 2)
+        curve_2 <- curve
+        curve_2[middle_index] <- -1
+        curve <- c(curve, 1, curve_2)
+    }
+    curve
 }
 
 
@@ -95,23 +95,23 @@ fold_dragon <- function(order, limit = 20) {
 #' coords <- get_path_coordinates(folds)
 #' plot(coords, type = "l", asp = 1)
 get_path_coordinates <- function(turns) {
-  coordinates <- matrix(rep(0, (length(turns) + 2) * 2), ncol = 2)
-  colnames(coordinates) <- c("x", "y")
-  coordinates[2, ] <- c(1, 0)
-  directions <- list(
-    c(1, 0),  # right
-    c(0, 1),  # up
-    c(-1, 0), # left
-    c(0, -1)  # down
-  )
-  direction <- 0
-  i <- 2
-  for (turn in turns) {
-    direction <- (direction + turn) %% 4
-    coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
-    i <- i + 1
-  }
-  coordinates
+    coordinates <- matrix(rep(0, (length(turns) + 2) * 2), ncol = 2)
+    colnames(coordinates) <- c("x", "y")
+    coordinates[2, ] <- c(1, 0)
+    directions <- list(
+        c(1, 0),  # right
+        c(0, 1),  # up
+        c(-1, 0), # left
+        c(0, -1)  # down
+    )
+    direction <- 0
+    i <- 2
+    for (turn in turns) {
+        direction <- (direction + turn) %% 4
+        coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
+        i <- i + 1
+    }
+    coordinates
 }
 
 
@@ -134,12 +134,12 @@ get_path_coordinates <- function(turns) {
 #' dragon_curve <- get_path_coordinates(fold_dragon(3))
 #' flip_dragon(dragon_curve, "horizontal")
 flip_dragon <- function(coordinates, direction) {
-  if (direction == "horizontal") {
-    coordinates[, "x"] <- coordinates[, "x"] * -1
-  } else {
-    coordinates[, "y"] <- coordinates[, "y"] * -1
-  }
-  coordinates
+    if (direction == "horizontal") {
+        coordinates[, "x"] <- coordinates[, "x"] * -1
+    } else {
+        coordinates[, "y"] <- coordinates[, "y"] * -1
+    }
+    coordinates
 }
 
 
@@ -164,17 +164,17 @@ flip_dragon <- function(coordinates, direction) {
 #' ragon_curve <- get_path_coordinates(fold_dragon(2))
 #' rotate_dragon(dragon_curve, "left", 1)
 rotate_dragon <- function(coordinates, direction, times = 1) {
-  for (i in seq_len(times)) {
-    if (direction %in% c("right", "clockwise")) {
-      x <- coordinates[, "y"]
-      y <- -coordinates[, "x"]
-    } else {
-      x <- -coordinates[, "y"]
-      y <- coordinates[, "x"]
+    for (i in seq_len(times)) {
+        if (direction %in% c("right", "clockwise")) {
+            x <- coordinates[, "y"]
+            y <- -coordinates[, "x"]
+        } else {
+            x <- -coordinates[, "y"]
+            y <- coordinates[, "x"]
+        }
+        coordinates <- cbind(x, y)
     }
-    coordinates <- cbind(x, y)
-  }
-  coordinates
+    coordinates
 }
 
 

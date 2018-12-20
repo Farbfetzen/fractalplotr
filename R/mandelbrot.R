@@ -33,20 +33,23 @@ mandelbrot <- function(width, height, re_min = -2, re_max = 1,
                                       im_min, im_max)
   result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
 
+  if (color_mode == "none") {
+      return(result$n_steps)
+  }
+
   if (color_function == "") {
     color_function <- colorRampPalette(c(
       "navy", "white", rgb(1, 0.75, 0), "darkred", "black"
     ))
   }
   if (color_mode == "discrete") {
-    color_matrix <- mandelbrot_color_discrete(color_function, result$n_steps)
-  } else if (color_mode == "continuous") {
-    color_matrix <- mandelbrot_color_continuous(
-      color_function, result$n_steps, result$z, max_iterations
-    )
+    return(mandelbrot_color_discrete(color_function, result$n_steps))
   }
-
-  color_matrix
+  if (color_mode == "continuous") {
+    return(mandelbrot_color_continuous(
+      color_function, result$n_steps, result$z, max_iterations
+    ))
+  }
 }
 
 

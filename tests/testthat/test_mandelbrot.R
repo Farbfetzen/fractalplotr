@@ -25,6 +25,6 @@ test_that("mandelbrot set is calculated correctly", {
   dimnames(m_reference) <- NULL
   m <- mandelbrot(width = 150, height = 100, re_min = -2, re_max = 1,
                   im_min = -1i, im_max = 1i, max_iterations = 128,
-                  threshold = 2)
+                  threshold = 2, color_mode = "none")
   expect_identical(m, m_reference)
 })

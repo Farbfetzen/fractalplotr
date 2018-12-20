@@ -81,7 +81,7 @@
 #
 # for (i in 1:10) {
 #   x <- 10 ^ (-i)
-#   max_iter <- 100 + 400 * (i - 1)
+#   max_iter <- 100 + 400 * (i - 1)  # Choose a fixed max_iter for all images in the zoom sequence so all colors correspond to the same values.
 #   save_as_image(
 #     fractal_jm(
 #       "mandelbrot",

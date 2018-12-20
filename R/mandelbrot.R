@@ -16,21 +16,40 @@
 
 
 #' @export
-mandelbrot <- function(width, height, re_min = -2, re_max = 1,
-                       im_min = -1i, im_max = 1i,
-                       center = -0.5+0i, re_width, im_height,
-                       max_iterations = 128, threshold = 2,
-                       prevent_distortion = TRUE, color_mode = "discrete",
-                       color_function = "") {
+mandelbrot <- function(width,
+                       height,
+                       re_width,
+                       im_height,
+                       center = -0.5+0i,
+                       max_iterations = 128,
+                       threshold = 2,
+                       color_mode = "discrete",
+                       color_function = "",
+                       plot = TRUE,
+                       file = "") {
     # TODO:
-    # - define a default color_fun and write it in the arguments
-    # - check input: if prevent_distortion only some of the arguments should be
-    #   given
-    # mandelbrot_check_input()
+    # - Specify in the documentation that plots are only produced if
+    #   color_mode != "none".
+    # Argument checking: Either provide re_width or im_height but never both.
+
+    # Check arguments and get the missing dimension:
+    if (missing(im_height) & !missing(re_width)) {
+        im_height <- re_width / width * height
+    } else if (!missing(im_height) & missing(re_width)) {
+        re_width <- im_height / height * width
+    } else {
+        stop("Wrong combination of arguments provided. Provide either re_width",
+             " or im_height but not both.")
+    }
+
+    # Convert coordinates to get the limits:
+    re_min <- Re(center) - re_width / 2
+    re_max <- Re(center) + re_width / 2
+    im_min <- complex(imaginary = Im(center) - im_height / 2)
+    im_max <- complex(imaginary = Im(center) + im_height / 2)
 
     complex_plane <- make_complex_plane(width, height,
-                                        re_min, re_max,
-                                        im_min, im_max)
+                                        re_min, re_max, im_min, im_max)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
 
     if (color_mode == "none") {
@@ -43,18 +62,22 @@ mandelbrot <- function(width, height, re_min = -2, re_max = 1,
         )
     }
     if (color_mode == "discrete") {
-        return(mandelbrot_color_discrete(color_function, result$n_steps))
+        color_matrix <- mandelbrot_color_discrete(
+            color_function, result$n_steps, max_iterations
+        )
     }
     if (color_mode == "continuous") {
-        return(mandelbrot_color_continuous(
+        color_matrix <- mandelbrot_color_continuous(
             color_function, result$n_steps, result$z, max_iterations
-        ))
+        )
     }
-}
 
-
-mandelbrot_check_input <- function() {
-
+    if (plot) {
+        plot_mandelbrot(color_matrix, file)
+        invisible(color_matrix)
+    } else {
+        color_matrix
+    }
 }
 
 
@@ -87,8 +110,8 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
 }
 
 
-mandelbrot_color_discrete <- function(color_fun, n_steps) {
-    color_palette <- color_fun(max(n_steps))
+mandelbrot_color_discrete <- function(color_fun, n_steps, max_iterations) {
+    color_palette <- color_fun(max_iterations)
     matrix(color_palette[n_steps], nrow = nrow(n_steps))
 }
 
@@ -123,11 +146,12 @@ mandelbrot_color_continuous <- function(color_fun,
 }
 
 
-#' @export
 plot_mandelbrot <- function(color_matrix, file = "") {
     if (file != "") {
         on.exit(dev.off())
         png(file, width = ncol(color_matrix), height = nrow(color_matrix))
+    } else {
+        grid::grid.newpage()
     }
     grid::grid.raster(color_matrix, interpolate = FALSE)
 }

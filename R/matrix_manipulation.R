@@ -17,10 +17,13 @@
 
 rotate_matrix <- function(m, direction, times = 1) {
     for (i in seq_len(times)) {
-        if (direction %in% c("right", "clockwise")) {
+        if (direction %in% c("r", "right", "clockwise")) {
             m <- t(m[nrow(m):1, ])
-        } else {
+        } else if (direction %in% c("l", "left", "anticlockwise")) {
             m <- t(m[, ncol(m):1])
+        } else {
+            stop("direction must be one of 'r', 'right', 'clockwise', ",
+                 "'l', 'left', 'anticlockwise'.")
         }
     }
     m
@@ -28,11 +31,13 @@ rotate_matrix <- function(m, direction, times = 1) {
 
 
 flip_matrix <- function(m, direction) {
-    if (direction == "vertical") {
+    # TODO: Maybe make an alias 'rotate_matrix' if the function is exported.
+    if (direction %in% c("v", "vertical")) {
         m <- m[nrow(m):1, ]
-    } else {
+    } else if (direction %in% c("h", "horizontal")) {
         m <- m[, ncol(m):1]
+    } else {
+        stop("direction must be one of 'v', 'vertical', 'h', 'horizontal'.")
     }
     m
 }
-

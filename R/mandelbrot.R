@@ -28,8 +28,6 @@ mandelbrot <- function(width,
                        plot = TRUE,
                        file = "") {
     # TODO:
-    # - Specify in the documentation that plots are only produced if
-    #   color_mode != "none".
     # Argument checking: Either provide re_width or im_height but never both.
 
     # Check arguments and get the missing dimension:
@@ -52,10 +50,6 @@ mandelbrot <- function(width,
                                         re_min, re_max, im_min, im_max)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
 
-    if (color_mode == "none") {
-        return(result$n_steps)
-    }
-
     if (color_function == "") {
         color_function <- colorRampPalette(
             c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
@@ -72,12 +66,8 @@ mandelbrot <- function(width,
         )
     }
 
-    if (plot) {
-        plot_mandelbrot(color_matrix, file)
-        invisible(color_matrix)
-    } else {
-        color_matrix
-    }
+    if (plot) plot_mandelbrot(color_matrix, file)
+    invisible(color_matrix)
 }
 
 

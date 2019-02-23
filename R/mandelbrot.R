@@ -52,8 +52,13 @@ mandelbrot <- function(width,
 
     if (color_function == "") {
         color_function <- colorRampPalette(
-            c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
+            c("white", "black")
         )
+        # TODO: Explain in the documentation how to specify the colors and
+        # include this in the example:
+        # color_function <- colorRampPalette(
+        #     c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
+        # )
     }
     if (color_mode == "discrete") {
         color_matrix <- mandelbrot_color_discrete(

@@ -7,8 +7,8 @@
 fold_dragon(order, limit = 20)
 }
 \arguments{
-\item{order}{The order of the dragon curve. Must be a positive
-integer <= \code{limit}.}
+\item{order}{The order of the dragon curve. Must be a positive integer <=
+\code{limit}.}
 
 \item{limit}{The maximum allowed value for \code{order}. This is to prevent
 accidental creation of very big results which can consume cpu and memory.
@@ -17,8 +17,8 @@ Defaults to 20. Be aware that the resulting vector will have a length of
 \code{get_path_coordinates} will be twice that object size.}
 }
 \value{
-A numeric vector of length 2^\code{order}-1. The values are either
-  1 for left turns or -1 for right turns.
+A numeric vector of length 2^\code{order}-1. The values are either 1
+  for left turns or -1 for right turns.
 }
 \description{
 \code{fold_dragon} creates a vector which indicates in which direction each

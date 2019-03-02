@@ -58,17 +58,17 @@ mandelbrot <- function(width,
         #     c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
         # )
     }
-    if (color_mode == "discrete") {
+    if (color_mode == "none") {
+        return(result$n_steps)
+    } else if (color_mode == "discrete") {
         color_matrix <- mandelbrot_color_discrete(
             color_function, result$n_steps, max_iterations
         )
-    }
-    if (color_mode == "continuous") {
+    } else if (color_mode == "continuous") {
         color_matrix <- mandelbrot_color_continuous(
             color_function, result$n_steps, result$z, max_iterations
         )
     }
-
     invisible(color_matrix)
 }
 

@@ -24,9 +24,7 @@ mandelbrot <- function(width,
                        max_iterations = 128,
                        threshold = 2,
                        color_mode = "discrete",
-                       color_function = "",
-                       plot = TRUE,
-                       file = "") {
+                       color_function = ""){
     # TODO:
     # Argument checking: Either provide re_width or im_height but never both.
 
@@ -71,7 +69,6 @@ mandelbrot <- function(width,
         )
     }
 
-    if (plot) plot_mandelbrot(color_matrix, file)
     invisible(color_matrix)
 }
 
@@ -138,15 +135,4 @@ mandelbrot_color_continuous <- function(color_fun,
     color_ip <- paste0("#", color_ip[, 1], color_ip[, 2], color_ip[, 3])
     result[outside] <- color_ip
     result
-}
-
-
-plot_mandelbrot <- function(color_matrix, file = "") {
-    if (file != "") {
-        on.exit(dev.off())
-        png(file, width = ncol(color_matrix), height = nrow(color_matrix))
-    } else {
-        grid::grid.newpage()
-    }
-    grid::grid.raster(color_matrix, interpolate = FALSE)
 }

@@ -3,5 +3,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^example_pictures$
+^old_example_pictures$
 ^readme\.md$
 ^\.gitignore$

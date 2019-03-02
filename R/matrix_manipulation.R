@@ -19,7 +19,7 @@ rotate_matrix <- function(m, direction, times = 1) {
     for (i in seq_len(times)) {
         if (direction %in% c("r", "right", "clockwise")) {
             m <- t(m[nrow(m):1, ])
-        } else if (direction %in% c("l", "left", "anticlockwise")) {
+        } else if (direction %in% c("l", "left", "counterclockwise")) {
             m <- t(m[, ncol(m):1])
         } else {
             stop("direction must be one of 'r', 'right', 'clockwise', ",

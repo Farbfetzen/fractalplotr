@@ -94,13 +94,3 @@ color_sandpile <- function(pile, color_fun, num_neighbors) {
     matrix(sand_colors$color[match(pile, sand_colors$height)],
            nrow = nrow(pile), ncol = ncol(pile))
 }
-
-
-#' @export
-plot_sandpile <- function(color_matrix, file = "") {
-    if (file != "") {
-        on.exit(dev.off())
-        png(file, width = ncol(color_matrix), height = nrow(color_matrix))
-    }
-    grid::grid.raster(color_matrix, interpolate = FALSE)
-}

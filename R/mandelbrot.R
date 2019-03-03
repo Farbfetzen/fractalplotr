@@ -141,6 +141,7 @@ mandelbrot_color_histogram <- function(n_steps, color_palette,
     cs_histo <- cumsum(histogram)
     hues <- cs_histo[n_steps[outside]]
     hues <- round(hues / n * max_iterations)
+    hues <- pmin(max_iterations, pmax(1, hues))
     color_matrix[outside] <- color_palette[hues]
     color_matrix
 }

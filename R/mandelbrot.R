@@ -14,12 +14,10 @@
 # along with this program. If not, see http://www.gnu.org/licenses.
 
 
-# TODO: Explain in the documentation how to specify the colors and
-# include this in the example:
-# color_function <- colorRampPalette(
-#     c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
-# )
-# Also mention the default greyscale.
+# TODO: Explain in the documentation how to specify the colors and also
+# mention the default greyscale.
+# length(color_palette) == max_iterations must be TRUE or the palette will
+# be recycled with a warning.
 
 #' @export
 mandelbrot <- function(width,
@@ -30,24 +28,30 @@ mandelbrot <- function(width,
                        max_iterations = 128,
                        threshold = 2,
                        return_colors = TRUE,
-                       color_mode = "discrete",
-                       color_function = colorRampPalette(c("white", "black"))){
+                       color_palette = NULL,
+                       color_inside = "black",
+                       color_mode = "discrete") {
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
     if (!return_colors) {
         return(invisible(result$n_steps))
-    } else if (color_mode == "discrete") {
+    }
+    if (is.null(color_palette)) {
+        color_palette <- grey.colors(max_iterations, start = 1, end = 0.2)
+    }
+    if (color_mode == "discrete") {
         color_matrix <- mandelbrot_color_discrete(
-            color_function, result$n_steps, max_iterations
+            result$n_steps, color_palette, color_inside, max_iterations
         )
-    } else if (color_mode == "continuous") {
-        color_matrix <- mandelbrot_color_continuous(
-            color_function, result$n_steps, result$z, max_iterations
+    } else if (color_mode == "smooth") {
+        color_matrix <- mandelbrot_color_smooth(
+            result$n_steps, result$z, color_palette,
+            color_inside, max_iterations
         )
     }
-    class(color_matrix) <- "color_matrix"
+    class(color_matrix) <- append(class(color_matrix), "color_matrix")
     invisible(color_matrix)
 }
 
@@ -81,16 +85,19 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
 }
 
 
-mandelbrot_color_discrete <- function(color_fun, n_steps, max_iterations) {
-    color_palette <- color_fun(max_iterations)
-    matrix(color_palette[n_steps], nrow = nrow(n_steps))
+mandelbrot_color_discrete <- function(n_steps, color_palette,
+                                      color_inside, max_iterations) {
+    color_matrix <- matrix(color_palette[n_steps], nrow = nrow(n_steps))
+    color_matrix[n_steps == max_iterations] <- color_inside
+    color_matrix
 }
 
 
-mandelbrot_color_continuous <- function(color_fun,
-                                        n_steps,
-                                        z,
-                                        max_iterations) {
+mandelbrot_color_smooth <- function(n_steps,
+                                    z,
+                                    color_palette,
+                                    color_inside,
+                                    max_iterations) {
     # Smooth colouring, modified from pseudocode taken from
     # https://en.wikipedia.org/wiki/Mandelbrot_set#Continuous_(smooth)_coloring
     # Don't ask me how it works.
@@ -98,10 +105,9 @@ mandelbrot_color_continuous <- function(color_fun,
 
     outside <- n_steps < max_iterations
     n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
-    result <- matrix("", nrow = nrow(outside), ncol = ncol(outside))
+    color_matrix <- matrix("", nrow = nrow(outside), ncol = ncol(outside))
 
-    color_palette <- color_fun(max_iterations)
-    result[!outside] <- tail(color_palette, 1)
+    color_matrix[!outside] <- color_inside
     color_palette <- t(col2rgb(color_palette))
     color_1 <- color_palette[floor(n_steps_outside), ]
     color_2 <- color_palette[ceiling(n_steps_outside), ]
@@ -112,6 +118,6 @@ mandelbrot_color_continuous <- function(color_fun,
     color_ip <- round(color_min + (color_max - color_min) * d)
     color_ip <- format.hexmode(color_ip, width = 2)
     color_ip <- paste0("#", color_ip[, 1], color_ip[, 2], color_ip[, 3])
-    result[outside] <- color_ip
-    result
+    color_matrix[outside] <- color_ip
+    color_matrix
 }

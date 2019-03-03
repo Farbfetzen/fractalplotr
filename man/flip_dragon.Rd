@@ -4,12 +4,10 @@
 \alias{flip_dragon}
 \title{Flip a Dragon Curve}
 \usage{
-flip_dragon(coordinates, direction)
+flip_dragon(dragon, direction)
 }
 \arguments{
-\item{coordinates}{A matrix with two columns for the x and y coordinates of
-the folds in the curve. Usually created by
-\code{\link{dragon_curve}}.}
+\item{dragon}{The dragon curve returned by \code{dragon_curve()}.}
 
 \item{direction}{A string specifying the direction of the flip. Possible
 values are "horizontal" and "vertical".}

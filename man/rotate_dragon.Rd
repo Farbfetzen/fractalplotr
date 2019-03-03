@@ -4,10 +4,10 @@
 \alias{rotate_dragon}
 \title{Rotate a Dragon Curve}
 \usage{
-rotate_dragon(coordinates, direction, times = 1)
+rotate_dragon(dragon, direction, times = 1)
 }
 \arguments{
-\item{coordinates}{A matrix with two columns for the x and y coordinates of
+\item{dragon}{A matrix with two columns for the x and y coordinates of
 the folds in the curve. Usually created by
 \code{\link{dragon_curve}}.}
 

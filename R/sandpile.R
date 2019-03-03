@@ -29,7 +29,7 @@ sandpile <- function(height,
         return(invisible(s))
     }
     s <- color_sandpile(s, colors)
-    class(s) <- "color_matrix"
+    class(s) <- c(class(s), "color_matrix")
     invisible(s)
 }
 

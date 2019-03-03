@@ -18,7 +18,7 @@
 dragon_curve <- function(order, limit = 20) {
     dragon <- fold_dragon(order, limit)
     dragon <- get_dragon_coordinates(dragon)
-    class(dragon) <- "dragon_curve"
+    class(dragon) <- c(class(dragon), "dragon_curve")
     invisible(dragon)
 }
 
@@ -68,9 +68,7 @@ get_dragon_coordinates <- function(turns) {
 #'
 #' Mirror a dragon curve either horizontally or vertically.
 #'
-#' @param coordinates A matrix with two columns for the x and y coordinates of
-#'   the folds in the curve. Usually created by
-#'   \code{\link{dragon_curve}}.
+#' @param dragon The dragon curve returned by \code{dragon_curve()}.
 #' @param direction A string specifying the direction of the flip. Possible
 #'   values are "horizontal" and "vertical".
 #'
@@ -82,13 +80,15 @@ get_dragon_coordinates <- function(turns) {
 #' @examples
 #' d <- dragon_curve(3)
 #' flip_dragon(d, "horizontal")
-flip_dragon <- function(coordinates, direction) {
+flip_dragon <- function(dragon, direction) {
+    cls <- class(dragon)
     if (direction == "horizontal") {
-        coordinates[, "x"] <- coordinates[, "x"] * -1
+        dragon[, "x"] <- dragon[, "x"] * -1
     } else if (direction == "vertical") {
-        coordinates[, "y"] <- coordinates[, "y"] * -1
+        dragon[, "y"] <- dragon[, "y"] * -1
     }
-    coordinates
+    class(dragon) <- dragon
+    dragon
 }
 
 
@@ -97,7 +97,7 @@ flip_dragon <- function(coordinates, direction) {
 #' Rotate dragon curve coordinates 90° to the right (clockwise) or left
 #' (counterclockwise) once or multiple times.
 #'
-#' @param coordinates A matrix with two columns for the x and y coordinates of
+#' @param dragon A matrix with two columns for the x and y coordinates of
 #'   the folds in the curve. Usually created by
 #'   \code{\link{dragon_curve}}.
 #' @param direction A string specifying the direction of rotation. Possible
@@ -112,16 +112,18 @@ flip_dragon <- function(coordinates, direction) {
 #' @examples
 #' d <- dragon_curve(fold_dragon(3))
 #' rotate_dragon(d, "left")
-rotate_dragon <- function(coordinates, direction, times = 1) {
+rotate_dragon <- function(dragon, direction, times = 1) {
+    cls <- class(dragon)
     for (i in seq_len(times)) {
         if (direction %in% c("right", "clockwise")) {
-            x <- coordinates[, "y"]
-            y <- -coordinates[, "x"]
+            x <- dragon[, "y"]
+            y <- -dragon[, "x"]
         } else if (direction %in% c("left", "counterclockwise")) {
-            x <- -coordinates[, "y"]
-            y <- coordinates[, "x"]
+            x <- -dragon[, "y"]
+            y <- dragon[, "x"]
         }
-        coordinates <- cbind(x, y)
+        dragon <- cbind(x, y)
     }
-    coordinates
+    class(dragon) <- dragon
+    dragon
 }

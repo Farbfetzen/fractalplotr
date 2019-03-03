@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,7 +23,7 @@ test_that("mandelbrot set is calculated correctly", {
     m_reference <- as.matrix(read.table(filepath, sep = ","))
     dimnames(m_reference) <- NULL
     m <- mandelbrot(width = 150, height = 100, re_width = 3,
-                    max_iterations = 128, threshold = 2, color_mode = "none")
+                    max_iterations = 128, threshold = 2, return_colors = FALSE)
     expect_identical(m, m_reference)
 })
 

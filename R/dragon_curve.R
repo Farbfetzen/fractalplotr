@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,38 +14,15 @@
 # along with this program. If not, see http://www.gnu.org/licenses.
 
 
-
-# TODO: Write function combining the code from fold_dragon and
-#       get_path_coordinates. Only export that and remove the two others.
-
-
-#' Fold the Dragon Curve
-#'
-#' \code{fold_dragon} creates a vector which indicates in which direction each
-#' corner of the dragon curve turns.
-#'
-#' This function is supposed to be used in combination with
-#' \code{\link{get_path_coordinates}} for which it creates the input.
-#'
-#' @param order The order of the dragon curve. Must be a positive integer <=
-#'   \code{limit}.
-#' @param limit The maximum allowed value for \code{order}. This is to prevent
-#'   accidental creation of very big results which can consume cpu and memory.
-#'   Defaults to 20. Be aware that the resulting vector will have a length of
-#'   2^\code{order}-1 and the coordinate matrix returned by
-#'   \code{get_path_coordinates} will be twice that object size.
-#'
-#' @return A numeric vector of length 2^\code{order}-1. The values are either 1
-#'   for left turns or -1 for right turns.
-#'
 #' @export
-#'
-#' @family dragon curve functions
-#'
-#' @examples
-#' fold_dragon(1)
-#' fold_dragon(3)
-#' fold_dragon(5)
+dragon_curve <- function(order, limit = 20) {
+    dragon <- fold_dragon(order, limit)
+    dragon <- get_dragon_coordinates(dragon)
+    class(dragon) <- "dragon_curve"
+    invisible(dragon)
+}
+
+
 fold_dragon <- function(order, limit = 20) {
     # Note: The length of the curve will be 2 ^ order - 1.
     if (order > limit) {
@@ -67,34 +43,7 @@ fold_dragon <- function(order, limit = 20) {
 }
 
 
-#' Calculate the Coordinates for the Corners of the Dragon Curve
-#'
-#' \code{get_path_coordinates} accepts a vector of turn directions and returns
-#' the coordinates of the folds in the associated curve.
-#'
-#' This function is supposed to be used in combination with
-#' \code{\link{fold_dragon}}. Of course, it can also return a path for other
-#' vectors of turns if they conform to the input format.
-#'
-#' @param turns A numeric vector consisting solely of the values 1 and -1. A 1
-#'   results in a left turn and a -1 makes a right turn.
-#'
-#' @return A numeric matrix with two columns x and y containing the coordinates
-#'   of the folds in the dragon curve.
-#'
-#' @export
-#'
-#' @family dragon curve functions
-#'
-#' @examples
-#' folds <- fold_dragon(3)
-#' get_path_coordinates(folds)
-#'
-#' # The matrix can be used easily plot the dragon curve:
-#' folds <- fold_dragon(8)
-#' coords <- get_path_coordinates(folds)
-#' plot(coords, type = "l", asp = 1)
-get_path_coordinates <- function(turns) {
+get_dragon_coordinates <- function(turns) {
     coordinates <- matrix(rep(0, (length(turns) + 2) * 2), ncol = 2)
     colnames(coordinates) <- c("x", "y")
     coordinates[2, ] <- c(1, 0)
@@ -121,7 +70,7 @@ get_path_coordinates <- function(turns) {
 #'
 #' @param coordinates A matrix with two columns for the x and y coordinates of
 #'   the folds in the curve. Usually created by
-#'   \code{\link{get_path_coordinates}}.
+#'   \code{\link{dragon_curve}}.
 #' @param direction A string specifying the direction of the flip. Possible
 #'   values are "horizontal" and "vertical".
 #'
@@ -131,12 +80,12 @@ get_path_coordinates <- function(turns) {
 #' @family dragon curve functions
 #'
 #' @examples
-#' dragon_curve <- get_path_coordinates(fold_dragon(3))
-#' flip_dragon(dragon_curve, "horizontal")
+#' d <- dragon_curve(3)
+#' flip_dragon(d, "horizontal")
 flip_dragon <- function(coordinates, direction) {
     if (direction == "horizontal") {
         coordinates[, "x"] <- coordinates[, "x"] * -1
-    } else {
+    } else if (direction == "vertical") {
         coordinates[, "y"] <- coordinates[, "y"] * -1
     }
     coordinates
@@ -150,10 +99,10 @@ flip_dragon <- function(coordinates, direction) {
 #'
 #' @param coordinates A matrix with two columns for the x and y coordinates of
 #'   the folds in the curve. Usually created by
-#'   \code{\link{get_path_coordinates}}.
+#'   \code{\link{dragon_curve}}.
 #' @param direction A string specifying the direction of rotation. Possible
 #'   values are "left", "right", "clockwise" and "counterclockwise".
-#' @param times A single positive number spcifying how often to rotate by 90°.
+#' @param times A single positive number specifying how often to rotate by 90°.
 #'
 #' @return A matrix containing the rotated coordinates.
 #' @export
@@ -161,14 +110,14 @@ flip_dragon <- function(coordinates, direction) {
 #' @family dragon curve functions
 #'
 #' @examples
-#' ragon_curve <- get_path_coordinates(fold_dragon(2))
-#' rotate_dragon(dragon_curve, "left", 1)
+#' d <- dragon_curve(fold_dragon(3))
+#' rotate_dragon(d, "left")
 rotate_dragon <- function(coordinates, direction, times = 1) {
     for (i in seq_len(times)) {
         if (direction %in% c("right", "clockwise")) {
             x <- coordinates[, "y"]
             y <- -coordinates[, "x"]
-        } else {
+        } else if (direction %in% c("left", "counterclockwise")) {
             x <- -coordinates[, "y"]
             y <- coordinates[, "x"]
         }
@@ -176,56 +125,3 @@ rotate_dragon <- function(coordinates, direction, times = 1) {
     }
     coordinates
 }
-
-
-
-# notes and stuff, remove later -------------------------------------------
-
-# TODO:
-# - Decide if I want to call it "turns" or "folds" or a mix of both. Either
-#   way the nomenclature should be consistent.
-# - Make proper tests and remove the ones here.
-# - Function for plotting dragon using raster() with arguments x and y.
-# - Write a function for plotting the dragon with nice defaults.
-
-
-# # plots:
-# opar <- par(no.readonly = TRUE)
-#
-# par(mfrow = c(4, 4), mar = c(0, 0, 0, 0))
-# for (i in 1:16) {
-#   plot(get_path_coordinates(fold_dragon(i)), type = "l", asp = 1, axes = FALSE,
-#        ann = FALSE)
-#   legend("topleft", legend = i, bty = "n")
-#   box()
-# }
-# par(opar)
-#
-# # I use segments here because it allows lines to be colored differently. lines
-# # only does one color for the whole curve.
-#
-# i <- 16
-# coords <- get_path_coordinates(fold_dragon(i))
-# xrange <- range(coords[, "x"])
-# yrange <- range(coords[, "y"])
-#
-# #png(paste0("dragon ", i, ".png"), width = diff(xrange) * 2,
-# #    height = diff(yrange) * 2, res = 96)
-# par(mar = c(0, 0, 0, 0))
-# plot(NA, NA, xlim = xrange, ylim = yrange,
-#     asp = 1, axes = FALSE, ann = FALSE, xaxs = "i", yaxs = "i")
-# colors <- rainbow(nrow(coords) - 1)
-# segments(coords[-nrow(coords), "x"], coords[-nrow(coords), "y"],
-#          coords[-1, "x"], coords[-1, "y"], col = colors)
-# # dev.off()
-#
-# # alternative coloring:
-# # png(paste0("dragon ", i, " alt_coloring.png"), width = diff(xrange) * 2,
-# #     height = diff(yrange) * 2, res = 96)
-# par(mar = c(0, 0, 0, 0))
-# plot(NA, NA, xlim = xrange, ylim = yrange,
-#      asp = 1, axes = FALSE, ann = FALSE, xaxs = "i", yaxs = "i")
-# colors <- rep(rainbow(i), c(2, 2^(1:(16-1))))
-# segments(coords[-nrow(coords), "x"], coords[-nrow(coords), "y"],
-#          coords[-1, "x"], coords[-1, "y"], col = colors)
-# # dev.off()

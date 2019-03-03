@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify

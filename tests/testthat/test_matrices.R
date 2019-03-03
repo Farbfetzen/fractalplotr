@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,7 +25,7 @@ test_that("complex plane is correctly created", {
         nrow = 3,
         byrow = TRUE
     )
-    m2 <- make_complex_plane(4, 3, -1, 2, 2i, 4i)
+    m2 <- make_complex_plane(4, 3, 3, 2, 0.5+3i)
     expect_identical(m1, m2)
 })
 

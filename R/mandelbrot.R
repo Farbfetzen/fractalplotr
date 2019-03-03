@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,51 +14,30 @@
 # along with this program. If not, see http://www.gnu.org/licenses.
 
 
+# TODO: Explain in the documentation how to specify the colors and
+# include this in the example:
+# color_function <- colorRampPalette(
+#     c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
+# )
+# Also mention the default greyscale.
+
 #' @export
 mandelbrot <- function(width,
                        height,
-                       re_width,
-                       im_height,
+                       re_width = 3.5,
+                       im_height = NA,
                        center = -0.5+0i,
                        max_iterations = 128,
                        threshold = 2,
+                       return_colors = TRUE,
                        color_mode = "discrete",
-                       color_function = ""){
-    # TODO:
-    # Argument checking: Either provide re_width or im_height but never both.
-
-    # Check arguments and get the missing dimension:
-    if (missing(im_height) & !missing(re_width)) {
-        im_height <- re_width / width * height
-    } else if (!missing(im_height) & missing(re_width)) {
-        re_width <- im_height / height * width
-    } else {
-        stop("Wrong combination of arguments provided. Provide either re_width",
-             " or im_height but not both.")
-    }
-
-    # Convert coordinates to get the limits:
-    re_min <- Re(center) - re_width / 2
-    re_max <- Re(center) + re_width / 2
-    im_min <- complex(imaginary = Im(center) - im_height / 2)
-    im_max <- complex(imaginary = Im(center) + im_height / 2)
-
+                       color_function = colorRampPalette(c("white", "black"))){
     complex_plane <- make_complex_plane(width, height,
-                                        re_min, re_max, im_min, im_max)
+                                        re_width, im_height,
+                                        center)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
-
-    if (color_function == "") {
-        color_function <- colorRampPalette(
-            c("white", "black")
-        )
-        # TODO: Explain in the documentation how to specify the colors and
-        # include this in the example:
-        # color_function <- colorRampPalette(
-        #     c("navy", "white", rgb(1, 0.75, 0), "darkred", "black")
-        # )
-    }
-    if (color_mode == "none") {
-        return(result$n_steps)
+    if (!return_colors) {
+        return(invisible(result$n_steps))
     } else if (color_mode == "discrete") {
         color_matrix <- mandelbrot_color_discrete(
             color_function, result$n_steps, max_iterations
@@ -69,6 +47,7 @@ mandelbrot <- function(width,
             color_function, result$n_steps, result$z, max_iterations
         )
     }
+    class(color_matrix) <- "color_matrix"
     invisible(color_matrix)
 }
 

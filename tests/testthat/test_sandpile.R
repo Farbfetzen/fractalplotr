@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2019 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,16 +14,24 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
-#' @export
-plot_fractal <- function(fractal) {
-    grid::grid.newpage()
-    grid::grid.raster(fractal, interpolate = FALSE)
-}
+context("Sandpiles")
 
 
-#' @export
-save_fractal <- function(fractal, file) {
-    png(file, width = ncol(fractal), height = nrow(fractal))
-    plot_fractal(fractal)
-    invisible(dev.off())
-}
+test_that("sandpile is correctly created", {
+    m1 <- matrix(
+        c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0,
+          0, 0, 0, 3, 2, 0, 2, 3, 0, 0, 0,
+          0, 0, 3, 0, 3, 2, 3, 0, 3, 0, 0,
+          0, 1, 2, 3, 0, 3, 0, 3, 2, 1, 0,
+          0, 2, 0, 2, 3, 0, 3, 2, 0, 2, 0,
+          0, 1, 2, 3, 0, 3, 0, 3, 2, 1, 0,
+          0, 0, 3, 0, 3, 2, 3, 0, 3, 0, 0,
+          0, 0, 0, 3, 2, 0, 2, 3, 0, 0, 0,
+          0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        nrow = 11
+    )
+    m2 <- sandpile(100, return_colors = FALSE)
+    expect_identical(m1, m2)
+})

@@ -9,7 +9,7 @@ flip_dragon(coordinates, direction)
 \arguments{
 \item{coordinates}{A matrix with two columns for the x and y coordinates of
 the folds in the curve. Usually created by
-\code{\link{get_path_coordinates}}.}
+\code{\link{dragon_curve}}.}
 
 \item{direction}{A string specifying the direction of the flip. Possible
 values are "horizontal" and "vertical".}
@@ -21,12 +21,10 @@ The mirrored dragon curve coordinates.
 Mirror a dragon curve either horizontally or vertically.
 }
 \examples{
-dragon_curve <- get_path_coordinates(fold_dragon(3))
-flip_dragon(dragon_curve, "horizontal")
+d <- dragon_curve(3)
+flip_dragon(d, "horizontal")
 }
 \seealso{
-Other dragon curve functions: \code{\link{fold_dragon}},
-  \code{\link{get_path_coordinates}},
-  \code{\link{rotate_dragon}}
+Other dragon curve functions: \code{\link{rotate_dragon}}
 }
 \concept{dragon curve functions}

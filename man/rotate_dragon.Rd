@@ -9,12 +9,12 @@ rotate_dragon(coordinates, direction, times = 1)
 \arguments{
 \item{coordinates}{A matrix with two columns for the x and y coordinates of
 the folds in the curve. Usually created by
-\code{\link{get_path_coordinates}}.}
+\code{\link{dragon_curve}}.}
 
 \item{direction}{A string specifying the direction of rotation. Possible
 values are "left", "right", "clockwise" and "counterclockwise".}
 
-\item{times}{A single positive number spcifying how often to rotate by 90°.}
+\item{times}{A single positive number specifying how often to rotate by 90°.}
 }
 \value{
 A matrix containing the rotated coordinates.
@@ -24,12 +24,10 @@ Rotate dragon curve coordinates 90° to the right (clockwise) or left
 (counterclockwise) once or multiple times.
 }
 \examples{
-ragon_curve <- get_path_coordinates(fold_dragon(2))
-rotate_dragon(dragon_curve, "left", 1)
+d <- dragon_curve(fold_dragon(3))
+rotate_dragon(d, "left")
 }
 \seealso{
-Other dragon curve functions: \code{\link{flip_dragon}},
-  \code{\link{fold_dragon}},
-  \code{\link{get_path_coordinates}}
+Other dragon curve functions: \code{\link{flip_dragon}}
 }
 \concept{dragon curve functions}

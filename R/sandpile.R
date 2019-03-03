@@ -1,4 +1,3 @@
-# fractalplotr - Plot Beautiful Fractals with R
 # Copyright (C) 2018 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,20 +13,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see http://www.gnu.org/licenses.
 
-# Numberphile video on sandpiles: https://www.youtube.com/watch?v=1MtEUErz7Gg
-# This is the version with the infinite grid mentioned at the end of the video.
-# Lots of sand is put in the center and then the rules are applied until there
-# are no more stacks to topple.
-
 
 # TODO:
 # - Use the symmetry to increase computation speed.
-# - Add an option to use 8 neighbors per cell. Remember that the limit height is
-#   then 8. Do this with an if statement, just put it below the rest.
+# - Add an option to use 8 neighbors per cell. Remember that this changes the
+#   limit height to 8.
 
 
 #' @export
-sandpile <- function(height) {
+sandpile <- function(height,
+                     colors = c(1, 2/3, 1/3, 0),
+                     return_colors = TRUE) {
+    s <- sandpile_iterate(height)
+    if (!return_colors) {
+        return(invisible(s))
+    }
+    s <- color_sandpile(s, colors)
+    class(s) <- "color_matrix"
+    invisible(s)
+}
+
+
+sandpile_iterate <- function(height) {
     sidelength <- 11  # must be an odd number
     n <- sidelength ^ 2
     pile <- matrix(0, nrow = sidelength, ncol = sidelength)
@@ -73,24 +80,7 @@ sandpile <- function(height) {
 }
 
 
-#' @export
-color_sandpile <- function(pile, color_fun, num_neighbors) {
-    if (missing(num_neighbors)) {
-        # Try to guess the number of neighbors used for creating the sandpile:
-        if (max(pile) > 3) {
-            num_neighbors <- 8
-        } else {
-            num_neighbors <- 4
-        }
-    } else if (!(num_neighbors %in% c(4, 8))) {
-        stop("num_neighbors must be either 4 or 8.")
-    }
-
-    sand_colors <- data.frame(
-        height = seq(0, num_neighbors - 1),
-        color = color_fun(num_neighbors),
-        stringsAsFactors = FALSE
-    )
-    matrix(sand_colors$color[match(pile, sand_colors$height)],
-           nrow = nrow(pile), ncol = ncol(pile))
+color_sandpile <- function(pile, colors) {
+    pile <- pile + 1
+    matrix(colors[pile], nrow = nrow(pile))
 }

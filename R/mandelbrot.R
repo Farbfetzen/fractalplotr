@@ -30,7 +30,7 @@ mandelbrot <- function(width,
                        return_colors = TRUE,
                        color_palette = NULL,
                        color_inside = "black",
-                       color_mode = "discrete") {
+                       color_mode = "simple") {
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)
@@ -39,10 +39,14 @@ mandelbrot <- function(width,
         return(invisible(result$n_steps))
     }
     if (is.null(color_palette)) {
-        color_palette <- grey.colors(max_iterations, start = 1, end = 0.2)
+        color_palette <- grey.colors(max_iterations)
     }
-    if (color_mode == "discrete") {
+    if (color_mode == "simple") {
         color_matrix <- mandelbrot_color_discrete(
+            result$n_steps, color_palette, color_inside, max_iterations
+        )
+    } else if (color_mode == "histogram") {
+        color_matrix <- mandelbrot_color_histogram(
             result$n_steps, color_palette, color_inside, max_iterations
         )
     } else if (color_mode == "smooth") {
@@ -50,8 +54,11 @@ mandelbrot <- function(width,
             result$n_steps, result$z, color_palette,
             color_inside, max_iterations
         )
+    } else {
+        stop("Unknown color_mode. Please use 'simple', 'histogram' or ",
+             "'smooth'.", call. = FALSE)
     }
-    class(color_matrix) <- append(class(color_matrix), "color_matrix")
+    class(color_matrix) <- c(class(color_matrix), "color_matrix")
     invisible(color_matrix)
 }
 
@@ -103,21 +110,37 @@ mandelbrot_color_smooth <- function(n_steps,
     # Don't ask me how it works.
     # Needs a high threshold to produce results with invisible steps.
 
+    color_matrix <- matrix("", nrow = nrow(n_steps), ncol = ncol(n_steps))
     outside <- n_steps < max_iterations
-    n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
-    color_matrix <- matrix("", nrow = nrow(outside), ncol = ncol(outside))
-
     color_matrix[!outside] <- color_inside
+    n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
     color_palette <- t(col2rgb(color_palette))
     color_1 <- color_palette[floor(n_steps_outside), ]
     color_2 <- color_palette[ceiling(n_steps_outside), ]
     d <- n_steps_outside %% 1  # fractional part
-
     color_min <- pmin(color_1, color_2)
     color_max <- pmax(color_1, color_2)
     color_ip <- round(color_min + (color_max - color_min) * d)
     color_ip <- format.hexmode(color_ip, width = 2)
     color_ip <- paste0("#", color_ip[, 1], color_ip[, 2], color_ip[, 3])
     color_matrix[outside] <- color_ip
+    color_matrix
+}
+
+
+mandelbrot_color_histogram <- function(n_steps, color_palette,
+                                       color_inside, max_iterations) {
+    # Will distribute colors based on how many pixels reached each value.
+    # Adapted from pseudocode found on Wikipedia.
+    color_matrix <- matrix("", nrow = nrow(n_steps), ncol = ncol(n_steps))
+    outside <- n_steps < max_iterations
+    color_matrix[!outside] <- color_inside
+    histogram <- tabulate(n_steps[outside], nbins = max_iterations)
+    n <- sum(outside)
+    hues <- numeric(n)
+    cs_histo <- cumsum(histogram)
+    hues <- cs_histo[n_steps[outside]]
+    hues <- round(hues / n * max_iterations)
+    color_matrix[outside] <- color_palette[hues]
     color_matrix
 }

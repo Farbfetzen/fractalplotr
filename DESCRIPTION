@@ -4,7 +4,6 @@ Title: Plot Beautiful Fractals with R
 Version: 0.2
 Authors@R: person("Sebastian", "Henz", role = c("aut", "cre"),
                   email = "bastihz.dev@posteo.de")
-Maintainer: Sebastian Henz <bastihz.dev@posteo.de>
 Description: Plot beautiful fractals in R. This package lets you create fractals 
     of various types, for example Mandelbrot sets, dragon curves or sandpiles.
 License: GPL-3 | file LICENSE
@@ -13,9 +12,11 @@ BugReports: https://github.com/BastiHz/fractalplotr/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Depends: 
+Depends:
     R (>= 3.5)
-Suggests: testthat,
+Suggests:
+    testthat,
     knitr,
     rmarkdown
-Imports: grid
+Imports:
+    grid

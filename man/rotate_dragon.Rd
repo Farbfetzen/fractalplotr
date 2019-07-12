@@ -24,7 +24,7 @@ Rotate dragon curve coordinates 90° to the right (clockwise) or left
 (counterclockwise) once or multiple times.
 }
 \examples{
-d <- dragon_curve(fold_dragon(3))
+d <- dragon_curve(3)
 rotate_dragon(d, "left")
 }
 \seealso{

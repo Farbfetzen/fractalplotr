@@ -6,8 +6,9 @@
 \alias{fractalplotr-package}
 \title{fractalplotr: Plot Beautiful Fractals with R}
 \description{
-Plot beautiful fractals in R. This package lets you create fractals 
-    of various types, for example Mandelbrot sets, dragon curves or sandpiles.
+Plot beautiful fractals in R. This package lets you
+    create fractals of various types, for example mandelbrot sets, dragon
+    curves or sandpiles.
 }
 \details{
 TODO: add details.

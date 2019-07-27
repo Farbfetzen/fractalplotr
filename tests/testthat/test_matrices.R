@@ -52,6 +52,10 @@ test_that("matrix is rotated counterclockwise", {
 test_that("matrix is flipped as expected", {
     mh <- matrix(c(3, 2, 1, 6, 5, 4, 9, 8, 7), nrow = 3, byrow = TRUE)
     mv <- matrix(c(7, 8, 9, 4, 5, 6, 1, 2, 3), nrow = 3, byrow = TRUE)
-    expect_identical(mh, flip_matrix(m1, "horizontal"))
-    expect_identical(mv, flip_matrix(m1, "vertical"))
+    expect_identical(mh, flip(m1, "horizontal"))
+    expect_identical(mh, flip(m1, "horiz"))
+    expect_identical(mh, flip(m1, "h"))
+    expect_identical(mv, flip(m1, "vertical"))
+    expect_identical(mv, flip(m1, "vert"))
+    expect_identical(mv, flip(m1, "v"))
 })

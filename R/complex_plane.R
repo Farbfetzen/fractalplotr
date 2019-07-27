@@ -2,9 +2,9 @@ make_complex_plane <- function(width, height, re_width, im_height, center) {
     stopifnot(exprs = {
         is.numeric(width)
         is.numeric(height)
-        is.numeric(re_width) | is.na(re_width)
-        is.numeric(im_height) | is.na(im_height)
-        is.complex(center)
+        is.numeric(re_width) || is.na(re_width)
+        is.numeric(im_height) || is.na(im_height)
+        is.complex(center) || is.numeric(center)
     })
 
     if (is.na(re_width) & is.na(im_height)) {

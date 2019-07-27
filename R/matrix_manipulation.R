@@ -1,3 +1,9 @@
+
+
+# TODO: Make just one method for rotation. Maybe use different methods
+# for dragon curve and color matrix.
+# TODO: Put this into a separate script
+# TODO: Export and document.
 rotate_matrix <- function(m, direction, times = 1) {
     cls <- class(m)
     for (i in seq_len(times)) {
@@ -11,19 +17,22 @@ rotate_matrix <- function(m, direction, times = 1) {
         }
     }
     class(m) <- cls
-    m
+    invisible(m)
 }
 
 
-flip_matrix <- function(m, direction) {
+# TODO: Put this into a separate script
+# TODO: Export and document.
+flip <- function(m, direction) {
     cls <- class(m)
-    if (direction %in% c("v", "vertical")) {
+    if (startsWith("vertical", direction)) {
         m <- m[nrow(m):1, ]
-    } else if (direction %in% c("h", "horizontal")) {
+    } else if (startsWith("horizontal", direction)) {
         m <- m[, ncol(m):1]
     } else {
-        stop("direction must be one of 'v', 'vertical', 'h', 'horizontal'.")
+        stop("direction must be either 'horizontal' or 'vertical' ",
+             "or an abbreviation of it.")
     }
     class(m) <- cls
-    m
+    invisible(m)
 }

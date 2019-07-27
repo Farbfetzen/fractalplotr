@@ -4,16 +4,30 @@
 #   limit height to 8.
 
 
+
+#' Title
+#'
+#' TODO: fixme
+#'
+#' @param height foo
+#' @param colors bar
+#' @param return_colors baz
+#'
+#' @return foo bar color_matrix obj
 #' @export
+#'
+#' @examples
+#' sandpile(100, return_colors = FALSE)
 sandpile <- function(height,
                      colors = c(1, 2/3, 1/3, 0),
                      return_colors = TRUE) {
+    # TODO: Make this just one function. Iterate does not need to be separate.
     s <- sandpile_iterate(height)
     if (!return_colors) {
         return(invisible(s))
     }
     s <- color_sandpile(s, colors)
-    class(s) <- c(class(s), "color_matrix")
+    class(s) <- c("color_matrix", class(s))
     invisible(s)
 }
 

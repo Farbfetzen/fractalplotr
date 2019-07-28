@@ -31,7 +31,7 @@ test_that("sandpile is correctly created", {
         nrow = 9
     )
     expect_identical(m1, sandpile(100, return_colors = FALSE))
-    m2 <- matrix("darkgray")
+    m2 <- matrix("lightgray")
     class(m2) <- c("color_matrix", class(m2))
     expect_equal(m2, sandpile(1))
 })

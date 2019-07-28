@@ -4,7 +4,7 @@
 \alias{sandpile}
 \title{Sandpiles}
 \usage{
-sandpile(n, colors = c("black", "darkgray", "lightgray", "white"),
+sandpile(n, colors = c("white", "lightgray", "darkgray", "black"),
   return_colors = TRUE)
 }
 \arguments{

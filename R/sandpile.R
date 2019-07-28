@@ -21,7 +21,7 @@
 #' @examples
 #' sandpile(100, return_colors = FALSE)
 sandpile <- function(n,
-                     colors = c("black", "darkgray", "lightgray", "white"),
+                     colors = c("white", "lightgray", "darkgray", "black"),
                      return_colors = TRUE) {
     stopifnot(
         n > 0

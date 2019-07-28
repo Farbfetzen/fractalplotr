@@ -27,8 +27,8 @@ The mirrored fractal.
 Mirror fractals horizontally or vertically.
 }
 \examples{
-d <- dragon_curve(10)
-f <- mirror(d, "horizontal")
-plot(d)
-plot(f)
+d1 <- dragon_curve(10)
+d2 <- mirror(d, "horizontal")
+plot(d1)
+plot(d2)
 }

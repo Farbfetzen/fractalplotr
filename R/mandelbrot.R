@@ -3,12 +3,33 @@
 # length(color_palette) == max_iterations must be TRUE or the palette will
 # be recycled with a warning.
 
+
+#' Title
+#'
+#' TODO: fixme
+#'
+#' @param width foo
+#' @param height bar
+#' @param re_width baz
+#' @param im_height hurr
+#' @param center blubb
+#' @param max_iterations hurz
+#' @param threshold a
+#' @param return_colors b
+#' @param color_palette c
+#' @param color_inside d
+#' @param color_mode e
+#'
+#' @return waaa color_matrix
 #' @export
+#'
+#' @examples
+#' mandelbrot(width = 10, height = 5)
 mandelbrot <- function(width,
                        height,
                        re_width = 3.5,
                        im_height = NA,
-                       center = -0.5+0i,
+                       center = complex(real = -0.5, imaginary = 0),
                        max_iterations = 128,
                        threshold = 2,
                        return_colors = TRUE,
@@ -42,7 +63,7 @@ mandelbrot <- function(width,
         stop("Unknown color_mode. Please use 'simple', 'histogram' or ",
              "'smooth'.", call. = FALSE)
     }
-    class(color_matrix) <- c(class(color_matrix), "color_matrix")
+    class(color_matrix) <- c("color_matrix", class(color_matrix))
     invisible(color_matrix)
 }
 

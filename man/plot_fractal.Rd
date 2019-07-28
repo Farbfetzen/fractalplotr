@@ -2,25 +2,25 @@
 % Please edit documentation in R/plot.R
 \name{plot_fractal}
 \alias{plot_fractal}
-\alias{plot_fractal.color_matrix}
-\alias{plot_fractal.dragon_curve}
+\alias{plot.dragon_curve}
+\alias{plot.color_matrix}
 \title{Plot fractals}
 \usage{
-plot_fractal(fractal, ...)
+\method{plot}{dragon_curve}(x, pretty = TRUE, ...)
 
-\method{plot_fractal}{color_matrix}(color_matrix)
-
-\method{plot_fractal}{dragon_curve}(dragon, color = "black")
+\method{plot}{color_matrix}(x, ...)
 }
 \arguments{
-\item{fractal}{The fractal to be plotted.}
+\item{x}{A fractal object.}
 
-\item{color}{The color of the dragon curve as single value in a format
-that R understands.}
+\item{pretty}{The color of the dragon curve.}
+
+\item{...}{Futher arguments passed on to \code{plot()}. Only used for dragon
+curves.}
 }
 \description{
 Plot fractals
 }
 \examples{
-plot_fractal(dragon_curve(12), "orange")
+plot(dragon_curve(12), col = "orange")
 }

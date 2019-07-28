@@ -1,36 +1,33 @@
+#' Dragon Curve
+#'
+#' TODO: this documentation
+#'
+#' The length of the curve will be 2 ^ order - 1.
+#'
+#' @param order foo bar
+#'
+#' @return foo bar
 #' @export
-dragon_curve <- function(order, limit = 20) {
-    dragon <- fold_dragon(order, limit)
-    dragon <- get_dragon_coordinates(dragon)
-    class(dragon) <- c(class(dragon), "dragon_curve")
-    invisible(dragon)
-}
-
-
-fold_dragon <- function(order, limit = 20) {
-    # Note: The length of the curve will be 2 ^ order - 1.
-    if (order > limit) {
-        stop("The order exceeds the limit and the resulting vector would ",
-             "probably be very big in memory. This is because the length is ",
-             "2 ^ order - 1. Change the value of \"limit\" to get higher ",
-             "order dragon curves.", call. = FALSE)
-    }
-    if (order == 1) return(1)
+#'
+#' @examples
+#' dragon_curve(5)
+dragon_curve <- function(order) {
+    stopifnot(
+        is.numeric(order),
+        order > 1
+    )
     curve <- 1
     for (i in 2:order) {
-        middle_index <- ceiling(length(curve) / 2)
-        curve_2 <- curve
-        curve_2[middle_index] <- -1
-        curve <- c(curve, 1, curve_2)
+        len <- length(curve)
+        middle_index <- (len + 1) / 2
+        curve <- c(curve, 1, curve)
+        curve[len + 1 + middle_index] <- -1
     }
-    curve
-}
 
 
-get_dragon_coordinates <- function(turns) {
-    coordinates <- matrix(rep(0, (length(turns) + 2) * 2), ncol = 2)
-    colnames(coordinates) <- c("x", "y")
-    coordinates[2, ] <- c(1, 0)
+    dragon <- matrix(0, nrow = length(curve) + 2, ncol = 2)
+    colnames(dragon) <- c("x", "y")
+    dragon[2, ] <- c(1, 0)
     directions <- list(
         c(1, 0),  # right
         c(0, 1),  # up
@@ -38,14 +35,19 @@ get_dragon_coordinates <- function(turns) {
         c(0, -1)  # down
     )
     direction <- 0
-    i <- 2
-    for (turn in turns) {
+    i <- 3
+    for (turn in curve) {
         direction <- (direction + turn) %% 4
-        coordinates[i + 1, ] <- coordinates[i, ] + directions[[direction + 1]]
+        # +1 because in R indices start at 1
+        dragon[i, ] <- dragon[i - 1, ] + directions[[direction + 1]]
         i <- i + 1
     }
-    coordinates
+    class(dragon) <- c("dragon_curve", class(dragon))
+    invisible(dragon)
 }
+
+
+
 
 
 #' Flip a Dragon Curve
@@ -65,13 +67,13 @@ get_dragon_coordinates <- function(turns) {
 #' d <- dragon_curve(3)
 #' flip_dragon(d, "horizontal")
 flip_dragon <- function(dragon, direction) {
-    cls <- class(dragon)
     if (direction == "horizontal") {
         dragon[, "x"] <- dragon[, "x"] * -1
     } else if (direction == "vertical") {
         dragon[, "y"] <- dragon[, "y"] * -1
+    } else {
+        stop("Direction must be either 'horizontal' or 'vertical'.")
     }
-    class(dragon) <- dragon
     dragon
 }
 

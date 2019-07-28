@@ -28,7 +28,6 @@ mirror.dragon_curve <- function(fractal,
         horizontal = "x",
         vertical = "y"
     )
-    print(axis)
     fractal[, axis] <- fractal[, axis] * -1
     fractal
 }

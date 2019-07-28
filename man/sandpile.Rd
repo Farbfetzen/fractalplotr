@@ -2,23 +2,30 @@
 % Please edit documentation in R/sandpile.R
 \name{sandpile}
 \alias{sandpile}
-\title{Title}
+\title{Sandpiles}
 \usage{
-sandpile(height, colors = c(1, 2/3, 1/3, 0), return_colors = TRUE)
+sandpile(n, colors = c("black", "darkgray", "lightgray", "white"),
+  return_colors = TRUE)
 }
 \arguments{
-\item{height}{foo}
+\item{n}{The number of grains dropped in the center.}
 
-\item{colors}{bar}
+\item{colors}{A vector of length 4 containing the colors to be allocated to
+zero to three grains per cell.}
 
-\item{return_colors}{baz}
+\item{return_colors}{Logical. Should the returned matrix consist of the
+numbers of grains per cell or of the corresponding colors?}
 }
 \value{
-foo bar color_matrix obj
+A matrix. Either with the number of grains per cell or the
+  corresponding colors, depending on the value of \code{return_colors}.
 }
 \description{
-TODO: fixme
+Drop some sand in the center and see it topple.
 }
 \examples{
 sandpile(100, return_colors = FALSE)
+}
+\references{
+\link{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 }

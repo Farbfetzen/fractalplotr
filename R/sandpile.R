@@ -1,49 +1,39 @@
-# TODO: Use the symmetry to increase computation speed.
+# TODO: Use the symmetry to increase computation speed. Don't forget to profile before and after.
 # TODO: Add an option to use 8 neighbors per cell. Remember that this changes the
-#   limit height to 8.
-# TODO: Trim the edges.
+#   limit n to 8. Adjust the documentation accordingly. The color vector must be of length 8.
 
 
-#' Title
+#' Sandpiles
 #'
-#' TODO: fixme
+#' Drop some sand in the center and see it topple.
 #'
-#' @param height foo
-#' @param colors bar
-#' @param return_colors baz
+#' @param n The number of grains dropped in the center.
+#' @param colors A vector of length 4 containing the colors to be allocated to
+#'   zero to three grains per cell.
+#' @param return_colors Logical. Should the returned matrix consist of the
+#'   numbers of grains per cell or of the corresponding colors?
 #'
-#' @return foo bar color_matrix obj
+#' @return A matrix. Either with the number of grains per cell or the
+#'   corresponding colors, depending on the value of \code{return_colors}.
+#' @references \link{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 #' @export
 #'
 #' @examples
 #' sandpile(100, return_colors = FALSE)
-sandpile <- function(height,
-                     colors = c(1, 2/3, 1/3, 0),
+sandpile <- function(n,
+                     colors = c("black", "darkgray", "lightgray", "white"),
                      return_colors = TRUE) {
-    # TODO: Make this just one function. Iterate does not need to be separate.
-    s <- sandpile_iterate(height)
-    if (!return_colors) {
-        return(invisible(s))
-    }
-    s <- color_sandpile(s, colors)
-    class(s) <- c("color_matrix", class(s))
-    invisible(s)
-}
-
-
-sandpile_iterate <- function(height) {
+    stopifnot(
+        n > 0
+    )
     sidelength <- 11  # must be an odd number
-    n <- sidelength ^ 2
     pile <- matrix(0, nrow = sidelength, ncol = sidelength)
     center <- ceiling(sidelength / 2)
-    pile[center, center] <- height
-    left_border <- seq(1, sidelength)
+    pile[center, center] <- n
+    left_border <- seq_len(sidelength)
     increase_by <- 10  # must be an even number
-
-    repeat {
-        to_topple <- which(pile > 3)
-        if (length(to_topple) == 0) break
-
+    to_topple <- which(pile > 3)
+    while (length(to_topple) > 0) {
         if (any(to_topple %in% left_border)) {
             # Increase the size of the pile
             new_sidelength <- sidelength + 2 * increase_by
@@ -56,7 +46,6 @@ sandpile_iterate <- function(height) {
             new_pile[coords] <- pile
             pile <- new_pile
             sidelength <- new_sidelength
-            n <- sidelength ^ 2
             left_border <- seq(1, sidelength)
             to_topple <- which(pile > 3)
         }
@@ -72,12 +61,19 @@ sandpile_iterate <- function(height) {
         pile[bottom_neighbors] <- pile[bottom_neighbors] + 1
         pile[left_neighbors] <- pile[left_neighbors] + 1
         pile[right_neighbors] <- pile[right_neighbors] + 1
+
+        to_topple <- which(pile > 3)
     }
+
+    # trim the edges solely consisting of zeroes:
+    pile <- pile[rowSums(pile) > 0, colSums(pile) > 0, drop = FALSE]
+
+    if (!return_colors) {
+        return(pile)
+    }
+
+    pile <- matrix(colors[pile + 1], nrow = nrow(pile))
+
+    class(pile) <- c("color_matrix", class(pile))
     pile
-}
-
-
-color_sandpile <- function(pile, colors) {
-    pile <- pile + 1
-    matrix(colors[pile], nrow = nrow(pile))
 }

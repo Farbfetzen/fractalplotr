@@ -1,8 +1,7 @@
-# TODO:
-# - Use the symmetry to increase computation speed.
-# - Add an option to use 8 neighbors per cell. Remember that this changes the
+# TODO: Use the symmetry to increase computation speed.
+# TODO: Add an option to use 8 neighbors per cell. Remember that this changes the
 #   limit height to 8.
-
+# TODO: Trim the edges.
 
 
 #' Title

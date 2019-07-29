@@ -2,6 +2,10 @@
 # mention the default greyscale.
 # length(color_palette) == max_iterations must be TRUE or the palette will
 # be recycled with a warning.
+# TODO: Define some nice color palettes as functions with
+#   colorRampPalette() or colorRamp() in a separate script. Show how tu use
+#   them with mandelbrot and sandpile in the examples of mandelbrot and
+#   sandpile.
 
 
 #' Title
@@ -18,7 +22,7 @@
 #' @param return_colors b
 #' @param color_palette c
 #' @param color_inside d
-#' @param color_mode e
+#' @param color_mode Can be abbreviated.
 #'
 #' @return waaa color_matrix
 #' @export
@@ -35,36 +39,32 @@ mandelbrot <- function(width,
                        return_colors = TRUE,
                        color_palette = NULL,
                        color_inside = "black",
-                       color_mode = "simple") {
+                       color_mode = c("simple", "histogram", "smooth")) {
+    color_mode <- match.arg(color_mode)
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
     if (!return_colors) {
-        return(invisible(result$n_steps))
+        return(result$n_steps)
     }
     if (is.null(color_palette)) {
         color_palette <- grey.colors(max_iterations)
     }
-    if (color_mode == "simple") {
-        color_matrix <- mandelbrot_color_discrete(
+    color_matrix <- switch (color_mode,
+        simple = mandelbrot_color_discrete(
             result$n_steps, color_palette, color_inside, max_iterations
-        )
-    } else if (color_mode == "histogram") {
-        color_matrix <- mandelbrot_color_histogram(
+        ),
+        histogram = mandelbrot_color_histogram(
             result$n_steps, color_palette, color_inside, max_iterations
-        )
-    } else if (color_mode == "smooth") {
-        color_matrix <- mandelbrot_color_smooth(
+        ),
+        smooth = mandelbrot_color_smooth(
             result$n_steps, result$z, color_palette,
             color_inside, max_iterations
         )
-    } else {
-        stop("Unknown color_mode. Please use 'simple', 'histogram' or ",
-             "'smooth'.", call. = FALSE)
-    }
+    )
     class(color_matrix) <- c("color_matrix", class(color_matrix))
-    invisible(color_matrix)
+    color_matrix
 }
 
 

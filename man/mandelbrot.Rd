@@ -7,7 +7,8 @@
 mandelbrot(width, height, re_width = 3.5, im_height = NA,
   center = complex(real = -0.5, imaginary = 0), max_iterations = 128,
   threshold = 2, return_colors = TRUE, color_palette = NULL,
-  color_inside = "black", color_mode = "simple")
+  color_inside = "black", color_mode = c("simple", "histogram",
+  "smooth"))
 }
 \arguments{
 \item{width}{foo}
@@ -30,7 +31,7 @@ mandelbrot(width, height, re_width = 3.5, im_height = NA,
 
 \item{color_inside}{d}
 
-\item{color_mode}{e}
+\item{color_mode}{Can be abbreviated.}
 }
 \value{
 waaa color_matrix

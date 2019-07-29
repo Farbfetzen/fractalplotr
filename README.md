@@ -3,11 +3,8 @@
 
 # fractalplotr
 
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-The goal of fractalplotr is to … (FIXME)
+The goal of fractalplotr is to … (FIXME) This package is currently under
+heavy construction. Nothing works and everything is on fire.
 
 ## Installation
 
@@ -21,7 +18,9 @@ devtools::install_github("bastihz/fractalplotr")
 ## Examples
 
 TODO: better image resolution, maybe a little smaller images? See how it
-looks on the phone and the laptop.
+looks on the phone and the laptop. \# FIXME: If I can’t set the size via
+the chunk then I could just programmatically generate and save the
+pictures and include them like any other picture.
 
 **Dragon curves** (TODO: link to wikipedia)
 
@@ -35,7 +34,11 @@ plot(d)
 **Mandelbrot sets** (TODO: link to wikipedia)
 
 ``` r
-m <- mandelbrot(width = 500, height = 400)
+m <- mandelbrot(
+    800, 
+    600, 
+    color_palette = colorRampPalette(c("black", "green"))(128)
+)
 plot(m)
 ```
 
@@ -48,4 +51,4 @@ s <- sandpile(1e5)
 plot(s)
 ```
 
-<img src="man/figures/README-sandpile-1.png" width="233px" />
+<img src="man/figures/README-sandpile-1.png" width="100%" />

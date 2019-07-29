@@ -49,8 +49,8 @@ plot(m)
 
 **Sandpiles** (TODO: link to wikipedia)
 
-```{r sandpile}
-s <- sandpile(10000)
+```{r sandpile, out.width = "233px"}
+s <- sandpile(1e5)
 plot(s)
 ```
 

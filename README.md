@@ -44,8 +44,8 @@ plot(m)
 **Sandpiles** (TODO: link to wikipedia)
 
 ``` r
-s <- sandpile(10000)
+s <- sandpile(1e5)
 plot(s)
 ```
 
-<img src="man/figures/README-sandpile-1.png" width="100%" />
+<img src="man/figures/README-sandpile-1.png" width="233px" />

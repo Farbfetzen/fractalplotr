@@ -11,49 +11,44 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+library(fractalplotr)
 ```
 # fractalplotr
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of fractalplotr is to ...
+The goal of fractalplotr is to ... (FIXME)
 
 ## Installation
 
-You can install the released version of fractalplotr from [CRAN](https://CRAN.R-project.org) with:
+You can install fractalplotr from GitHub with:
 
-``` r
-install.packages("fractalplotr")
-```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
+``` {r install, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+**Dragon curves** (TODO: link to wikipedia)
 
-```{r example}
-library(fractalplotr)
-## basic example code
+```{r dragon}
+d <- dragon_curve(12)
+plot(d)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+**Mandelbrot sets** (TODO: link to wikipedia)
 
-```{r cars}
-summary(cars)
+```{r mandelbrot}
+m <- mandelbrot(width = 500, height = 400)
+plot(m)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
+**Sandpiles** (TODO: link to wikipedia)
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r sandpile}
+s <- sandpile(10000)
+plot(s)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

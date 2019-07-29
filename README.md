@@ -18,7 +18,10 @@ install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
 
-## Example
+## Examples
+
+TODO: better image resolution, maybe a little smaller images? See how it
+looks on the phone and the laptop.
 
 **Dragon curves** (TODO: link to wikipedia)
 

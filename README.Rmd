@@ -30,9 +30,7 @@ devtools::install_github("bastihz/fractalplotr")
 ## Examples
 
 TODO: better image resolution, maybe a little smaller images? See how it looks on the phone and the laptop.
-# FIXME: If I can't set the size via the chunk then I could just
-programmatically generate and save the pictures and include them like any other
-picture.
+# FIXME: If I can't set the size via the chunk then I could just generate and save the pictures using an r chunk and include them using normal markdown (center aligned, look for examples). In this case tweak the knitr::opts chunk. See for example the usesthis readme and how it includes the hexagonal logo.
 
 **Dragon curves** (TODO: link to wikipedia)
 

@@ -13,11 +13,24 @@ knitr::opts_chunk$set(
 )
 library(fractalplotr)
 ```
+
+
 # fractalplotr
 
-The goal of fractalplotr is to ... (FIXME)
-This package is currently under heavy construction. Nothing works and everything
-is on fire.
+This package lets you create and plot fractals.
+
+currently implemented:
+
+* [Dragon curve](https://en.wikipedia.org/wiki/Dragon_curve)
+* [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
+* [Sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model)
+
+planned:
+
+* [Julia set](https://en.wikipedia.org/wiki/Julia_set)
+* [Ulam-Warburton cellular automaton](https://en.wikipedia.org/wiki/Ulam%E2%80%93Warburton_automaton)
+* [toothpick pattern](https://en.wikipedia.org/wiki/Toothpick_sequence)
+
 
 ## Installation
 
@@ -27,35 +40,38 @@ You can install fractalplotr from GitHub with:
 # install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
+
+
 ## Examples
 
-TODO: better image resolution, maybe a little smaller images? See how it looks on the phone and the laptop.
-# FIXME: If I can't set the size via the chunk then I could just generate and save the pictures using an r chunk and include them using normal markdown (center aligned, look for examples). In this case tweak the knitr::opts chunk. See for example the usesthis readme and how it includes the hexagonal logo.
-
-**Dragon curves** (TODO: link to wikipedia)
+**Dragon curve**
 
 ```{r dragon}
 d <- dragon_curve(12)
-plot(d)
+plot(d, col = "forestgreen")
 ```
 
-**Mandelbrot sets** (TODO: link to wikipedia)
+
+**Mandelbrot set**
 
 ```{r mandelbrot}
+blue_to_black <- colorRampPalette(c(rgb(0, 0, 0.5), "white", rgb(1, 0.75, 0), 
+                                    "darkred", "black"))
 m <- mandelbrot(
-    800, 
-    600, 
-    color_palette = colorRampPalette(c("black", "green"))(128)
+    1200, 
+    1200,
+    re_width = 2.5,
+    center = -0.75,
+    color_palette = blue_to_black(128),
+    color_mode = "smooth"
 )
 plot(m)
 ```
 
 
-**Sandpiles** (TODO: link to wikipedia)
-
+**Sandpile**
 
 ```{r sandpile}
-s <- sandpile(1e5)
+s <- sandpile(1e5, c("white", "yellow", "orange", "red"))
 plot(s)
 ```
-

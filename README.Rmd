@@ -24,7 +24,7 @@ is on fire.
 You can install fractalplotr from GitHub with:
 
 ``` {r install, eval = FALSE}
-install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
 ## Examples

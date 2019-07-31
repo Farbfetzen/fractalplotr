@@ -29,6 +29,12 @@ rotate.color_matrix <- function(fractal, direction) {
 }
 
 
+# IDEE: statt direction als string zu nehmen, einfach eine Ganzzahl akzeptieren.
+# Positiv dreht im Uhrzeigersinn und negativ entgegen. Und der Betrag bestimmt,
+# wie of um 90° gedreht wird. Kümmere dich nicht darum die Zahl auf 1:3 zu
+# beschränken, denn so schlau sollten die User schon sein (also dass sie nicht
+# 25 oder so eingeben).
+
 # TODO: Make just one method for rotation. Use different methods
 # for dragon curve and color matrix. Remember to fix the tests.
 # TODO: Rename this script to rotate.

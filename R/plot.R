@@ -1,33 +1,34 @@
 #' Plot fractals
 #'
-#' @param fractal The fractal to be plotted.
-#' @param color The color of the dragon curve as single value in a format
-#'     that R understands.
+#' @name plot_fractal
 #'
-#' @export
+#' @param x A fractal object.
+#' @param ... Futher arguments passed on to \code{plot()}. Only used for dragon
+#'   curves.
 #'
 #' @examples
-#' plot_fractal(dragon_curve(12), "orange")
-plot_fractal <- function(fractal, ...) {
-    UseMethod("plot_fractal", fractal)
+#' plot(dragon_curve(12), col = "orange")
+NULL
+
+
+#' @rdname plot_fractal
+#' @param pretty The color of the dragon curve.
+#' @export
+plot.dragon_curve <- function(x, pretty = TRUE, ...) {
+    if (pretty) {
+        opar <- par(no.readonly = TRUE)
+        on.exit(par(opar))
+        par(mar = rep(0, 4))
+        plot.default(x, type = "l", asp = 1, axes = FALSE, ann = FALSE, ...)
+    } else {
+        plot.default(x, ...)
+    }
 }
 
 
 #' @rdname plot_fractal
 #' @export
-plot_fractal.color_matrix <- function(color_matrix) {
+plot.color_matrix <- function(x, ...) {
     grid::grid.newpage()
-    grid::grid.raster(color_matrix, interpolate = FALSE)
-}
-
-
-#' @rdname plot_fractal
-#' @export
-plot_fractal.dragon_curve <- function(dragon, color = "black") {
-    opar <- par(no.readonly = TRUE)
-    on.exit(par(opar))
-    par(mar = rep(0, 4))
-    plot(dragon, col = color, type = "l", asp = 1,
-         xaxt = "n", yaxt = "n", bty = "n", ann = FALSE
-    )
+    grid::grid.raster(x, interpolate = FALSE)
 }

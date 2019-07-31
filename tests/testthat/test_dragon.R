@@ -18,8 +18,24 @@ context("dragon curve")
 
 
 test_that("dragon is folded as expected", {
-    expect_identical(fold_dragon(1), c(1))
-    expect_identical(fold_dragon(2), c(1, 1, -1))
-    expect_identical(fold_dragon(3), c(1, 1, -1, 1, 1, -1, -1))
+    d <- dragon_curve(3)
+    m <- matrix(
+        c(
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1,
+            0, 2,
+            -1, 2,
+            -1, 1,
+            -2, 1,
+            -2, 2
+        ),
+        ncol = 2,
+        byrow = TRUE
+    )
+    colnames(m) <- c("x", "y")
+    class(m) <- c("dragon_curve", class(m))
+    expect_identical(d, m)
 })
 

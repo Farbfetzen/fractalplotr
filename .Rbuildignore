@@ -2,8 +2,7 @@
 ^\.directory$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^example_pictures$
-^old_example_pictures$
+^README\.Rmd$
 ^readme\.md$
 ^\.gitignore$
 ^LICENSE$

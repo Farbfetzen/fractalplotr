@@ -34,4 +34,5 @@ test_that("sandpile is correctly created", {
     m2 <- matrix("lightgray")
     class(m2) <- c("color_matrix", class(m2))
     expect_equal(m2, sandpile(1))
+    expect_equal(sum(sandpile(100, return_colors = FALSE)), 100)
 })

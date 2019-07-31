@@ -30,11 +30,10 @@ sandpile <- function(n,
     pile <- matrix(0, nrow = sidelength, ncol = sidelength)
     center <- ceiling(sidelength / 2)
     pile[center, center] <- n
-    left_border <- seq_len(sidelength)
     increase_by <- 10  # must be an even number
     to_topple <- which(pile > 3)
     while (length(to_topple) > 0) {
-        if (any(to_topple %in% left_border)) {
+        if (any(to_topple <= sidelength)) {
             # Increase the size of the pile
             new_sidelength <- sidelength + 2 * increase_by
             new_pile <- matrix(0, nrow = new_sidelength, ncol = new_sidelength)
@@ -46,7 +45,6 @@ sandpile <- function(n,
             new_pile[coords] <- pile
             pile <- new_pile
             sidelength <- new_sidelength
-            left_border <- seq(1, sidelength)
             to_topple <- which(pile > 3)
         }
 

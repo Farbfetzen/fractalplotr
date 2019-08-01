@@ -1,59 +1,60 @@
 #' Rotate Fractals
 #'
-#' Rotate a fractal either clockwise or counterclockwise
+#' Rotate a fractal either clockwise or counterclockwise by multiples of 90
+#' degrees.
 #'
 #' @param fractal The fractal to be rotated.
-#' @param direction The direction of rotation, either "clockwise" or
-#'   "counterclockwise". Can be abbreviated.
+#' @param n A positive or negative integer specifying the number and direction
+#'   of 90 degree turns. A positive value turns clockwise and a negative value
+#'   turns counterclockwise.
 #'
 #' @return The rotated fractal.
-#' @export
 #'
 #' @examples
-#' d1 <- dragon_curve(10)
-#' d2 <- rotate(d, "clockwise")
-#' plot(d1)
-#' plot(d2)
-rotate <- function(fractal, direction) {
+#' d <- dragon_curve(10)
+#' d_r <- rotate(d, 1)  # rotate once to the right
+#' d_l <- rotate(d, -1)  # rotate once to the left
+#' plot(d)
+#' plot(d_r)
+#' plot(d_l)
+#'
+#' @export
+rotate <- function(fractal, n) {
     UseMethod("rotate")
 }
 
 
-rotate.dragon_curve <- function(fractal, direction) {
-    stop("not yet implemented")
+#' @rdname rotate
+#' @export
+rotate.dragon_curve <- function(fractal, n = 1) {
+    clockwise <- n > 0
+    for (i in seq_len(abs(n))) {
+        # I could just reverse the order of the colnames instead of the columns
+        # itself. But maybe users rely on their order, that x is column 1 and y
+        # is column 2.
+        fractal[, c("x", "y")] <- fractal[, c("y", "x")]
+        if (clockwise) {
+            fractal[, "y"] <- -fractal[, "y"]
+        } else {
+            fractal[, "x"] <- -fractal[, "x"]
+        }
+    }
+    fractal
 }
 
 
-rotate.color_matrix <- function(fractal, direction) {
-    stop("not yet implemented")
+#' @rdname rotate
+#' @export
+rotate.color_matrix <- function(fractal, n = 1) {
+    clockwise <- n > 0
+    cls <- class(fractal)
+    for (i in seq_len(abs(n))) {
+        if (clockwise) {
+            fractal <- t(fractal[nrow(fractal):1, ])
+        } else {
+            fractal <- t(fractal[, ncol(fractal):1])
+        }
+    }
+    class(fractal) <- cls
+    fractal
 }
-
-
-# IDEE: statt direction als string zu nehmen, einfach eine Ganzzahl akzeptieren.
-# Positiv dreht im Uhrzeigersinn und negativ entgegen. Und der Betrag bestimmt,
-# wie of um 90° gedreht wird. Kümmere dich nicht darum die Zahl auf 1:3 zu
-# beschränken, denn so schlau sollten die User schon sein (also dass sie nicht
-# 25 oder so eingeben).
-
-# TODO: Make just one method for rotation. Use different methods
-# for dragon curve and color matrix. Remember to fix the tests.
-# TODO: Rename this script to rotate.
-# TODO: Export and document.
-
-# rotate_matrix <- function(m, direction, times = 1) {
-#     cls <- class(m)
-#     for (i in seq_len(times)) {
-#         if (direction %in% c("r", "right", "clockwise")) {
-#             m <- t(m[nrow(m):1, ])
-#         } else if (direction %in% c("l", "left", "counterclockwise")) {
-#             m <- t(m[, ncol(m):1])
-#         } else {
-#             stop("direction must be one of 'r', 'right', 'clockwise', ",
-#                  "'l', 'left', 'anticlockwise'.")
-#         }
-#     }
-#     class(m) <- cls
-#     m
-# }
-
-

@@ -2,25 +2,36 @@
 % Please edit documentation in R/rotate.R
 \name{rotate}
 \alias{rotate}
+\alias{rotate.dragon_curve}
+\alias{rotate.color_matrix}
 \title{Rotate Fractals}
 \usage{
-rotate(fractal, direction)
+rotate(fractal, n)
+
+\method{rotate}{dragon_curve}(fractal, n = 1)
+
+\method{rotate}{color_matrix}(fractal, n = 1)
 }
 \arguments{
 \item{fractal}{The fractal to be rotated.}
 
-\item{direction}{The direction of rotation, either "clockwise" or
-"counterclockwise". Can be abbreviated.}
+\item{n}{A positive or negative integer specifying the number and direction
+of 90 degree turns. A positive value turns clockwise and a negative value
+turns counterclockwise.}
 }
 \value{
 The rotated fractal.
 }
 \description{
-Rotate a fractal either clockwise or counterclockwise
+Rotate a fractal either clockwise or counterclockwise by multiples of 90
+degrees.
 }
 \examples{
-d1 <- dragon_curve(10)
-d2 <- rotate(d, "clockwise")
-plot(d1)
-plot(d2)
+d <- dragon_curve(10)
+d_r <- rotate(d, 1)  # rotate once to the right
+d_l <- rotate(d, -1)  # rotate once to the left
+plot(d)
+plot(d_r)
+plot(d_l)
+
 }

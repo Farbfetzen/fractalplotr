@@ -7,10 +7,13 @@
 #' @param order foo bar
 #'
 #' @return foo bar
-#' @export
+#'
+#' @references \url{https://en.wikipedia.org/wiki/Dragon_curve}
 #'
 #' @examples
 #' dragon_curve(5)
+#'
+#' @export
 dragon_curve <- function(order) {
     stopifnot(
         is.numeric(order),
@@ -44,72 +47,4 @@ dragon_curve <- function(order) {
     }
     class(dragon) <- c("dragon_curve", class(dragon))
     invisible(dragon)
-}
-
-
-
-
-
-#' Flip a Dragon Curve
-#'
-#' Mirror a dragon curve either horizontally or vertically.
-#'
-#' @param dragon The dragon curve returned by \code{dragon_curve()}.
-#' @param direction A string specifying the direction of the flip. Possible
-#'   values are "horizontal" and "vertical".
-#'
-#' @return The mirrored dragon curve coordinates.
-#' @export
-#'
-#' @family dragon curve functions
-#'
-#' @examples
-#' d <- dragon_curve(3)
-#' flip_dragon(d, "horizontal")
-flip_dragon <- function(dragon, direction) {
-    if (direction == "horizontal") {
-        dragon[, "x"] <- dragon[, "x"] * -1
-    } else if (direction == "vertical") {
-        dragon[, "y"] <- dragon[, "y"] * -1
-    } else {
-        stop("Direction must be either 'horizontal' or 'vertical'.")
-    }
-    dragon
-}
-
-
-#' Rotate a Dragon Curve
-#'
-#' Rotate dragon curve coordinates 90° to the right (clockwise) or left
-#' (counterclockwise) once or multiple times.
-#'
-#' @param dragon A matrix with two columns for the x and y coordinates of
-#'   the folds in the curve. Usually created by
-#'   \code{\link{dragon_curve}}.
-#' @param direction A string specifying the direction of rotation. Possible
-#'   values are "left", "right", "clockwise" and "counterclockwise".
-#' @param times A single positive number specifying how often to rotate by 90°.
-#'
-#' @return A matrix containing the rotated coordinates.
-#' @export
-#'
-#' @family dragon curve functions
-#'
-#' @examples
-#' d <- dragon_curve(3)
-#' rotate_dragon(d, "left")
-rotate_dragon <- function(dragon, direction, times = 1) {
-    cls <- class(dragon)
-    for (i in seq_len(times)) {
-        if (direction %in% c("right", "clockwise")) {
-            x <- dragon[, "y"]
-            y <- -dragon[, "x"]
-        } else if (direction %in% c("left", "counterclockwise")) {
-            x <- -dragon[, "y"]
-            y <- dragon[, "x"]
-        }
-        dragon <- cbind(x, y)
-    }
-    class(dragon) <- dragon
-    dragon
 }

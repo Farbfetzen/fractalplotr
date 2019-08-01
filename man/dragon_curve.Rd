@@ -20,4 +20,8 @@ The length of the curve will be 2 ^ order - 1.
 }
 \examples{
 dragon_curve(5)
+
+}
+\references{
+\url{https://en.wikipedia.org/wiki/Dragon_curve}
 }

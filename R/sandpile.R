@@ -23,11 +23,13 @@
 #'
 #' @return A matrix. Either with the number of grains per cell or the
 #'   corresponding colors, depending on the value of \code{return_colors}.
-#' @references \link{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
-#' @export
+#'
+#' @references \url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 #'
 #' @examples
 #' sandpile(100, return_colors = FALSE)
+#'
+#' @export
 sandpile <- function(n,
                      colors = c("white", "lightgray", "darkgray", "black"),
                      return_colors = TRUE) {

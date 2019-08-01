@@ -25,10 +25,13 @@
 #' @param color_mode Can be abbreviated.
 #'
 #' @return waaa color_matrix
-#' @export
+#'
+#' @references \url{https://en.wikipedia.org/wiki/Mandelbrot_set}
 #'
 #' @examples
 #' mandelbrot(width = 10, height = 5)
+#'
+#' @export
 mandelbrot <- function(width,
                        height,
                        re_width = 3.5,

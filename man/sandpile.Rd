@@ -25,7 +25,8 @@ Drop some sand in the center and see it topple.
 }
 \examples{
 sandpile(100, return_colors = FALSE)
+
 }
 \references{
-\link{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
+\url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 }

@@ -41,4 +41,8 @@ TODO: fixme
 }
 \examples{
 mandelbrot(width = 10, height = 5)
+
+}
+\references{
+\url{https://en.wikipedia.org/wiki/Mandelbrot_set}
 }

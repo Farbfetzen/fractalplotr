@@ -1,4 +1,12 @@
-# TODO: Use the symmetry to increase computation speed. Don't forget to profile before and after.
+# TODO: Use the symmetry to increase computation speed. It would be easiest to
+# use a quarter of the matrix and then at the end mirror and rotate to build the
+# result. I could also use an eight of the whole matrix but that would be more
+# complicated. Don't forget to profile before and after. Also save some
+# sandpiles before as rds to compare them with the new ones.
+# TODO: Preliminary tests show that keeping everything as integers will help
+# with speed. Just not very much. But it may matter with bigger sandpiles. Just
+# make sure not to force integers when the center cell is > 2e9 because that's
+# the limit an int can be in R. Also: which(pile > 3) -> which(pile > 3L)
 # TODO: Add an option to use 8 neighbors per cell. Remember that this changes the
 #   limit n to 8. Adjust the documentation accordingly. The color vector must be of length 8.
 

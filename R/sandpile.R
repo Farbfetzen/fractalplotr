@@ -7,32 +7,32 @@
 # with speed. Just not very much. But it may matter with bigger sandpiles. Just
 # make sure not to force integers when the center cell is > 2e9 because that's
 # the limit an int can be in R. Also: which(pile > 3) -> which(pile > 3L)
-# TODO: Add an option to use 8 neighbors per cell. Remember that this changes the
-#   limit n to 8. Adjust the documentation accordingly. The color vector must be of length 8.
-
+# TODO: Add an option to use 8 neighbors per cell. Remember that this changes
+# the limit n to 8. Adjust the documentation accordingly. The color vector must
+# be of length 8. Can I use the same symmetry speed improvements as with n = 4?
+# TODO: Iterate over an eight of the matrix for more speed. This is low priority
+# so do the other improvements first.
 
 #' Sandpiles
 #'
 #' Drop some sand in the center and see it topple.
 #'
 #' @param n The number of grains dropped in the center.
-#' @param colors A vector of length 4 containing the colors to be allocated to
-#'   zero to three grains per cell.
-#' @param return_colors Logical. Should the returned matrix consist of the
-#'   numbers of grains per cell or of the corresponding colors?
+#' @param colors A vector of length 4 or \code{NULL}. Specifies the colors to be
+#'   allocated to the values \code{0:4}. If \code{NULL} the number of grains per
+#'   cell are returned instead.
 #'
-#' @return A matrix. Either with the number of grains per cell or the
-#'   corresponding colors, depending on the value of \code{return_colors}.
+#' @return A matrix, either containing colors or the number of grains per
+#'   cell, depending on the argument \code{colors}.
 #'
 #' @references \url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 #'
 #' @examples
-#' sandpile(100, return_colors = FALSE)
+#' s <- sandpile(100)
+#' plot(s)
 #'
 #' @export
-sandpile <- function(n,
-                     colors = c("white", "lightgray", "darkgray", "black"),
-                     return_colors = TRUE) {
+sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
     stopifnot(
         n > 0
     )
@@ -76,7 +76,7 @@ sandpile <- function(n,
     # trim the edges solely consisting of zeroes:
     pile <- pile[rowSums(pile) > 0, colSums(pile) > 0, drop = FALSE]
 
-    if (!return_colors) {
+    if (is.null(colors)) {
         return(pile)
     }
 

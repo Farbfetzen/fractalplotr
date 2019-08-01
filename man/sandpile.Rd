@@ -4,27 +4,25 @@
 \alias{sandpile}
 \title{Sandpiles}
 \usage{
-sandpile(n, colors = c("white", "lightgray", "darkgray", "black"),
-  return_colors = TRUE)
+sandpile(n, colors = c("white", "lightgray", "darkgray", "black"))
 }
 \arguments{
 \item{n}{The number of grains dropped in the center.}
 
-\item{colors}{A vector of length 4 containing the colors to be allocated to
-zero to three grains per cell.}
-
-\item{return_colors}{Logical. Should the returned matrix consist of the
-numbers of grains per cell or of the corresponding colors?}
+\item{colors}{A vector of length 4 or \code{NULL}. Specifies the colors to be
+allocated to the values \code{0:4}. If \code{NULL} the number of grains per
+cell are returned instead.}
 }
 \value{
-A matrix. Either with the number of grains per cell or the
-  corresponding colors, depending on the value of \code{return_colors}.
+A matrix, either containing colors or the number of grains per
+  cell, depending on the argument \code{colors}.
 }
 \description{
 Drop some sand in the center and see it topple.
 }
 \examples{
-sandpile(100, return_colors = FALSE)
+s <- sandpile(100)
+plot(s)
 
 }
 \references{

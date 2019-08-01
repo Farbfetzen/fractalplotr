@@ -18,7 +18,7 @@ context("Sandpiles")
 
 
 test_that("sandpile is correctly created", {
-    m1 <- matrix(
+    s1 <- matrix(
         c(0, 0, 0, 1, 2, 1, 0, 0, 0,
           0, 0, 3, 2, 0, 2, 3, 0, 0,
           0, 3, 0, 3, 2, 3, 0, 3, 0,
@@ -30,9 +30,9 @@ test_that("sandpile is correctly created", {
           0, 0, 0, 1, 2, 1, 0, 0, 0),
         nrow = 9
     )
-    expect_identical(m1, sandpile(100, return_colors = FALSE))
-    m2 <- matrix("lightgray")
-    class(m2) <- c("color_matrix", class(m2))
-    expect_equal(m2, sandpile(1))
-    expect_equal(sum(sandpile(100, return_colors = FALSE)), 100)
+    expect_identical(sandpile(100, NULL), s1)
+    s2 <- matrix("lightgray")
+    class(s2) <- c("color_matrix", class(s2))
+    expect_equal(sandpile(1), s2)
+    expect_equal(sum(sandpile(100, NULL)), 100)
 })

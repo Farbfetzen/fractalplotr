@@ -26,6 +26,25 @@ rotate <- function(fractal, n) {
 
 #' @rdname rotate
 #' @export
+rotate.default <- function(fractal, n = 1) {
+    # For class color_matrix or any other matrix that is not of class
+    # dragon_curve.
+    clockwise <- n > 0
+    cls <- class(fractal)
+    for (i in seq_len(abs(n))) {
+        if (clockwise) {
+            fractal <- t(fractal[nrow(fractal):1, ])
+        } else {
+            fractal <- t(fractal[, ncol(fractal):1])
+        }
+    }
+    class(fractal) <- cls
+    fractal
+}
+
+
+#' @rdname rotate
+#' @export
 rotate.dragon_curve <- function(fractal, n = 1) {
     clockwise <- n > 0
     for (i in seq_len(abs(n))) {
@@ -39,22 +58,5 @@ rotate.dragon_curve <- function(fractal, n = 1) {
             fractal[, "x"] <- -fractal[, "x"]
         }
     }
-    fractal
-}
-
-
-#' @rdname rotate
-#' @export
-rotate.color_matrix <- function(fractal, n = 1) {
-    clockwise <- n > 0
-    cls <- class(fractal)
-    for (i in seq_len(abs(n))) {
-        if (clockwise) {
-            fractal <- t(fractal[nrow(fractal):1, ])
-        } else {
-            fractal <- t(fractal[, ncol(fractal):1])
-        }
-    }
-    class(fractal) <- cls
     fractal
 }

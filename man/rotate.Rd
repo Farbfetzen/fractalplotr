@@ -2,15 +2,15 @@
 % Please edit documentation in R/rotate.R
 \name{rotate}
 \alias{rotate}
+\alias{rotate.default}
 \alias{rotate.dragon_curve}
-\alias{rotate.color_matrix}
 \title{Rotate Fractals}
 \usage{
 rotate(fractal, n)
 
-\method{rotate}{dragon_curve}(fractal, n = 1)
+\method{rotate}{default}(fractal, n = 1)
 
-\method{rotate}{color_matrix}(fractal, n = 1)
+\method{rotate}{dragon_curve}(fractal, n = 1)
 }
 \arguments{
 \item{fractal}{The fractal to be rotated.}

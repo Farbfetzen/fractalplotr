@@ -24,22 +24,10 @@ mirror <- function(fractal, direction) {
 
 #' @rdname mirror
 #' @export
-mirror.dragon_curve <- function(fractal,
-                                direction = c("horizontal", "vertical")) {
-    direction <- match.arg(direction)
-    axis <- switch (direction,
-        horizontal = "x",
-        vertical = "y"
-    )
-    fractal[, axis] <- fractal[, axis] * -1
-    fractal
-}
-
-
-#' @rdname mirror
-#' @export
-mirror.color_matrix <- function(fractal,
-                                direction = c("horizontal", "vertical")) {
+mirror.default <- function(fractal,
+                           direction = c("horizontal", "vertical")) {
+    # For class color_matrix or any other matrix that is not of class
+    # dragon_curve.
     direction <- match.arg(direction)
     cls <- class(fractal)
     if (direction == "horizontal") {
@@ -48,5 +36,19 @@ mirror.color_matrix <- function(fractal,
         fractal <- fractal[nrow(fractal):1, ]
     }
     class(fractal) <- cls
+    fractal
+}
+
+
+#' @rdname mirror
+#' @export
+mirror.dragon_curve <- function(fractal,
+                                direction = c("horizontal", "vertical")) {
+    direction <- match.arg(direction)
+    axis <- switch (direction,
+        horizontal = "x",
+        vertical = "y"
+    )
+    fractal[, axis] <- fractal[, axis] * -1
     fractal
 }

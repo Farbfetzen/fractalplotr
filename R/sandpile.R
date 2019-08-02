@@ -36,6 +36,100 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
     stopifnot(
         n > 0
     )
+    sidelength <- 11
+    size <- sidelength * sidelength
+    right_border <- seq(size - sidelength + 1, size)
+    almost_right_border <- min(right_border) - 1
+    far_right <- right_border + sidelength
+    min_far_right <- min(far_right)
+    bottom_border <- seq(sidelength, size, sidelength)
+    far_bottom <- bottom_border + 1
+    pile <- matrix(0, nrow = sidelength, ncol = sidelength)
+    pile[sidelength, sidelength] <- n
+    increase_by <- 10  # must be an even number
+    to_topple <- which(pile > 3)
+    while (length(to_topple) > 0) {
+        if (any(to_topple <= sidelength)) {
+            # Increase the size of the pile
+            pile <- rbind(
+                matrix(0, nrow = increase_by, ncol = sidelength),
+                pile
+            )
+            sidelength <- sidelength + increase_by
+            pile <- cbind(
+                matrix(0, nrow = sidelength, ncol = increase_by),
+                pile
+            )
+            size <- sidelength * sidelength
+            right_border <- seq(size - sidelength + 1, size)
+            almost_right_border <- min(right_border) - 1
+            far_right <- right_border + sidelength
+            min_far_right <- min(far_right)
+            bottom_border <- seq(sidelength, size, sidelength)
+            far_bottom <- bottom_border + 1
+            to_topple <- which(pile > 3)
+        }
+
+        pile[to_topple] <- pile[to_topple] - 4
+
+        # To use the symmetry I have to handle the borders in a special way.
+        # Because the right border and the bottom border, which are the middle
+        # column and middle row in the final matrix, can be filled from the
+        # right or the bottom. So I look if sand flows into the right border
+        # from the left and then I add sand again because it would also flow
+        # into it from the right. Same with the bottom border but for this I
+        # just copy the right border.
+
+        top_neighbors <- to_topple - 1
+        left_neighbors <- to_topple - sidelength
+        right_neighbors <- to_topple + sidelength
+        right_neighbors <- right_neighbors[right_neighbors < min_far_right]
+        bottom_neighbors <- to_topple + 1
+        bottom_neighbors <- bottom_neighbors[!bottom_neighbors %in% far_bottom]
+
+        pile[top_neighbors] <- pile[top_neighbors] + 1
+        pile[left_neighbors] <- pile[left_neighbors] + 1
+        pile[right_neighbors] <- pile[right_neighbors] + 1
+        pile[bottom_neighbors] <- pile[bottom_neighbors] + 1
+
+        right_border_again <- right_neighbors[right_neighbors > almost_right_border]
+        if (length(right_border_again) > 0) {
+            pile[right_border_again] <- pile[right_border_again] + 1
+            pile[bottom_border] <- pile[right_border]
+            if (size %in% right_neighbors) {
+                pile[size] <- pile[size] + 1
+            }
+        }
+
+        to_topple <- which(pile > 3)
+    }
+
+    # trim the edges solely consisting of zeroes:
+    pile <- pile[rowSums(pile) > 0, colSums(pile) > 0, drop = FALSE]
+
+    # Make the quarter matrix whole:
+    if (n > 3) {
+        pile <- cbind(pile, rotate(pile)[, -1])
+        pile <- rbind(pile, mirror(pile, "vertical")[-1, ])
+    }
+
+    if (is.null(colors)) {
+        return(pile)
+    }
+
+    pile <- matrix(colors[pile + 1], nrow = nrow(pile))
+
+    class(pile) <- c("color_matrix", class(pile))
+    pile
+}
+
+
+# This is the old version of sandpile(). I keep it around while developing the
+# new version.
+sandpile_old <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
+    stopifnot(
+        n > 0
+    )
     sidelength <- 11  # must be an odd number
     pile <- matrix(0, nrow = sidelength, ncol = sidelength)
     center <- ceiling(sidelength / 2)

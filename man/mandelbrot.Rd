@@ -2,7 +2,7 @@
 % Please edit documentation in R/mandelbrot.R
 \name{mandelbrot}
 \alias{mandelbrot}
-\title{Title}
+\title{Mandelbrot set}
 \usage{
 mandelbrot(width, height, re_width = 3.5, im_height = NA,
   center = complex(real = -0.5, imaginary = 0), max_iterations = 128,
@@ -11,36 +11,37 @@ mandelbrot(width, height, re_width = 3.5, im_height = NA,
   "smooth"))
 }
 \arguments{
-\item{width}{foo}
+\item{width, height}{The width and height in pixels.}
 
-\item{height}{bar}
+\item{re_width, im_height}{The width and height of the complex plane}
 
-\item{re_width}{baz}
+\item{center}{A complex number giving the center of the complex plane.
+Defaults to -0.5+0i.}
 
-\item{im_height}{hurr}
+\item{max_iterations}{The maximum number of iterations. Defaults is 128}
 
-\item{center}{blubb}
+\item{threshold}{The threshold value. Default is 2.}
 
-\item{max_iterations}{hurz}
+\item{return_colors}{Logical. Should the colors or the number of steps be
+returned?}
 
-\item{threshold}{a}
+\item{color_palette}{A vector of colors. Should be the same length as
+max_iterations.}
 
-\item{return_colors}{b}
+\item{color_inside}{The color of the area inside the set.}
 
-\item{color_palette}{c}
-
-\item{color_inside}{d}
-
-\item{color_mode}{Can be abbreviated.}
+\item{color_mode}{How the colors of the set will be calculated. One of
+"simple", "histogram" or "smooth". Can be abbreviated.}
 }
 \value{
-waaa color_matrix
+A matrix specifying the color for each coordinate.
 }
 \description{
-TODO: fixme
+The famous mandelbrot set.
 }
 \examples{
-mandelbrot(width = 10, height = 5)
+m <- mandelbrot(width = 200, height = 150)
+plot(m)
 
 }
 \references{

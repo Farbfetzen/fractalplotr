@@ -6,30 +6,43 @@
 #   colorRampPalette() or colorRamp() in a separate script. Show how tu use
 #   them with mandelbrot and sandpile in the examples of mandelbrot and
 #   sandpile.
+# TODO: Change how the color palette argument words. If it is NULL, then return
+# not the colors but the raw numbers. Remove the return_colors argument. This
+# makes it behave like sandpile().
+# TODO: Make the colors easier and clearer to use. It's a bit complicated at the
+# moment.
+# TODO: Explain how specifying the coordinates works in the details section. For
+# example that only two ' of the tree arguments re_width, im_height and center
+# are allowed.
+# TODO: Explain what the color modes are. Improve the smooth coloring so no
+# lines between colors are visible if possible.
 
 
-#' Title
+#' Mandelbrot set
 #'
-#' TODO: fixme
+#' The famous mandelbrot set.
 #'
-#' @param width foo
-#' @param height bar
-#' @param re_width baz
-#' @param im_height hurr
-#' @param center blubb
-#' @param max_iterations hurz
-#' @param threshold a
-#' @param return_colors b
-#' @param color_palette c
-#' @param color_inside d
-#' @param color_mode Can be abbreviated.
+#' @param width,height The width and height in pixels.
+#' @param re_width,im_height The width and height of the complex plane
+#' @param center A complex number giving the center of the complex plane.
+#'   Defaults to -0.5+0i.
+#' @param max_iterations The maximum number of iterations. Defaults is 128
+#' @param threshold The threshold value. Default is 2.
+#' @param return_colors Logical. Should the colors or the number of steps be
+#'   returned?
+#' @param color_palette A vector of colors. Should be the same length as
+#'   max_iterations.
+#' @param color_inside The color of the area inside the set.
+#' @param color_mode How the colors of the set will be calculated. One of
+#'   "simple", "histogram" or "smooth". Can be abbreviated.
 #'
-#' @return waaa color_matrix
+#' @return A matrix specifying the color for each coordinate.
 #'
 #' @references \url{https://en.wikipedia.org/wiki/Mandelbrot_set}
 #'
 #' @examples
-#' mandelbrot(width = 10, height = 5)
+#' m <- mandelbrot(width = 200, height = 150)
+#' plot(m)
 #'
 #' @export
 mandelbrot <- function(width,

@@ -1,17 +1,18 @@
 #' Dragon Curve
 #'
-#' TODO: this documentation
+#' Repeatedly fold a line to create a space-filling curve.
 #'
-#' The length of the curve will be 2 ^ order - 1.
+#' @param order The order of the dragon curve, i.e. how many times it will be
+#'   folded.
 #'
-#' @param order foo bar
-#'
-#' @return foo bar
+#' @return A matrix with two columns for the x and y coordinates of the folds.
 #'
 #' @references \url{https://en.wikipedia.org/wiki/Dragon_curve}
 #'
 #' @examples
-#' dragon_curve(5)
+#' d <- dragon_curve(4)
+#' d
+#' plot(d)
 #'
 #' @export
 dragon_curve <- function(order) {
@@ -27,7 +28,7 @@ dragon_curve <- function(order) {
         curve[len + 1 + middle_index] <- -1
     }
 
-
+    # Convert the folds to coordinates:
     dragon <- matrix(0, nrow = length(curve) + 2, ncol = 2)
     colnames(dragon) <- c("x", "y")
     dragon[2, ] <- c(1, 0)
@@ -46,5 +47,5 @@ dragon_curve <- function(order) {
         i <- i + 1
     }
     class(dragon) <- c("dragon_curve", class(dragon))
-    invisible(dragon)
+    dragon
 }

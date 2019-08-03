@@ -4,22 +4,22 @@
 # TODO: Iterate over an eight of the matrix for more speed. This is low priority
 # so do the other improvements first.
 
-#' Sandpiles
+#' Sandpile
 #'
-#' Drop some sand in the center and see it topple.
+#' Drop some sand in the center and see it spread outwards.
 #'
 #' @param n The number of grains dropped in the center.
 #' @param colors A vector of length 4 or \code{NULL}. Specifies the colors to be
-#'   allocated to the values \code{0:4}. If \code{NULL} the number of grains per
-#'   cell are returned instead.
+#'   allocated to the values \code{0:4}. If \code{NULL}, the number of grains
+#'   per cell are returned instead.
 #'
-#' @return A matrix, either containing colors or the number of grains per
-#'   cell, depending on the argument \code{colors}.
+#' @return A matrix, either containing colors or the number of grains per cell,
+#'   depending on the argument \code{colors}.
 #'
 #' @references \url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 #'
 #' @examples
-#' s <- sandpile(100)
+#' s <- sandpile(1000)
 #' plot(s)
 #'
 #' @export
@@ -106,63 +106,6 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
         pile <- cbind(pile, rotate(pile)[, -1])
         pile <- rbind(pile, mirror(pile, "vertical")[-1, ])
     }
-
-    if (is.null(colors)) {
-        return(pile)
-    }
-
-    pile <- matrix(colors[pile + 1], nrow = nrow(pile))
-
-    class(pile) <- c("color_matrix", class(pile))
-    pile
-}
-
-
-# This is the old version of sandpile(). I keep it around while developing the
-# new version.
-sandpile_old <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
-    stopifnot(
-        n > 0
-    )
-    sidelength <- 11  # must be an odd number
-    pile <- matrix(0, nrow = sidelength, ncol = sidelength)
-    center <- ceiling(sidelength / 2)
-    pile[center, center] <- n
-    increase_by <- 10  # must be an even number
-    to_topple <- which(pile > 3)
-    while (length(to_topple) > 0) {
-        if (any(to_topple <= sidelength)) {
-            # Increase the size of the pile
-            new_sidelength <- sidelength + 2 * increase_by
-            new_pile <- matrix(0, nrow = new_sidelength, ncol = new_sidelength)
-            middle <- seq(increase_by + 1, length.out = sidelength)
-            coords <- cbind(
-                row = rep(middle, sidelength),
-                col = rep(middle, each = sidelength)
-            )
-            new_pile[coords] <- pile
-            pile <- new_pile
-            sidelength <- new_sidelength
-            to_topple <- which(pile > 3)
-        }
-
-        pile[to_topple] <- pile[to_topple] - 4
-
-        top_neighbors <- to_topple - 1
-        bottom_neighbors <- to_topple + 1
-        left_neighbors <- to_topple - sidelength
-        right_neighbors <- to_topple + sidelength
-
-        pile[top_neighbors] <- pile[top_neighbors] + 1
-        pile[bottom_neighbors] <- pile[bottom_neighbors] + 1
-        pile[left_neighbors] <- pile[left_neighbors] + 1
-        pile[right_neighbors] <- pile[right_neighbors] + 1
-
-        to_topple <- which(pile > 3)
-    }
-
-    # trim the edges solely consisting of zeroes:
-    pile <- pile[rowSums(pile) > 0, colSums(pile) > 0, drop = FALSE]
 
     if (is.null(colors)) {
         return(pile)

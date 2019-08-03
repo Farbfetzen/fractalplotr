@@ -7,19 +7,19 @@
 dragon_curve(order)
 }
 \arguments{
-\item{order}{foo bar}
+\item{order}{The order of the dragon curve, i.e. how many times it will be
+folded.}
 }
 \value{
-foo bar
+A matrix with two columns for the x and y coordinates of the folds.
 }
 \description{
-TODO: this documentation
-}
-\details{
-The length of the curve will be 2 ^ order - 1.
+Repeatedly fold a line to create a space-filling curve.
 }
 \examples{
-dragon_curve(5)
+d <- dragon_curve(4)
+d
+plot(d)
 
 }
 \references{

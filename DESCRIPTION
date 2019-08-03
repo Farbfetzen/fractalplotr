@@ -1,7 +1,7 @@
 Type: Package
 Package: fractalplotr
 Title: Plot Beautiful Fractals with R
-Version: 0.2.0.9000
+Version: 0.2.0.9001
 Authors@R: 
     person(given = "Sebastian",
            family = "Henz",

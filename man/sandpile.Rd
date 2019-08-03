@@ -2,23 +2,29 @@
 % Please edit documentation in R/sandpile.R
 \name{sandpile}
 \alias{sandpile}
-\title{Title}
+\title{Sandpile}
 \usage{
-sandpile(height, colors = c(1, 2/3, 1/3, 0), return_colors = TRUE)
+sandpile(n, colors = c("white", "lightgray", "darkgray", "black"))
 }
 \arguments{
-\item{height}{foo}
+\item{n}{The number of grains dropped in the center.}
 
-\item{colors}{bar}
-
-\item{return_colors}{baz}
+\item{colors}{A vector of length 4 or \code{NULL}. Specifies the colors to be
+allocated to the values \code{0:4}. If \code{NULL}, the number of grains
+per cell are returned instead.}
 }
 \value{
-foo bar color_matrix obj
+A matrix, either containing colors or the number of grains per cell,
+  depending on the argument \code{colors}.
 }
 \description{
-TODO: fixme
+Drop some sand in the center and see it spread outwards.
 }
 \examples{
-sandpile(100, return_colors = FALSE)
+s <- sandpile(1000)
+plot(s)
+
+}
+\references{
+\url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
 }

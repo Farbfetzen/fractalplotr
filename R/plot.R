@@ -12,13 +12,11 @@ NULL
 
 
 #' @rdname plot_fractal
-#' @param pretty The color of the dragon curve.
+#' @param pretty TODO: Explain what this does exactly. Ant to set it to false if
+#'   the user wants to customize the plot.
 #' @export
 plot.dragon_curve <- function(x, pretty = TRUE, ...) {
     if (pretty) {
-        opar <- par(no.readonly = TRUE)
-        on.exit(par(opar))
-        par(mar = rep(0, 4))
         plot.default(x, type = "l", asp = 1, axes = FALSE, ann = FALSE, ...)
     } else {
         plot.default(x, ...)

@@ -1,12 +1,3 @@
-# TODO: Use the symmetry to increase computation speed. It would be easiest to
-# use a quarter of the matrix and then at the end mirror and rotate to build the
-# result. I could also use an eight of the whole matrix but that would be more
-# complicated. Don't forget to profile before and after. Also save some
-# sandpiles before as rds to compare them with the new ones.
-# TODO: Preliminary tests show that keeping everything as integers will help
-# with speed. Just not very much. But it may matter with bigger sandpiles. Just
-# make sure not to force integers when the center cell is > 2e9 because that's
-# the limit an int can be in R. Also: which(pile > 3) -> which(pile > 3L)
 # TODO: Add an option to use 8 neighbors per cell. Remember that this changes
 # the limit n to 8. Adjust the documentation accordingly. The color vector must
 # be of length 8. Can I use the same symmetry speed improvements as with n = 4?
@@ -44,20 +35,20 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
     min_far_right <- min(far_right)
     bottom_border <- seq(sidelength, size, sidelength)
     far_bottom <- bottom_border + 1
-    pile <- matrix(0, nrow = sidelength, ncol = sidelength)
+    pile <- matrix(0, sidelength, sidelength)
     pile[sidelength, sidelength] <- n
     increase_by <- 10  # must be an even number
     to_topple <- which(pile > 3)
     while (length(to_topple) > 0) {
         if (any(to_topple <= sidelength)) {
-            # Increase the size of the pile
+            # Increase the size of the pile so that the grains don't spill out.
             pile <- rbind(
-                matrix(0, nrow = increase_by, ncol = sidelength),
+                matrix(0, increase_by, sidelength),
                 pile
             )
             sidelength <- sidelength + increase_by
             pile <- cbind(
-                matrix(0, nrow = sidelength, ncol = increase_by),
+                matrix(0, sidelength, increase_by),
                 pile
             )
             size <- sidelength * sidelength
@@ -80,6 +71,7 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
         # into it from the right. Same with the bottom border but for this I
         # just copy the right border.
 
+        # FIXME: Come back later and think of a better way to do this.
         top_neighbors <- to_topple - 1
         left_neighbors <- to_topple - sidelength
         right_neighbors <- to_topple + sidelength
@@ -92,7 +84,9 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
         pile[right_neighbors] <- pile[right_neighbors] + 1
         pile[bottom_neighbors] <- pile[bottom_neighbors] + 1
 
-        right_border_again <- right_neighbors[right_neighbors > almost_right_border]
+        right_border_again <- right_neighbors[
+            right_neighbors > almost_right_border
+        ]
         if (length(right_border_again) > 0) {
             pile[right_border_again] <- pile[right_border_again] + 1
             pile[bottom_border] <- pile[right_border]

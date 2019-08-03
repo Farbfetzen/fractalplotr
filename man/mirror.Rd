@@ -2,16 +2,16 @@
 % Please edit documentation in R/mirror.R
 \name{mirror}
 \alias{mirror}
+\alias{mirror.default}
 \alias{mirror.dragon_curve}
-\alias{mirror.color_matrix}
 \title{Mirror Fractals}
 \usage{
 mirror(fractal, direction)
 
-\method{mirror}{dragon_curve}(fractal, direction = c("horizontal",
+\method{mirror}{default}(fractal, direction = c("horizontal",
   "vertical"))
 
-\method{mirror}{color_matrix}(fractal, direction = c("horizontal",
+\method{mirror}{dragon_curve}(fractal, direction = c("horizontal",
   "vertical"))
 }
 \arguments{
@@ -28,7 +28,10 @@ Mirror fractals horizontally or vertically.
 }
 \examples{
 d <- dragon_curve(10)
-f <- mirror(d, "horizontal")
+d_h <- mirror(d, "horizontal")
+d_v <- mirror(d, "vertical")
 plot(d)
-plot(f)
+plot(d_h)
+plot(d_v)
+
 }

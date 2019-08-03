@@ -7,15 +7,36 @@
 #'   "vertical". Can be abbreviated.
 #'
 #' @return The mirrored fractal.
-#' @export
 #'
 #' @examples
 #' d <- dragon_curve(10)
-#' f <- mirror(d, "horizontal")
+#' d_h <- mirror(d, "horizontal")
+#' d_v <- mirror(d, "vertical")
 #' plot(d)
-#' plot(f)
+#' plot(d_h)
+#' plot(d_v)
+#'
+#' @export
 mirror <- function(fractal, direction) {
     UseMethod("mirror")
+}
+
+
+#' @rdname mirror
+#' @export
+mirror.default <- function(fractal,
+                           direction = c("horizontal", "vertical")) {
+    # For class color_matrix or any other matrix that is not of class
+    # dragon_curve.
+    direction <- match.arg(direction)
+    cls <- class(fractal)
+    if (direction == "horizontal") {
+        fractal <- fractal[, ncol(fractal):1]
+    } else if (direction == "vertical") {
+        fractal <- fractal[nrow(fractal):1, ]
+    }
+    class(fractal) <- cls
+    fractal
 }
 
 
@@ -28,23 +49,6 @@ mirror.dragon_curve <- function(fractal,
         horizontal = "x",
         vertical = "y"
     )
-    print(axis)
     fractal[, axis] <- fractal[, axis] * -1
-    fractal
-}
-
-
-#' @rdname mirror
-#' @export
-mirror.color_matrix <- function(fractal,
-                                direction = c("horizontal", "vertical")) {
-    direction <- match.arg(direction)
-    cls <- class(fractal)
-    if (direction == "horizontal") {
-        fractal <- fractal[, ncol(fractal):1]
-    } else if (direction == "vertical") {
-        fractal <- fractal[nrow(fractal):1, ]
-    }
-    class(fractal) <- cls
     fractal
 }

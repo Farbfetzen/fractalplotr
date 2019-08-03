@@ -13,7 +13,8 @@
 \arguments{
 \item{x}{A fractal object.}
 
-\item{pretty}{The color of the dragon curve.}
+\item{pretty}{TODO: Explain what this does exactly. Ant to set it to false if
+the user wants to customize the plot.}
 
 \item{...}{Futher arguments passed on to \code{plot()}. Only used for dragon
 curves.}

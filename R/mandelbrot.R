@@ -16,6 +16,9 @@
 # are allowed or necessary.
 # TODO: Explain what the color modes are. Improve the smooth coloring so no
 # lines between colors are visible if possible.
+# TODO: Maybe I can improve the speed by having only vectors and no matrices in
+# the loop. The code in the loop would be the same, I guess, but I would need to
+# change the result into a matrix.
 
 
 #' Mandelbrot set
@@ -59,28 +62,6 @@ mandelbrot <- function(width,
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)
-    result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
-    if (is.null(colors)) {
-        return(result$n_steps)
-    }
-    color_matrix <- switch (color_mode,
-        simple = mandelbrot_color_discrete(
-            result$n_steps, colors, color_inside, max_iterations
-        ),
-        histogram = mandelbrot_color_histogram(
-            result$n_steps, colors, color_inside, max_iterations
-        ),
-        smooth = mandelbrot_color_smooth(
-            result$n_steps, result$z, colors,
-            color_inside, max_iterations
-        )
-    )
-    class(color_matrix) <- c("color_matrix", class(color_matrix))
-    color_matrix
-}
-
-
-mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
     n_steps <- z <- matrix(
         0L,
         nrow = nrow(complex_plane),
@@ -105,7 +86,19 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
         if (!any(todo)) break
     }
 
-    list(n_steps = n_steps, z = z)
+    if (is.null(colors)) {
+        return(n_steps)
+    }
+    color_matrix <- switch (color_mode,
+        simple = mandelbrot_color_discrete(n_steps, colors, color_inside,
+                                           max_iterations),
+        histogram = mandelbrot_color_histogram(n_steps, colors, color_inside,
+                                               max_iterations),
+        smooth = mandelbrot_color_smooth(n_steps, z, colors, color_inside,
+                                         max_iterations)
+    )
+    class(color_matrix) <- c("color_matrix", class(color_matrix))
+    color_matrix
 }
 
 

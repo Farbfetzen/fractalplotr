@@ -28,4 +28,6 @@ test_that("mandelbrot set is calculated correctly", {
 })
 
 # TODO: Test coordinate arguments and their combinations. re_width and im_height
-# should never be provided together, for example.
+#   should never be provided together, for example.
+# TODO: Write tests for all coloring functions so I detect changes when they
+#   occur.

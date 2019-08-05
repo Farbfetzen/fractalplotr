@@ -90,7 +90,7 @@ mandelbrot <- function(width,
         return(n_steps)
     }
     color_matrix <- switch (color_mode,
-        simple = mandelbrot_color_discrete(n_steps, colors, color_inside,
+        simple = mandelbrot_color_simple(n_steps, colors, color_inside,
                                            max_iterations),
         histogram = mandelbrot_color_histogram(n_steps, colors, color_inside,
                                                max_iterations),
@@ -102,7 +102,7 @@ mandelbrot <- function(width,
 }
 
 
-mandelbrot_color_discrete <- function(n_steps, colors,
+mandelbrot_color_simple <- function(n_steps, colors,
                                       color_inside, max_iterations) {
     color_matrix <- matrix(colors[n_steps], nrow = nrow(n_steps))
     color_matrix[n_steps == max_iterations] <- color_inside

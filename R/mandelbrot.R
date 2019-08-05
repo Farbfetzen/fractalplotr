@@ -1,24 +1,18 @@
 # TODO: Explain in the documentation how to specify the colors and also
-# mention the default greyscale.
-# length(colors) == max_iterations must be TRUE or the palette will
-# be recycled with a warning.
+#   mention the default greyscale. length(colors) == max_iterations must be
+#   TRUE. Or maybe it doesn't when I implement looping colors?
 # TODO: Define some nice color palettes as functions with
 #   colorRampPalette() or colorRamp() in a separate script. Show how tu use
 #   them with mandelbrot and sandpile in the examples of mandelbrot and
 #   sandpile.
-# TODO: Change how the color palette argument words. If it is NULL, then return
-# not the colors but the raw numbers. Remove the return_colors argument. This
-# makes it behave like sandpile().
-# TODO: Make the colors easier and clearer to use. It's a bit complicated at the
-# moment.
 # TODO: Explain how specifying the coordinates works in the details section. For
-# example that only two of the tree arguments re_width, im_height and center
-# are allowed or necessary.
+#   example that only two of the tree arguments re_width, im_height and center
+#   are allowed or necessary.
 # TODO: Explain what the color modes are. Improve the smooth coloring so no
-# lines between colors are visible if possible.
+#   lines between colors are visible if possible.
 # TODO: Maybe I can improve the speed by having only vectors and no matrices in
-# the loop. The code in the loop would be the same, I guess, but I would need to
-# change the result into a matrix.
+#   the loop. The code in the loop would be the same, I guess, but I would need
+#   to change the result into a matrix.
 
 
 #' Mandelbrot set
@@ -31,15 +25,15 @@
 #'   Defaults to -0.5+0i.
 #' @param max_iterations The maximum number of iterations. Defaults is 128
 #' @param threshold The threshold value. Default is 2.
-#' @param return_colors Logical. Should the colors or the number of steps be
-#'   returned?
 #' @param colors A vector of colors. Should be the same length as
-#'   max_iterations.
+#'   max_iterations. If \code{NULL}, the number of steps are returned instead of
+#'   the colors.
 #' @param color_inside The color of the area inside the set.
 #' @param color_mode How the colors of the set will be calculated. One of
 #'   "simple", "histogram" or "smooth". Can be abbreviated.
 #'
-#' @return A matrix specifying the color for each coordinate.
+#' @return A matrix specifying the color for each coordinate. If colors is
+#'   \code{NULL}, then the number of steps are returned.
 #'
 #' @references \url{https://en.wikipedia.org/wiki/Mandelbrot_set}
 #'
@@ -59,6 +53,9 @@ mandelbrot <- function(width,
                        color_inside = "black",
                        color_mode = c("simple", "histogram", "smooth")) {
     color_mode <- match.arg(color_mode)
+    if (!is.null(colors) && length(colors) != max_iterations) {
+        stop("colors must either be NULL or a vector of length max_iterations.")
+    }
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)

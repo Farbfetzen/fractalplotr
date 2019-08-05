@@ -6,7 +6,7 @@
 \usage{
 mandelbrot(width, height, re_width = 3.5, im_height = NA,
   center = complex(real = -0.5, imaginary = 0), max_iterations = 128,
-  threshold = 2, return_colors = TRUE, color_palette = NULL,
+  threshold = 2, colors = grey.colors(max_iterations),
   color_inside = "black", color_mode = c("simple", "histogram",
   "smooth"))
 }
@@ -22,11 +22,9 @@ Defaults to -0.5+0i.}
 
 \item{threshold}{The threshold value. Default is 2.}
 
-\item{return_colors}{Logical. Should the colors or the number of steps be
-returned?}
-
-\item{color_palette}{A vector of colors. Should be the same length as
-max_iterations.}
+\item{colors}{A vector of colors. Should be the same length as
+max_iterations. If \code{NULL}, the number of steps are returned instead of
+the colors.}
 
 \item{color_inside}{The color of the area inside the set.}
 
@@ -34,7 +32,8 @@ max_iterations.}
 "simple", "histogram" or "smooth". Can be abbreviated.}
 }
 \value{
-A matrix specifying the color for each coordinate.
+A matrix specifying the color for each coordinate. If colors is
+  \code{NULL}, then the number of steps are returned.
 }
 \description{
 The famous mandelbrot set.

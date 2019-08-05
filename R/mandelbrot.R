@@ -1,6 +1,6 @@
 # TODO: Explain in the documentation how to specify the colors and also
 # mention the default greyscale.
-# length(color_palette) == max_iterations must be TRUE or the palette will
+# length(colors) == max_iterations must be TRUE or the palette will
 # be recycled with a warning.
 # TODO: Define some nice color palettes as functions with
 #   colorRampPalette() or colorRamp() in a separate script. Show how tu use
@@ -12,8 +12,8 @@
 # TODO: Make the colors easier and clearer to use. It's a bit complicated at the
 # moment.
 # TODO: Explain how specifying the coordinates works in the details section. For
-# example that only two ' of the tree arguments re_width, im_height and center
-# are allowed.
+# example that only two of the tree arguments re_width, im_height and center
+# are allowed or necessary.
 # TODO: Explain what the color modes are. Improve the smooth coloring so no
 # lines between colors are visible if possible.
 
@@ -30,7 +30,7 @@
 #' @param threshold The threshold value. Default is 2.
 #' @param return_colors Logical. Should the colors or the number of steps be
 #'   returned?
-#' @param color_palette A vector of colors. Should be the same length as
+#' @param colors A vector of colors. Should be the same length as
 #'   max_iterations.
 #' @param color_inside The color of the area inside the set.
 #' @param color_mode How the colors of the set will be calculated. One of
@@ -52,8 +52,7 @@ mandelbrot <- function(width,
                        center = complex(real = -0.5, imaginary = 0),
                        max_iterations = 128,
                        threshold = 2,
-                       return_colors = TRUE,
-                       color_palette = NULL,
+                       colors = grey.colors(max_iterations),
                        color_inside = "black",
                        color_mode = c("simple", "histogram", "smooth")) {
     color_mode <- match.arg(color_mode)
@@ -61,21 +60,18 @@ mandelbrot <- function(width,
                                         re_width, im_height,
                                         center)
     result <- mandelbrot_iterate(complex_plane, max_iterations, threshold)
-    if (!return_colors) {
+    if (is.null(colors)) {
         return(result$n_steps)
-    }
-    if (is.null(color_palette)) {
-        color_palette <- grey.colors(max_iterations)
     }
     color_matrix <- switch (color_mode,
         simple = mandelbrot_color_discrete(
-            result$n_steps, color_palette, color_inside, max_iterations
+            result$n_steps, colors, color_inside, max_iterations
         ),
         histogram = mandelbrot_color_histogram(
-            result$n_steps, color_palette, color_inside, max_iterations
+            result$n_steps, colors, color_inside, max_iterations
         ),
         smooth = mandelbrot_color_smooth(
-            result$n_steps, result$z, color_palette,
+            result$n_steps, result$z, colors,
             color_inside, max_iterations
         )
     )
@@ -113,9 +109,9 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
 }
 
 
-mandelbrot_color_discrete <- function(n_steps, color_palette,
+mandelbrot_color_discrete <- function(n_steps, colors,
                                       color_inside, max_iterations) {
-    color_matrix <- matrix(color_palette[n_steps], nrow = nrow(n_steps))
+    color_matrix <- matrix(colors[n_steps], nrow = nrow(n_steps))
     color_matrix[n_steps == max_iterations] <- color_inside
     color_matrix
 }
@@ -123,7 +119,7 @@ mandelbrot_color_discrete <- function(n_steps, color_palette,
 
 mandelbrot_color_smooth <- function(n_steps,
                                     z,
-                                    color_palette,
+                                    colors,
                                     color_inside,
                                     max_iterations) {
     # Smooth colouring, modified from pseudocode taken from
@@ -135,9 +131,9 @@ mandelbrot_color_smooth <- function(n_steps,
     outside <- n_steps < max_iterations
     color_matrix[!outside] <- color_inside
     n_steps_outside <- n_steps[outside] + 1 - log(log(abs(z[outside]), 2), 2)
-    color_palette <- t(col2rgb(color_palette))
-    color_1 <- color_palette[floor(n_steps_outside), ]
-    color_2 <- color_palette[ceiling(n_steps_outside), ]
+    colors <- t(col2rgb(colors))
+    color_1 <- colors[floor(n_steps_outside), ]
+    color_2 <- colors[ceiling(n_steps_outside), ]
     d <- n_steps_outside %% 1  # fractional part
     color_min <- pmin(color_1, color_2)
     color_max <- pmax(color_1, color_2)
@@ -149,7 +145,7 @@ mandelbrot_color_smooth <- function(n_steps,
 }
 
 
-mandelbrot_color_histogram <- function(n_steps, color_palette,
+mandelbrot_color_histogram <- function(n_steps, colors,
                                        color_inside, max_iterations) {
     # Will distribute colors based on how many pixels reached each value.
     # Adapted from pseudocode found on Wikipedia.
@@ -163,6 +159,6 @@ mandelbrot_color_histogram <- function(n_steps, color_palette,
     hues <- cs_histo[n_steps[outside]]
     hues <- round(hues / n * max_iterations)
     hues <- pmin(max_iterations, pmax(1, hues))
-    color_matrix[outside] <- color_palette[hues]
+    color_matrix[outside] <- colors[hues]
     color_matrix
 }

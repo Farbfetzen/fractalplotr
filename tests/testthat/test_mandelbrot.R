@@ -23,7 +23,7 @@ test_that("mandelbrot set is calculated correctly", {
     m_reference <- as.matrix(read.table(filepath, sep = ","))
     dimnames(m_reference) <- NULL
     m <- mandelbrot(width = 150, height = 100, re_width = 3,
-                    max_iterations = 128, threshold = 2, return_colors = FALSE)
+                    max_iterations = 128, threshold = 2, colors = NULL)
     expect_identical(m, m_reference)
 })
 

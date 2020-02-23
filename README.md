@@ -37,10 +37,9 @@ d <- dragon_curve(12)
 plot(d, col = "forestgreen")
 ```
 
-<img src="man/figures/README-dragon-1.png" width="100%" />
+![](man/figures/README-dragon-1.png)<!-- -->
 
-**Mandelbrot
-set**
+**Mandelbrot set**
 
 ``` r
 blue_to_black <- colorRampPalette(c(rgb(0, 0, 0.5), "white", rgb(1, 0.75, 0), 
@@ -56,7 +55,7 @@ m <- mandelbrot(
 plot(m)
 ```
 
-<img src="man/figures/README-mandelbrot-1.png" width="100%" />
+![](man/figures/README-mandelbrot-1.png)<!-- -->
 
 **Sandpile**
 
@@ -65,4 +64,4 @@ s <- sandpile(1e5, c("white", "yellow", "orange", "red"))
 plot(s)
 ```
 
-<img src="man/figures/README-sandpile-1.png" width="100%" />
+![](man/figures/README-sandpile-1.png)<!-- -->

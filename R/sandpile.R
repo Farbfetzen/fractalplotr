@@ -88,6 +88,7 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
         # just copy the right border.
 
         # FIXME: Come back later and think of a better way to do this.
+        # Can't I define that beforehand somehow and then just look it up?
         top_neighbors <- to_topple - 1
         left_neighbors <- to_topple - sidelength
         right_neighbors <- to_topple + sidelength

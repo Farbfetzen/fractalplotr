@@ -43,6 +43,6 @@ plot.dragon_curve <- function(x, pretty = TRUE, ...) {
 #' @rdname plot_fractal
 #' @export
 plot.color_matrix <- function(x, ...) {
-    grid::grid.newpage()
-    grid::grid.raster(x, interpolate = FALSE)
+    grid.newpage()
+    grid.raster(x, interpolate = FALSE)
 }

@@ -8,11 +8,9 @@
 \usage{
 mirror(fractal, direction)
 
-\method{mirror}{default}(fractal, direction = c("horizontal",
-  "vertical"))
+\method{mirror}{default}(fractal, direction = c("horizontal", "vertical"))
 
-\method{mirror}{dragon_curve}(fractal, direction = c("horizontal",
-  "vertical"))
+\method{mirror}{dragon_curve}(fractal, direction = c("horizontal", "vertical"))
 }
 \arguments{
 \item{fractal}{A fractal object to be mirrored}

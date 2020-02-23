@@ -4,11 +4,19 @@
 \alias{mandelbrot}
 \title{Mandelbrot set}
 \usage{
-mandelbrot(width, height, re_width = 3.5, im_height = NA,
-  center = complex(real = -0.5, imaginary = 0), max_iterations = 128,
-  threshold = 2, return_colors = TRUE, color_palette = NULL,
-  color_inside = "black", color_mode = c("simple", "histogram",
-  "smooth"))
+mandelbrot(
+  width,
+  height,
+  re_width = 3.5,
+  im_height = NA,
+  center = complex(real = -0.5, imaginary = 0),
+  max_iterations = 128,
+  threshold = 2,
+  return_colors = TRUE,
+  color_palette = NULL,
+  color_inside = "black",
+  color_mode = c("simple", "histogram", "smooth")
+)
 }
 \arguments{
 \item{width, height}{The width and height in pixels.}

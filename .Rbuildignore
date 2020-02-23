@@ -1,8 +1,8 @@
 ^\.Rhistory$
-^\.directory$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.gitignore$
 ^README\.Rmd$
 ^readme\.md$
-^\.gitignore$
-^LICENSE$
+^LICENSE\.txt$
+^\.directory$

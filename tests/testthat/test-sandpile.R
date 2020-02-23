@@ -14,7 +14,8 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-test_that("sandpile is correctly created", {
+test_that("sandpile has not changed for small piles", {
+    # "small" meaning that the intitial size of the pile does not increase
     s1 <- matrix(
         c(0, 0, 0, 1, 2, 1, 0, 0, 0,
           0, 0, 3, 2, 0, 2, 3, 0, 0,
@@ -33,3 +34,7 @@ test_that("sandpile is correctly created", {
     expect_equal(sandpile(1), s2)
     expect_equal(sum(sandpile(100, NULL)), 100)
 })
+
+
+# TODO: Add test for large piles where the size does increase. Maybe n = 1000.
+# Use the inst directory like that mandelbrot test.

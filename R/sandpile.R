@@ -17,8 +17,7 @@
 # TODO: Add an option to use 8 neighbors per cell. Remember that this changes
 # the limit n to 8. Adjust the documentation accordingly. The color vector must
 # be of length 8. Can I use the same symmetry speed improvements as with n = 4?
-# TODO: Iterate over an eight of the matrix for more speed. This is low priority
-# so do the other improvements first.
+# TODO: Improve the speed of this function. See issue #14.
 
 #' Sandpile
 #'
@@ -57,6 +56,7 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
     to_topple <- which(pile > 3)
     while (length(to_topple) > 0) {
         if (any(to_topple <= sidelength)) {
+            # The sand in the first column of the matrix is about to topple.
             # Increase the size of the pile so that the grains don't spill out.
             pile <- rbind(
                 matrix(0, increase_by, sidelength),

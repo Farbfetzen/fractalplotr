@@ -47,7 +47,7 @@ d <- dragon_curve(12)
 plot(d, col = "forestgreen")
 ```
 
-![](man/figures/README-dragon-1.png)<!-- -->
+![](readme_figures/README-dragon-1.png)<!-- -->
 
 ### Mandelbrot set
 
@@ -65,7 +65,7 @@ m <- mandelbrot(
 plot(m)
 ```
 
-![](man/figures/README-mandelbrot-1.png)<!-- -->
+![](readme_figures/README-mandelbrot-1.png)<!-- -->
 
 ### Sandpile
 
@@ -74,4 +74,4 @@ s <- sandpile(1e5, c("white", "yellow", "orange", "red"))
 plot(s)
 ```
 
-![](man/figures/README-sandpile-1.png)<!-- -->
+![](readme_figures/README-sandpile-1.png)<!-- -->

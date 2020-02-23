@@ -10,9 +10,6 @@ Plot beautiful fractals in R. This package lets you
     create fractals of various types, for example mandelbrot sets, dragon
     curves or sandpiles.
 }
-\details{
-TODO: add details.
-}
 \seealso{
 Useful links:
 \itemize{

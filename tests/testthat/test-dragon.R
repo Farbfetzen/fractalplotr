@@ -14,7 +14,24 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-library(testthat)
-library(fractalplotr)
-
-test_check("fractalplotr")
+test_that("dragon is folded as expected", {
+    d <- dragon_curve(3)
+    m <- matrix(
+        c(
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1,
+            0, 2,
+            -1, 2,
+            -1, 1,
+            -2, 1,
+            -2, 2
+        ),
+        ncol = 2,
+        byrow = TRUE
+    )
+    colnames(m) <- c("x", "y")
+    class(m) <- c("dragon_curve", class(m))
+    expect_identical(d, m)
+})

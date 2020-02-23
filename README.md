@@ -21,26 +21,35 @@ planned:
 
 ## Installation
 
-You can install fractalplotr from GitHub with:
+`fractalplotr` is not on CRAN. You can install the most recent version
+from GitHub using the devtools package:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
 
+RStudio’s integrated package updater won’t detect updates in packages
+installed from GitHub. I recommend running
+
+``` r
+devtools::update_packages()
+```
+
+in regular intervals to check for updates from those sources.
+
 ## Examples
 
-**Dragon curve**
+### Dragon curve
 
 ``` r
 d <- dragon_curve(12)
 plot(d, col = "forestgreen")
 ```
 
-<img src="man/figures/README-dragon-1.png" width="100%" />
+![](readme_figures/README-dragon-1.png)<!-- -->
 
-**Mandelbrot
-set**
+### Mandelbrot set
 
 ``` r
 blue_to_black <- colorRampPalette(c(rgb(0, 0, 0.5), "white", rgb(1, 0.75, 0), 
@@ -56,13 +65,13 @@ m <- mandelbrot(
 plot(m)
 ```
 
-<img src="man/figures/README-mandelbrot-1.png" width="100%" />
+![](readme_figures/README-mandelbrot-1.png)<!-- -->
 
-**Sandpile**
+### Sandpile
 
 ``` r
 s <- sandpile(1e5, c("white", "yellow", "orange", "red"))
 plot(s)
 ```
 
-<img src="man/figures/README-sandpile-1.png" width="100%" />
+![](readme_figures/README-sandpile-1.png)<!-- -->

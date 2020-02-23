@@ -8,8 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "readme_figures/README-"
 )
 library(fractalplotr)
 ```
@@ -34,17 +33,21 @@ planned:
 
 ## Installation
 
-You can install fractalplotr from GitHub with:
-
+`fractalplotr` is not on CRAN. You can install the most recent version from GitHub using the devtools package:
 ``` {r install, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("bastihz/fractalplotr")
 ```
+RStudio's integrated package updater won't detect updates in packages installed from GitHub. I recommend running
+``` {r update, eval = FALSE}
+devtools::update_packages()
+```
+in regular intervals to check for updates from those sources.
 
 
 ## Examples
 
-**Dragon curve**
+### Dragon curve
 
 ```{r dragon}
 d <- dragon_curve(12)
@@ -52,7 +55,7 @@ plot(d, col = "forestgreen")
 ```
 
 
-**Mandelbrot set**
+### Mandelbrot set
 
 ```{r mandelbrot}
 blue_to_black <- colorRampPalette(c(rgb(0, 0, 0.5), "white", rgb(1, 0.75, 0), 
@@ -69,7 +72,7 @@ plot(m)
 ```
 
 
-**Sandpile**
+### Sandpile
 
 ```{r sandpile}
 s <- sandpile(1e5, c("white", "yellow", "orange", "red"))

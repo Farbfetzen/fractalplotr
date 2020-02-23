@@ -1,3 +1,19 @@
+# Copyright (C) 2020 Sebastian Henz
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see https://www.gnu.org/licenses/.
+
+
 # TODO: Explain in the documentation how to specify the colors and also
 #   mention the default greyscale. length(colors) == max_iterations must be
 #   TRUE. Or maybe it doesn't when I implement looping colors?
@@ -59,6 +75,7 @@ mandelbrot <- function(width,
     complex_plane <- make_complex_plane(width, height,
                                         re_width, im_height,
                                         center)
+
     n_steps <- z <- matrix(
         0L,
         nrow = nrow(complex_plane),

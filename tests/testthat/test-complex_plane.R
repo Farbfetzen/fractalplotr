@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Sebastian Henz
+# Copyright (C) 2020 Sebastian Henz
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,31 +11,17 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program. If not, see http://www.gnu.org/licenses.
+# along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-context("dragon curve")
-
-
-test_that("dragon is folded as expected", {
-    d <- dragon_curve(3)
-    m <- matrix(
-        c(
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1,
-            0, 2,
-            -1, 2,
-            -1, 1,
-            -2, 1,
-            -2, 2
-        ),
-        ncol = 2,
+test_that("complex plane is correctly created", {
+    m1 <- matrix(
+        c(-1 + 4i, 0 + 4i, 1 + 4i, 2 + 4i,
+          -1 + 3i, 0 + 3i, 1 + 3i, 2 + 3i,
+          -1 + 2i, 0 + 2i, 1 + 2i, 2 + 2i),
+        nrow = 3,
         byrow = TRUE
     )
-    colnames(m) <- c("x", "y")
-    class(m) <- c("dragon_curve", class(m))
-    expect_identical(d, m)
+    m2 <- make_complex_plane(4, 3, 3, 2, 0.5 + 3i)
+    expect_identical(m1, m2)
 })
-

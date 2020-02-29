@@ -39,45 +39,38 @@
 #'
 #' @export
 sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
-    stopifnot(
-        n > 0
-    )
-    sidelength <- 11
+    stopifnot(n > 0)
+    n <- as.integer(n)
+    sidelength <- 11L
     size <- sidelength * sidelength
-    right_border <- seq(size - sidelength + 1, size)
-    almost_right_border <- min(right_border) - 1
+    right_border <- seq(size - sidelength + 1L, size)
+    almost_right_border <- min(right_border) - 1L
     far_right <- right_border + sidelength
     min_far_right <- min(far_right)
     bottom_border <- seq(sidelength, size, sidelength)
-    far_bottom <- bottom_border + 1
-    pile <- matrix(0, sidelength, sidelength)
+    far_bottom <- bottom_border + 1L
+    pile <- matrix(0L, sidelength, sidelength)
     pile[sidelength, sidelength] <- n
-    increase_by <- 10  # must be an even number
-    to_topple <- which(pile > 3)
-    while (length(to_topple) > 0) {
+    increase_by <- 10L  # must be an even number
+    to_topple <- which(pile > 3L)
+    while (length(to_topple) > 0L) {
         if (any(to_topple <= sidelength)) {
             # The sand in the first column of the matrix is about to topple.
             # Increase the size of the pile so that the grains don't spill out.
-            pile <- rbind(
-                matrix(0, increase_by, sidelength),
-                pile
-            )
+            pile <- rbind(matrix(0L, increase_by, sidelength), pile)
             sidelength <- sidelength + increase_by
-            pile <- cbind(
-                matrix(0, sidelength, increase_by),
-                pile
-            )
+            pile <- cbind(matrix(0L, sidelength, increase_by), pile)
             size <- sidelength * sidelength
-            right_border <- seq(size - sidelength + 1, size)
-            almost_right_border <- min(right_border) - 1
+            right_border <- seq(size - sidelength + 1L, size)
+            almost_right_border <- min(right_border) - 1L
             far_right <- right_border + sidelength
             min_far_right <- min(far_right)
             bottom_border <- seq(sidelength, size, sidelength)
-            far_bottom <- bottom_border + 1
-            to_topple <- which(pile > 3)
+            far_bottom <- bottom_border + 1L
+            to_topple <- which(pile > 3L)
         }
 
-        pile[to_topple] <- pile[to_topple] - 4
+        pile[to_topple] <- pile[to_topple] - 4L
 
         # To use the symmetry I have to handle the borders in a special way.
         # Because the right border and the bottom border, which are the middle
@@ -89,37 +82,35 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
 
         # FIXME: Come back later and think of a better way to do this.
         # Can't I define that beforehand somehow and then just look it up?
-        top_neighbors <- to_topple - 1
+        top_neighbors <- to_topple - 1L
         left_neighbors <- to_topple - sidelength
         right_neighbors <- to_topple + sidelength
         right_neighbors <- right_neighbors[right_neighbors < min_far_right]
-        bottom_neighbors <- to_topple + 1
+        bottom_neighbors <- to_topple + 1L
         bottom_neighbors <- bottom_neighbors[!bottom_neighbors %in% far_bottom]
 
-        pile[top_neighbors] <- pile[top_neighbors] + 1
-        pile[left_neighbors] <- pile[left_neighbors] + 1
-        pile[right_neighbors] <- pile[right_neighbors] + 1
-        pile[bottom_neighbors] <- pile[bottom_neighbors] + 1
+        pile[top_neighbors] <- pile[top_neighbors] + 1L
+        pile[left_neighbors] <- pile[left_neighbors] + 1L
+        pile[right_neighbors] <- pile[right_neighbors] + 1L
+        pile[bottom_neighbors] <- pile[bottom_neighbors] + 1L
 
-        right_border_again <- right_neighbors[
-            right_neighbors > almost_right_border
-        ]
-        if (length(right_border_again) > 0) {
-            pile[right_border_again] <- pile[right_border_again] + 1
+        right_border_again <- right_neighbors[right_neighbors > almost_right_border]
+        if (length(right_border_again) > 0L) {
+            pile[right_border_again] <- pile[right_border_again] + 1L
             pile[bottom_border] <- pile[right_border]
             if (size %in% right_neighbors) {
-                pile[size] <- pile[size] + 1
+                pile[size] <- pile[size] + 1L
             }
         }
 
-        to_topple <- which(pile > 3)
+        to_topple <- which(pile > 3L)
     }
 
     # trim the edges solely consisting of zeroes:
     pile <- pile[rowSums(pile) > 0, colSums(pile) > 0, drop = FALSE]
 
     # Make the quarter matrix whole:
-    if (n > 3) {
+    if (n > 3L) {
         pile <- cbind(pile, rotate(pile)[, -1])
         pile <- rbind(pile, mirror(pile, "vertical")[-1, ])
     }
@@ -128,7 +119,7 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
         return(pile)
     }
 
-    pile <- matrix(colors[pile + 1], nrow = nrow(pile))
+    pile <- matrix(colors[pile + 1L], nrow = nrow(pile))
 
     class(pile) <- c("color_matrix", class(pile))
     pile

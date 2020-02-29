@@ -28,6 +28,7 @@ test_that("sandpile has not changed for small piles", {
           0, 0, 0, 1, 2, 1, 0, 0, 0),
         nrow = 9
     )
+    mode(reference) <- "integer"
     expect_identical(sandpile(100, NULL), reference)
 })
 
@@ -40,3 +41,6 @@ test_that("sandpile hast not changed for large piles", {
     dimnames(reference) <- NULL
     expect_identical(sandpile(10000, NULL), reference)
 })
+
+
+# TODO: test colors

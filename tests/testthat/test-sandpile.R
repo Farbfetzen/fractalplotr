@@ -14,8 +14,9 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-test_that("sandpile is correctly created", {
-    s1 <- matrix(
+test_that("sandpile has not changed for small piles", {
+    # "small" meaning that the initial matrix does not increase in size
+    reference <- matrix(
         c(0, 0, 0, 1, 2, 1, 0, 0, 0,
           0, 0, 3, 2, 0, 2, 3, 0, 0,
           0, 3, 0, 3, 2, 3, 0, 3, 0,
@@ -27,9 +28,19 @@ test_that("sandpile is correctly created", {
           0, 0, 0, 1, 2, 1, 0, 0, 0),
         nrow = 9
     )
-    expect_identical(sandpile(100, NULL), s1)
-    s2 <- matrix("lightgray")
-    class(s2) <- c("color_matrix", class(s2))
-    expect_equal(sandpile(1), s2)
-    expect_equal(sum(sandpile(100, NULL)), 100)
+    mode(reference) <- "integer"
+    expect_identical(sandpile(100, NULL), reference)
 })
+
+
+test_that("sandpile hast not changed for large piles", {
+    # "large" meaning that the final matrix is bigger than the initial one
+    filepath <- system.file("testdata", "sandpile.csv",
+                            package = "fractalplotr", mustWork = TRUE)
+    reference <- as.matrix(read.table(filepath, sep = ","))
+    dimnames(reference) <- NULL
+    expect_identical(sandpile(10000, NULL), reference)
+})
+
+
+# TODO: test colors

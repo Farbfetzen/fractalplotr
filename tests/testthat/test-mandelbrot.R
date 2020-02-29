@@ -14,15 +14,17 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-test_that("mandelbrot set is calculated correctly", {
+test_that("mandelbrot set has not changed", {
     filepath <- system.file("testdata", "mandelbrot.csv",
                             package = "fractalplotr", mustWork = TRUE)
-    m_reference <- as.matrix(read.table(filepath, sep = ","))
-    dimnames(m_reference) <- NULL
+    reference <- as.matrix(read.table(filepath, sep = ","))
+    dimnames(reference) <- NULL
     m <- mandelbrot(width = 150, height = 100, re_width = 3,
                     max_iterations = 128, threshold = 2, return_colors = FALSE)
-    expect_identical(m, m_reference)
+    expect_identical(m, reference)
 })
 
 # TODO: Test coordinate arguments and their combinations. re_width and im_height
 # should never be provided together, for example.
+
+# TODO: test colouring

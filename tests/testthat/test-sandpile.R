@@ -15,8 +15,8 @@
 
 
 test_that("sandpile has not changed for small piles", {
-    # "small" meaning that the intitial size of the pile does not increase
-    s1 <- matrix(
+    # "small" meaning that the matrix keeps its intitial size
+    reference <- matrix(
         c(0, 0, 0, 1, 2, 1, 0, 0, 0,
           0, 0, 3, 2, 0, 2, 3, 0, 0,
           0, 3, 0, 3, 2, 3, 0, 3, 0,
@@ -28,13 +28,16 @@ test_that("sandpile has not changed for small piles", {
           0, 0, 0, 1, 2, 1, 0, 0, 0),
         nrow = 9
     )
-    expect_identical(sandpile(100, NULL), s1)
-    s2 <- matrix("lightgray")
-    class(s2) <- c("color_matrix", class(s2))
-    expect_equal(sandpile(1), s2)
-    expect_equal(sum(sandpile(100, NULL)), 100)
+    expect_identical(sandpile(100, NULL), reference)
 })
 
 
-# TODO: Add test for large piles where the size does increase. Maybe n = 1000.
-# Use the inst directory like that mandelbrot test.
+test_that("sandpile hast not changed for large piles", {
+    # "large" meaning that the final matrix is bigger than the initial one
+    filepath <- system.file("testdata", "sandpile.csv",
+                            package = "fractalplotr", mustWork = TRUE)
+    reference <- as.matrix(read.table(filepath, sep = ","))
+    dimnames(reference) <- NULL
+    s <- sandpile(10000, NULL)
+    expect_identical(s, reference)
+})

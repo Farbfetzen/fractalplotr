@@ -14,11 +14,6 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-# TODO: Add an option to use 8 neighbors per cell. Remember that this changes
-# the limit n to 8. Adjust the documentation accordingly. The color vector must
-# be of length 8. Can I use the same symmetry speed improvements as with n = 4?
-
-
 #' Sandpile
 #'
 #' Drop some sand in the center and see it spread outwards.
@@ -42,7 +37,7 @@ sandpile <- function(n, colors = grey.colors(4, start = 1, end = 0)) {
     stopifnot(n > 0)
     n <- as.integer(n)
     sidelength <- 11L
-    increase_by <- 10L  # must be an even number to keep the sidelength odd
+    increase_by <- 11L
     pile <- matrix(0L, sidelength, sidelength)
     pile[sidelength, sidelength] <- n
     size <- length(pile)
@@ -118,12 +113,10 @@ sandpile <- function(n, colors = grey.colors(4, start = 1, end = 0)) {
         pile <- rbind(pile, mirror(pile, "vertical")[-1, ])
     }
 
-    if (is.null(colors)) {
-        return(pile)
+    if (!is.null(colors)) {
+        pile <- matrix(colors[pile + 1L], nrow = nrow(pile))
+        class(pile) <- c("color_matrix", class(pile))
     }
 
-    pile <- matrix(colors[pile + 1L], nrow = nrow(pile))
-
-    class(pile) <- c("color_matrix", class(pile))
     pile
 }

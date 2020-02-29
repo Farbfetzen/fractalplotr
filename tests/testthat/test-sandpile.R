@@ -15,7 +15,7 @@
 
 
 test_that("sandpile has not changed for small piles", {
-    # "small" meaning that the matrix keeps its intitial size
+    # "small" meaning that the initial matrix does not increase in size
     reference <- matrix(
         c(0, 0, 0, 1, 2, 1, 0, 0, 0,
           0, 0, 3, 2, 0, 2, 3, 0, 0,

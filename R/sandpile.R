@@ -60,7 +60,8 @@ sandpile <- function(n, colors = c("white", "lightgray", "darkgray", "black")) {
             pile <- rbind(matrix(0L, increase_by, sidelength), pile)
             sidelength <- sidelength + increase_by
             pile <- cbind(matrix(0L, sidelength, increase_by), pile)
-            size <- sidelength * sidelength
+
+            size <- length(pile)
             right_border <- seq(size - sidelength + 1L, size)
             almost_right_border <- min(right_border) - 1L
             far_right <- right_border + sidelength

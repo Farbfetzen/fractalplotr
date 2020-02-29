@@ -42,5 +42,5 @@ test_that("sandpile hast not changed for large piles", {
     expect_identical(sandpile(10000, NULL), reference)
 })
 
-
+# TODO: test with very small n, like 1, 2, 3, 4, 5, 10, 15.
 # TODO: test colors

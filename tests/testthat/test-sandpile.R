@@ -38,6 +38,5 @@ test_that("sandpile hast not changed for large piles", {
                             package = "fractalplotr", mustWork = TRUE)
     reference <- as.matrix(read.table(filepath, sep = ","))
     dimnames(reference) <- NULL
-    s <- sandpile(10000, NULL)
-    expect_identical(s, reference)
+    expect_identical(sandpile(10000, NULL), reference)
 })

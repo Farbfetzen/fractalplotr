@@ -11,14 +11,6 @@ currently implemented:
   - [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
   - [Sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model)
 
-planned:
-
-  - [Julia set](https://en.wikipedia.org/wiki/Julia_set)
-  - [Ulam-Warburton cellular
-    automaton](https://en.wikipedia.org/wiki/Ulam%E2%80%93Warburton_automaton)
-  - [toothpick
-    pattern](https://en.wikipedia.org/wiki/Toothpick_sequence)
-
 ## Installation
 
 `fractalplotr` is not on CRAN. You can install the most recent version

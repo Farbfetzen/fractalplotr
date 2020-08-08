@@ -1,5 +1,5 @@
 # notes:
-# make it possible to modify the line length. see that reddit post
+# - make it possible to modify the line length. see that reddit post
 
 
 # Grow an L-system for n iterations
@@ -24,7 +24,6 @@ expand_l_system <- function(axiom, rules, n = 1) {
 
 # generate the points from the instructions
 # TODO: name more fitting for L-system
-# TODO: What if there is no "F" in the L-system? Does it error or fall through?
 generate_points <- function(instructions, angle, initial_angle = pi / 2) {
     # angles: 0 = right, pi/2 = up, pi = left, pi*3/2 = down
     instructions <- strsplit(instructions, "")[[1]]
@@ -75,7 +74,6 @@ generate_points <- function(instructions, angle, initial_angle = pi / 2) {
             }
         )
     }
-    print(line_idx)
     result <- data.frame(x0 = x0, y0 = y0, x1 = x1, y1 = y1)
     result[!duplicated(result), ]
 }
@@ -111,6 +109,10 @@ plot_l_system <- function(points, ...) {
 
 
 # Examples from Wikipedia
+# Make all of them into test cases (with fewer iterations). Compare either the
+# pointlists or the images.
+
+par(mfrow = c(1, 3))
 
 # plant:
 axiom <- "X"
@@ -119,7 +121,7 @@ rules <-  list(
     `F` = "FF"
 )
 angle <- pi * 0.15
-L <- expand_l_system(axiom, rules, 6)
+L <- expand_l_system(axiom, rules, 7)
 p <- generate_points(L, angle, pi * 0.45)
 plot_l_system(p, col = "forestgreen")
 
@@ -130,7 +132,7 @@ rules <- list(
     `Y` = "-FX-Y"
 )
 angle <- pi / 2
-D <- expand_l_system(axiom, rules, n = 11)
+D <- expand_l_system(axiom, rules, n = 12)
 p <- generate_points(D, angle)
 plot_l_system(p)
 
@@ -142,7 +144,9 @@ rules <- list(
 )
 angle <- 2 * pi / 3
 S <- expand_l_system(axiom, rules, 6)
-# Achtung: Hier heißt "G" auch "draw forward"! Daher vorher mit "F" ersetzen:
+# Achtung: Hier heißt "G" auch "draw forward"! Daher vorher mit "F" ersetzen.
+# Vielleicht zusätzliche Option in generate_points? Einen Vektor mit Symbolen,
+# die durch F ersetzt werden sollen?
 S <- gsub("G", "F", S, fixed = TRUE)
 p <- generate_points(S, angle, angle/2)
 plot_l_system(p)

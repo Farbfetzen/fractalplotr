@@ -10,6 +10,7 @@ currently implemented:
   - [Dragon curve](https://en.wikipedia.org/wiki/Dragon_curve)
   - [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
   - [Sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model)
+  - [L-systems](https://en.wikipedia.org/wiki/L-system)
 
 ## Installation
 
@@ -32,11 +33,37 @@ in regular intervals to check for updates from those sources.
 
 ## Examples
 
+### L-system plant
+
+``` r
+l_system <- grow_l_system(
+    axiom = "X",
+    rules = list(
+        `X` = "F+[[X]-X]-F[-FX]+X",
+        `F` = "FF"
+    ),
+    n = 7
+)
+plant_lines <- convert_l_system(
+    l_system,
+    angle = pi * 0.15,
+    initial_angle = pi * 0.45
+)
+par(mar = rep(0, 4))
+plot_l_system(
+    plant_lines,
+    col = "forestgreen"
+)
+```
+
+![](readme_figures/README-l_plant-1.png)<!-- -->
+
 ### Dragon curve
 
 ``` r
 d <- dragon_curve(12)
-plot(d, col = "forestgreen")
+par(mar = rep(0, 4))
+plot(d, col = "purple")
 ```
 
 ![](readme_figures/README-dragon-1.png)<!-- -->

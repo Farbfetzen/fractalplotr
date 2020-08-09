@@ -8,3 +8,33 @@
 ## notes
 - Make a NEWS.md file
 - remove the wikipedia links. only include non-trivial references
+
+# some interesting L-systems
+axiom = "FX"
+rules = list(
+    `X` = "FX[+FX][-FX]",
+    `F` = "FF"
+)
+angle <- pi / 4
+n <- 7
+axiom = "FX"
+rules = list(
+    `X` = "FX[FFX][+FX][-FX]",
+    `F` = "FF"
+)
+angle <- pi / 3
+n <- 6
+axiom = "X"
+rules = list(
+    `F` = "FF",
+    `X` = "F+X"
+)
+angle <- pi / 5
+n <- 7
+axiom = "X"
+rules = list(
+    `F` = "FF",
+    `X` = "F[X][+X][-X]"
+)
+angle <- pi / 2
+n <- 9

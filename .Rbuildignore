@@ -8,3 +8,4 @@
 ^\.directory$
 ^readme_figures$
 ^dev_notes\.md$
+^data-raw$

@@ -14,19 +14,18 @@ currently implemented:
 
 ## Installation
 
-`fractalplotr` is not on CRAN. You can install the most recent version
-from GitHub using the devtools package:
+You can install the most recent version from GitHub:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("bastihz/fractalplotr")
+# install.packages("remotes")
+remotes::install_github("bastihz/fractalplotr")
 ```
 
 RStudio’s integrated package updater won’t detect updates in packages
 installed from GitHub. I recommend running
 
 ``` r
-devtools::update_packages()
+remotes::update_packages()
 ```
 
 in regular intervals to check for updates from those sources.

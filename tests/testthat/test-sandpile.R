@@ -35,11 +35,8 @@ test_that("sandpile has not changed for small piles", {
 
 test_that("sandpile hast not changed for large piles", {
     # "large" meaning that the final matrix is bigger than the initial one
-    filepath <- system.file("testdata", "sandpile.csv",
-                            package = "fractalplotr", mustWork = TRUE)
-    reference <- as.matrix(read.table(filepath, sep = ","))
-    dimnames(reference) <- NULL
-    expect_identical(sandpile(10000, NULL), reference)
+    s <- sandpile(10000, NULL)
+    expect_identical(s, test_sandpile)
 })
 
 # TODO: test with very small n, like 1, 2, 3, 4, 5, 10, 15.

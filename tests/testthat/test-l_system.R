@@ -23,12 +23,12 @@ test_that("L-system plant generates correctly", {
         ),
         n = 7
     )
-    l_plant_new <- convert_l_system(
+    l_plant <- convert_l_system(
         instructions = l_system,
         angle = pi * 0.15,
         initial_angle = pi * 0.45
     )
-    expect_identical(l_plant, l_plant_new)
+    expect_identical(l_plant, test_l_plant)
 })
 
 
@@ -41,11 +41,11 @@ test_that("L-system dragon curve generates correctly", {
         ),
         n = 12
     )
-    l_dragon_new <- convert_l_system(
+    l_dragon <- convert_l_system(
         instructions = l_system,
         angle = pi / 2
     )
-    expect_identical(l_dragon, l_dragon_new)
+    expect_identical(l_dragon, test_l_dragon)
 })
 
 
@@ -57,10 +57,10 @@ test_that("L-system sierpinski triangle generates correctly", {
             `G` = "GG"
         ),
         n = 6)
-    l_triangle_new <- convert_l_system(
+    l_triangle <- convert_l_system(
         instructions = l_system,
         angle = 2 * pi / 3,
         initial_angle = pi / 3
     )
-    expect_identical(l_triangle, l_triangle_new)
+    expect_identical(l_triangle, test_l_triangle)
 })

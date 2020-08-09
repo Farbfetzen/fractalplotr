@@ -1,5 +1,7 @@
 ## code to prepare `test_data` dataset goes here
 
+
+# L-system plant
 l_system <- grow_l_system(
     axiom = "X",
     rules = list(
@@ -8,13 +10,14 @@ l_system <- grow_l_system(
     ),
     n = 7
 )
-l_plant <- convert_l_system(
+test_l_plant <- convert_l_system(
     instructions = l_system,
     angle = pi * 0.15,
     initial_angle = pi * 0.45
 )
 
-# dragon curve:
+
+# L-system dragon curve
 l_system <- grow_l_system(
     axiom = "FX",
     rules = list(
@@ -23,12 +26,13 @@ l_system <- grow_l_system(
     ),
     n = 12
 )
-l_dragon <- convert_l_system(
+test_l_dragon <- convert_l_system(
     instructions = l_system,
     angle = pi / 2
 )
 
-# sierpinski triangle:
+
+# L-system sierpinski triangle
 l_system <- grow_l_system(
     axiom = "F-G-G",
     rules = list(
@@ -36,17 +40,34 @@ l_system <- grow_l_system(
         `G` = "GG"
     ),
     n = 6)
-l_triangle <- convert_l_system(
+test_l_triangle <- convert_l_system(
     instructions = l_system,
     angle = 2 * pi / 3,
     initial_angle = pi / 3
 )
 
 
+# mandelbrot set
+test_mandelbrot <- mandelbrot(
+    width = 150,
+    height = 100,
+    re_width = 3,
+    max_iterations = 128,
+    threshold = 2,
+    return_colors = FALSE
+)
+
+
+# sandpile
+test_sandpile <- sandpile(10000, NULL)
+
+
 usethis::use_data(
-    l_plant,
-    l_dragon,
-    l_triangle,
+    test_l_plant,
+    test_l_dragon,
+    test_l_triangle,
+    test_mandelbrot,
+    test_sandpile,
     internal = TRUE,
     overwrite = TRUE
 )

@@ -38,3 +38,18 @@ rules = list(
 )
 angle <- pi / 2
 n <- 9
+
+
+Example for "modify line length" and "flip direction":
+https://www.reddit.com/r/creativecoding/comments/i93yk4/growing_tree_lsystem/g1ciem1/
+Remember to include them in save and load instructions.
+
+Example for line length modification:
+https://www.reddit.com/r/generative/comments/i4mjs6/fractal_tree_transformation/g0j78tg/
+but I replaced the IQ2 with 0.7071
+axiom <- "X"
+rules <- list(`X` = "[@0.7071-FX][@0.7071+FX]")
+angle <- pi * 0.2  # Change between 0 and pi
+n <- 10
+plot_l_system(convert_l_system(grow_l_system(axiom, rules, n), angle))
+

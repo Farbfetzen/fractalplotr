@@ -136,12 +136,18 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
     position <- c(0, 0)
     current_angle <- initial_angle
     line_idx <- 0
+    tau <- 2 * pi
+    len_instructions <- length(instructions)
+    line_length <- 1
+    numerics <- strsplit(".0123456789", "")[[1]]
+    save_idx <- 0
     saved_positions <- list()
     saved_angles <- numeric()
-    save_idx <- 0
-    tau <- 2 * pi
+    saved_line_lengths <- numeric()
 
-    for (i in seq_along(instructions)) {
+    i <- 0
+    while (i < len_instructions) {
+        i <- i + 1
         switch(
             instructions[i],
             `F` = {
@@ -149,7 +155,8 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
                 line_idx <- line_idx + 1
                 x0[line_idx] <- position[1]
                 y0[line_idx] <- position[2]
-                position <- position + c(cos(current_angle), sin(current_angle))
+                position <- position +
+                    c(cos(current_angle), sin(current_angle)) * line_length
                 x1[line_idx] <- position[1]
                 y1[line_idx] <- position[2]
             },
@@ -166,12 +173,30 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
                 save_idx <- save_idx + 1
                 saved_positions[[save_idx]] <- position
                 saved_angles[save_idx] <- current_angle
+                saved_line_lengths[save_idx] <- line_length
             },
             `]` = {
                 # load state
                 position <- saved_positions[[save_idx]]
                 current_angle <- saved_angles[[save_idx]]
+                line_length <- saved_line_lengths[save_idx]
                 save_idx <- save_idx - 1
+            },
+            `@` = {
+                # multiply line length by following number
+                num <- ""
+                for (j in seq(i + 1, len_instructions)) {
+                    if (instructions[j] %in% numerics) {
+                        num <- paste0(num, instructions[j])
+                    } else {
+                        break
+                    }
+                }
+                if (num == "") {
+                    stop("No numeric argument after '@'.")
+                }
+                line_length <- line_length * as.numeric(num)
+                i <- j - 1
             }
         )
     }

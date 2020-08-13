@@ -41,8 +41,6 @@ n <- 9
 
 
 Example for line length modification:
-https://www.reddit.com/r/generative/comments/i4mjs6/fractal_tree_transformation/g0j78tg/
-but I replaced the IQ2 with 0.7071
 axiom <- "X"
 rules <- list(`X` = "[@.7071-FX][@.7071+FX]")
 angle <- pi * 0.2  # Change between 0 and pi
@@ -51,12 +49,19 @@ plot_l_system(convert_l_system(grow_l_system(axiom, rules, n), angle))
 
 
 Example for "modify line length" and "flip direction":
-https://www.reddit.com/r/creativecoding/comments/i93yk4/growing_tree_lsystem/g1ciem1/
-Remember to include them in save and load instructions.
 axiom <- "X"
 rules <- list(`X` = "F[+@.7X]F![-@.6X]F")
 angle <- pi * 0.125
 n <- 10
 plot_l_system(convert_l_system(grow_l_system(axiom, rules, n), angle))
+
+
+https://www.reddit.com/r/generative/comments/i58xim/120%C2%BA_fractal_tree_lsystem/g0nfm17/
+axiom <- "[FX]++[FX]"
+rules <- list(`X` = "[@.7071+[FX]++[FX]]")
+angle <- pi * 2 / 3
+n <- 12
+foo <- convert_l_system(grow_l_system(axiom, rules, n), angle, 0)
+plot_l_system(foo, col = rainbow(nrow(foo)))
 
 

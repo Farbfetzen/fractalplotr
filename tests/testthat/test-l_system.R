@@ -64,3 +64,16 @@ test_that("L-system sierpinski triangle generates correctly", {
     )
     expect_identical(l_triangle, test_l_triangle)
 })
+
+
+test_that("L-system line length change and angle flip work", {
+    l_system <- grow_l_system(
+        axiom = "X",
+        rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+        n = 9)
+    l_line_length_angle_flip <- convert_l_system(
+        instructions = l_system,
+        angle = pi * 0.125
+    )
+    expect_identical(l_line_length_angle_flip, test_l_line_length_angle_flip)
+})

@@ -39,11 +39,24 @@ l_system <- grow_l_system(
         `F` = "F-G+F+G-F",
         `G` = "GG"
     ),
-    n = 6)
+    n = 6
+)
 test_l_triangle <- convert_l_system(
     instructions = l_system,
     angle = 2 * pi / 3,
     initial_angle = pi / 3
+)
+
+
+# L-system with changing line length and flipping angle
+l_system <- grow_l_system(
+    axiom = "X",
+    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+    n = 9
+)
+test_l_line_length_angle_flip <- convert_l_system(
+    instructions = l_system,
+    angle = pi * 0.125
 )
 
 
@@ -66,6 +79,7 @@ usethis::use_data(
     test_l_plant,
     test_l_dragon,
     test_l_triangle,
+    test_l_line_length_angle_flip,
     test_mandelbrot,
     test_sandpile,
     internal = TRUE,

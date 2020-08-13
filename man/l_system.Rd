@@ -49,9 +49,17 @@ the endpoints of the line segments.}
 \description{
 Expand, convert and plot L-systems or Lindenmayer systems.
 }
+\details{
+List of instructions:
+\describe{
+\item{F}{Draw a line in the current direction.}
+\item{+ or -}{Turn by angle.}
+\item{[ or ]}{Save and load current state.}
+\item{@}{Multiply line length by following numerical argument.}
+\item{!}{Flip the angle direction.}
+}
+}
 \examples{
-par(mfrow = c(1, 3))
-
 # plant:
 l_system <- grow_l_system(
     axiom = "X",
@@ -82,9 +90,10 @@ l_system <- grow_l_system(
 )
 l_lines <- convert_l_system(
     instructions = l_system,
-    angle = pi / 2
+    angle = pi / 2,
+    initial_angle = 0
 )
-plot_l_system(l_lines = l_lines)
+plot_l_system(l_lines = l_lines, col = rainbow(nrow(l_lines)))
 
 # sierpinski triangle:
 l_system <- grow_l_system(
@@ -93,12 +102,25 @@ l_system <- grow_l_system(
         `F` = "F-G+F+G-F",
         `G` = "GG"
     ),
-    n = 6)
+    n = 6
+)
 l_lines <- convert_l_system(
     instructions = l_system,
     angle = 2 * pi / 3,
     initial_angle = pi / 3,
     draw_f = "G"
+)
+plot_l_system(l_lines = l_lines)
+
+# changing line length and flipping angle:
+l_system <- grow_l_system(
+    axiom = "X",
+    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+    n = 9
+)
+l_lines <- convert_l_system(
+    instructions = l_system,
+    angle = pi * 0.125
 )
 plot_l_system(l_lines = l_lines)
 }

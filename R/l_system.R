@@ -17,6 +17,8 @@
 # TODO:
 # - Make it possible to modify the line length. See that reddit post.
 # - Make an S3 method for plotting, same as for the other fractals.
+# - Explaint all instructions in "Details" of documentation.
+# - Add examples of change line length and flip angle
 
 
 #' L-system
@@ -143,6 +145,7 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
     save_idx <- 0
     saved_positions <- list()
     saved_angles <- numeric()
+    saved_current_angles <- numeric()
     saved_line_lengths <- numeric()
 
     i <- 0
@@ -161,24 +164,26 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
                 y1[line_idx] <- position[2]
             },
             `+` = {
-                # turn counterclockwise
+                # change line angle
                 current_angle <- (current_angle + angle) %% tau
             },
             `-` = {
-                # turn clockwise
+                # change line angle
                 current_angle <- (current_angle - angle) %% tau
             },
             `[` = {
                 # save state
                 save_idx <- save_idx + 1
                 saved_positions[[save_idx]] <- position
-                saved_angles[save_idx] <- current_angle
+                saved_angles[save_idx] <- angle
+                saved_current_angles[save_idx] <- current_angle
                 saved_line_lengths[save_idx] <- line_length
             },
             `]` = {
                 # load state
                 position <- saved_positions[[save_idx]]
-                current_angle <- saved_angles[[save_idx]]
+                angle <- saved_angles[[save_idx]]
+                current_angle <- saved_current_angles[[save_idx]]
                 line_length <- saved_line_lengths[save_idx]
                 save_idx <- save_idx - 1
             },
@@ -197,6 +202,10 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
                 }
                 line_length <- line_length * as.numeric(num)
                 i <- j - 1
+            },
+            `!` = {
+                # flip angle turn direction
+                angle <- -angle
             }
         )
     }

@@ -17,7 +17,8 @@
 # TODO:
 # - Make an S3 method for plotting, same as for the other fractals.
 # - Optional: For every line save the current angle, length, and stack depth and
-#   return those. Maybe useful for plotting (col, lwd, etc.)
+#   return those. Maybe useful for plotting (col, lwd, etc.). Color tree
+#   branches differently than leaves.
 
 #' L-system
 #'
@@ -74,7 +75,7 @@
 #' )
 #' plot_l_system(
 #'     l_lines = l_lines,
-#'     col = "forestgreen"
+#'     col = colorRampPalette(c("#008000", "#00FF00"))(100)
 #' )
 #'
 #' # dragon curve:

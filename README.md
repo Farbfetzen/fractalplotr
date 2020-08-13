@@ -51,7 +51,7 @@ plant_lines <- convert_l_system(
 par(mar = rep(0, 4))
 plot_l_system(
     plant_lines,
-    col = "forestgreen"
+    col = colorRampPalette(c("#008000", "#00FF00"))(100)
 )
 ```
 

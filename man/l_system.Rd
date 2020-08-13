@@ -76,7 +76,7 @@ l_lines <- convert_l_system(
 )
 plot_l_system(
     l_lines = l_lines,
-    col = "forestgreen"
+    col = colorRampPalette(c("#008000", "#00FF00"))(100)
 )
 
 # dragon curve:

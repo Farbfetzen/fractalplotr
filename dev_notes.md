@@ -60,8 +60,26 @@ https://www.reddit.com/r/generative/comments/i58xim/120%C2%BA_fractal_tree_lsyst
 axiom <- "[FX]++[FX]"
 rules <- list(`X` = "[@.7071+[FX]++[FX]]")
 angle <- pi * 2 / 3
-n <- 12
+n <- 13
 foo <- convert_l_system(grow_l_system(axiom, rules, n), angle, 0)
-plot_l_system(foo, col = rainbow(nrow(foo)))
+col <- terrain.colors(1000)
+plot_l_system(foo, col = col)
 
 
+l_system <- grow_l_system(
+    axiom = "X",
+    rules = list(
+        `X` = "F+[[X]-X]-F[-FX]+X",
+        `F` = "FF"
+    ),
+    n = 7
+)
+l_lines <- convert_l_system(
+    instructions = l_system,
+    angle = pi * 0.15,
+    initial_angle = pi * 0.45
+)
+plot_l_system(
+    l_lines = l_lines,
+    col = terrain.colors(100)
+)

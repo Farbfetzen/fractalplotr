@@ -42,16 +42,16 @@ max_iterations.}
 "simple", "histogram" or "smooth". Can be abbreviated.}
 }
 \value{
-A matrix specifying the color for each coordinate.
+A matrix of class "color_matrix" specifying the color for each pixel.
 }
 \description{
-The famous mandelbrot set.
+Generate the mandelbrot set.
 }
 \examples{
 m <- mandelbrot(width = 200, height = 150)
 plot(m)
 
 }
-\references{
-\url{https://en.wikipedia.org/wiki/Mandelbrot_set}
+\seealso{
+\code{\link[=plot.color_matrix]{plot.color_matrix()}}
 }

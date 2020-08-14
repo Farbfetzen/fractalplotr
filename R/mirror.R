@@ -16,9 +16,9 @@
 
 #' Mirror Fractals
 #'
-#' Mirror fractals horizontally or vertically.
+#' Flip fractals horizontally or vertically.
 #'
-#' @param fractal A fractal object to be mirrored
+#' @param fractal A fractal object to be mirrored.
 #' @param direction The direction of the mirroring, either "horizontal" or
 #'   "vertical". Can be abbreviated.
 #'

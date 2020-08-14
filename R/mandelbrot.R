@@ -36,7 +36,7 @@
 
 #' Mandelbrot set
 #'
-#' The famous mandelbrot set.
+#' Generate the mandelbrot set.
 #'
 #' @param width,height The width and height in pixels.
 #' @param re_width,im_height The width and height of the complex plane
@@ -52,9 +52,9 @@
 #' @param color_mode How the colors of the set will be calculated. One of
 #'   "simple", "histogram" or "smooth". Can be abbreviated.
 #'
-#' @return A matrix specifying the color for each coordinate.
+#' @return A matrix of class "color_matrix" specifying the color for each pixel.
 #'
-#' @references \url{https://en.wikipedia.org/wiki/Mandelbrot_set}
+#' @seealso [plot.color_matrix()]
 #'
 #' @examples
 #' m <- mandelbrot(width = 200, height = 150)

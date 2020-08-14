@@ -1,7 +1,7 @@
 Type: Package
 Package: fractalplotr
 Title: Plot Beautiful Fractals with R
-Version: 0.3.0
+Version: 0.4.0
 Date: 2020-08-14
 Authors@R: 
     person(given = "Sebastian",
@@ -21,3 +21,4 @@ LazyData: true
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0)
+Roxygen: list(markdown = TRUE)

@@ -13,7 +13,7 @@ mirror(fractal, direction)
 \method{mirror}{dragon_curve}(fractal, direction = c("horizontal", "vertical"))
 }
 \arguments{
-\item{fractal}{A fractal object to be mirrored}
+\item{fractal}{A fractal object to be mirrored.}
 
 \item{direction}{The direction of the mirroring, either "horizontal" or
 "vertical". Can be abbreviated.}
@@ -22,7 +22,7 @@ mirror(fractal, direction)
 The mirrored fractal.
 }
 \description{
-Mirror fractals horizontally or vertically.
+Flip fractals horizontally or vertically.
 }
 \examples{
 d <- dragon_curve(10)

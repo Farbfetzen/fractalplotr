@@ -18,30 +18,31 @@
 #'
 #' Repeatedly fold a line to create a space-filling curve.
 #'
-#' @param order The order of the dragon curve, i.e. how many times it will be
-#'   folded.
+#' @param n How often the curve will be folded. Must be at least 1.
 #'
-#' @return A matrix with two columns for the x and y coordinates of the folds.
-#'
-#' @references \url{https://en.wikipedia.org/wiki/Dragon_curve}
+#' @return A matrix of class "dragon_curve" with two columns for the x and y
+#'   coordinates of the folds.
 #'
 #' @examples
-#' d <- dragon_curve(4)
-#' d
+#' d <- dragon_curve(9)
 #' plot(d)
 #'
+#' @seealso [plot.dragon_curve()]
+#'
 #' @export
-dragon_curve <- function(order) {
+dragon_curve <- function(n) {
     stopifnot(
-        is.numeric(order),
-        order > 1
+        is.numeric(n),
+        n > 0
     )
-    curve <- 1
-    for (i in 2:order) {
+    curve <- c()
+    for (i in seq_len(n)) {
         len <- length(curve)
         middle_index <- (len + 1) / 2
         curve <- c(curve, 1, curve)
-        curve[len + 1 + middle_index] <- -1
+        if (i > 1) {
+            curve[len + 1 + middle_index] <- -1
+        }
     }
 
     # Convert the folds to coordinates:
@@ -64,4 +65,33 @@ dragon_curve <- function(order) {
     }
     class(dragon) <- c("dragon_curve", class(dragon))
     dragon
+}
+
+
+#' Plot Dragon Curves
+#'
+#' Plot dragon curves as lines.
+#'
+#' @param x A matrix of class "dragon_curve" as returned from [dragon_curve()]
+#'   with columns x and y.
+#' @param ... Other parameters passed to [`lines()`][graphics::lines],
+#'   e.g. `col` or `lwd`.
+#'
+#' @return None
+#'
+#' @examples plot(dragon_curve(9))
+#'
+#' @export
+plot.dragon_curve <- function(x, ...) {
+    plot(
+        NA,
+        xlim = range(x[, "x"]),
+        ylim = range(x[, "y"]),
+        asp = 1,
+        xaxs = "i",
+        yaxs = "i",
+        axes = FALSE,
+        ann = FALSE
+    )
+    lines(x, ...)
 }

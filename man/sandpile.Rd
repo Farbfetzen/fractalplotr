@@ -14,8 +14,8 @@ allocated to the values \code{0:4}. If \code{NULL}, the number of grains
 per cell are returned instead. Defaults to a grey palette.}
 }
 \value{
-A matrix, either containing colors or the number of grains per cell,
-  depending on the value of \code{colors}.
+A matrix of class "color_matrix", either containing colors or the
+number of grains per cell, depending on the value of \code{colors}.
 }
 \description{
 Drop some sand in the center and see it spread outwards.
@@ -25,6 +25,6 @@ s <- sandpile(1000)
 plot(s)
 
 }
-\references{
-\url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
+\seealso{
+\code{\link[=plot.color_matrix]{plot.color_matrix()}}
 }

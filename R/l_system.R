@@ -15,22 +15,22 @@
 
 
 # TODO:
-# - Make an S3 method for plotting, same as for the other fractals.
 # - Optional: For every line save the current angle, length, and stack depth and
 #   return those. Maybe useful for plotting (col, lwd, etc.). Color tree
 #   branches differently than leaves.
+# - Combine these two functions into one.
 
 #' L-system
 #'
-#' Expand, convert and plot L-systems or Lindenmayer systems.
+#' Generate L-systems.
 #'
-#' @details List of instructions:
+#' List of instructions:
 #' \describe{
-#' \item{F}{Draw a line in the current direction.}
-#' \item{+ or -}{Turn by angle.}
-#' \item{[ or ]}{Save and load current state.}
-#' \item{@}{Multiply line length by following numerical argument.}
-#' \item{!}{Flip the angle direction.}
+#'   \item{`F`}{Draw a line in the current direction.}
+#'   \item{`+` or `-`}{Turn by angle.}
+#'   \item{`[` or `]`}{Save or load current state.}
+#'   \item{`@`}{Multiply line length by following numerical argument.}
+#'   \item{`!`}{Flip the angle direction.}
 #' }
 #'
 #' @name l_system
@@ -45,18 +45,14 @@
 #' @param initial_angle The initial direction of the first line in radians.
 #' @param draw_f A character vector of symbols the replace with "F" in the
 #'   instructions.
-#' @param l_lines A data frame with the columns x0, y0, x1, and y1 determining
-#'   the endpoints of the line segments.
-#' @param ... Other parameters passed on to
-#'   \code{\link[graphics:segments]{segments}}.
 #'
-#' @return \code{grow_l_system} returns a string of instructions after \code{n}
+#' @return `grow_l_system()` returns a string of instructions after `n`
 #'   iterations of the system.
 #'
-#'   \code{convert_l_system} returns a data frame with the columns x0, y0, x1,
-#'   and y1 determining the endpoints of the line segments.
+#'   `convert_l_system()` returns a data frame of class "l_system" with the
+#'   columns x0, y0, x1, and y1 determining the endpoints of the line segments.
 #'
-#'   \code{plot_l_system} returns NULL.
+#' @seealso [plot.l_system()]
 #'
 #' @examples
 #' # plant:
@@ -73,10 +69,7 @@
 #'     angle = pi * 0.15,
 #'     initial_angle = pi * 0.45
 #' )
-#' plot_l_system(
-#'     l_lines = l_lines,
-#'     col = colorRampPalette(c("#008000", "#00FF00"))(100)
-#' )
+#' plot(l_lines, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 #'
 #' # dragon curve:
 #' l_system <- grow_l_system(
@@ -92,7 +85,7 @@
 #'     angle = pi / 2,
 #'     initial_angle = 0
 #' )
-#' plot_l_system(l_lines = l_lines, col = rainbow(nrow(l_lines)))
+#' plot(l_lines, col = rainbow(nrow(l_lines)))
 #'
 #' # sierpinski triangle:
 #' l_system <- grow_l_system(
@@ -109,7 +102,7 @@
 #'     initial_angle = pi / 3,
 #'     draw_f = "G"
 #' )
-#' plot_l_system(l_lines = l_lines)
+#' plot(l_lines)
 #'
 #' # changing line length and flipping angle:
 #' l_system <- grow_l_system(
@@ -121,7 +114,7 @@
 #'     instructions = l_system,
 #'     angle = pi * 0.125
 #' )
-#' plot_l_system(l_lines = l_lines)
+#' plot(l_lines)
 NULL
 
 
@@ -233,24 +226,40 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
         )
     }
     result <- data.frame(x0 = x0, y0 = y0, x1 = x1, y1 = y1)
+    class(result) <- c("l_system", class(result))
     result[!duplicated(result), ]
 }
 
 
-#' @rdname l_system
+#' Plot L-systems
+#'
+#' Plot L-systems as line segments.
+#'
+#' @param x A data frame of class "l_system" as returned from
+#'   [convert_l_system()] with the columns x0, y0, x1, and y1.
+#' @param ... Other parameters passed on to [graphics::segments()].
+#'
+#' @return None
+#'
+#' @examples
+#' L <- grow_l_system("X", list(`X` = "[@.7071-FX][@.7071+FX]"), 10)
+#' L <- convert_l_system(L, pi * 0.2)
+#' plot(L)
+#'
 #' @export
-plot_l_system <- function(l_lines, ...) {
+plot.l_system <- function(x, ...) {
     plot(
         NA,
-        xlim = range(l_lines$x0, l_lines$x1),
-        ylim = range(l_lines$y0, l_lines$y1),
+        xlim = range(x$x0, x$x1),
+        ylim = range(x$y0, x$y1),
         asp = 1,
+        xaxs = "i",
+        yaxs = "i",
         axes = FALSE,
         ann = FALSE
     )
-    segments(l_lines$x0, l_lines$y0, l_lines$x1, l_lines$y1, ...)
+    segments(x$x0, x$y0, x$x1, x$y1, ...)
 }
-
 
 
 # animated:

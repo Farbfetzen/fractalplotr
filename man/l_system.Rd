@@ -4,14 +4,11 @@
 \alias{l_system}
 \alias{grow_l_system}
 \alias{convert_l_system}
-\alias{plot_l_system}
 \title{L-system}
 \usage{
 grow_l_system(axiom, rules, n = 1)
 
 convert_l_system(instructions, angle, initial_angle = pi/2, draw_f = NULL)
-
-plot_l_system(l_lines, ...)
 }
 \arguments{
 \item{axiom}{A string of symbols representing the initial state of the
@@ -30,33 +27,25 @@ for every "+" or "-".}
 
 \item{draw_f}{A character vector of symbols the replace with "F" in the
 instructions.}
-
-\item{l_lines}{A data frame with the columns x0, y0, x1, and y1 determining
-the endpoints of the line segments.}
-
-\item{...}{Other parameters passed on to
-\code{\link[graphics:segments]{segments}}.}
 }
 \value{
-\code{grow_l_system} returns a string of instructions after \code{n}
-  iterations of the system.
+\code{grow_l_system()} returns a string of instructions after \code{n}
+iterations of the system.
 
-  \code{convert_l_system} returns a data frame with the columns x0, y0, x1,
-  and y1 determining the endpoints of the line segments.
-
-  \code{plot_l_system} returns NULL.
+\code{convert_l_system()} returns a data frame of class "l_system" with the
+columns x0, y0, x1, and y1 determining the endpoints of the line segments.
 }
 \description{
-Expand, convert and plot L-systems or Lindenmayer systems.
+Generate L-systems.
 }
 \details{
 List of instructions:
 \describe{
-\item{F}{Draw a line in the current direction.}
-\item{+ or -}{Turn by angle.}
-\item{[ or ]}{Save and load current state.}
-\item{@}{Multiply line length by following numerical argument.}
-\item{!}{Flip the angle direction.}
+\item{\code{F}}{Draw a line in the current direction.}
+\item{\code{+} or \code{-}}{Turn by angle.}
+\item{\code{[} or \verb{]}}{Save or load current state.}
+\item{\code{@}}{Multiply line length by following numerical argument.}
+\item{\code{!}}{Flip the angle direction.}
 }
 }
 \examples{
@@ -74,10 +63,7 @@ l_lines <- convert_l_system(
     angle = pi * 0.15,
     initial_angle = pi * 0.45
 )
-plot_l_system(
-    l_lines = l_lines,
-    col = colorRampPalette(c("#008000", "#00FF00"))(100)
-)
+plot(l_lines, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 
 # dragon curve:
 l_system <- grow_l_system(
@@ -93,7 +79,7 @@ l_lines <- convert_l_system(
     angle = pi / 2,
     initial_angle = 0
 )
-plot_l_system(l_lines = l_lines, col = rainbow(nrow(l_lines)))
+plot(l_lines, col = rainbow(nrow(l_lines)))
 
 # sierpinski triangle:
 l_system <- grow_l_system(
@@ -110,7 +96,7 @@ l_lines <- convert_l_system(
     initial_angle = pi / 3,
     draw_f = "G"
 )
-plot_l_system(l_lines = l_lines)
+plot(l_lines)
 
 # changing line length and flipping angle:
 l_system <- grow_l_system(
@@ -122,5 +108,8 @@ l_lines <- convert_l_system(
     instructions = l_system,
     angle = pi * 0.125
 )
-plot_l_system(l_lines = l_lines)
+plot(l_lines)
+}
+\seealso{
+\code{\link[=plot.l_system]{plot.l_system()}}
 }

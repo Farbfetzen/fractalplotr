@@ -19,14 +19,14 @@
 #' Drop some sand in the center and see it spread outwards.
 #'
 #' @param n The number of grains dropped in the center.
-#' @param colors A vector of length 4 or \code{NULL}. Specifies the colors to be
-#'   allocated to the values \code{0:4}. If \code{NULL}, the number of grains
+#' @param colors A vector of length 4 or `NULL`. Specifies the colors to be
+#'   allocated to the values `0:4`. If `NULL`, the number of grains
 #'   per cell are returned instead. Defaults to a grey palette.
 #'
-#' @return A matrix, either containing colors or the number of grains per cell,
-#'   depending on the value of \code{colors}.
+#' @return A matrix of class "color_matrix", either containing colors or the
+#'   number of grains per cell, depending on the value of `colors`.
 #'
-#' @references \url{https://en.wikipedia.org/wiki/Abelian_sandpile_model}
+#' @seealso [plot.color_matrix()]
 #'
 #' @examples
 #' s <- sandpile(1000)
@@ -109,7 +109,7 @@ sandpile <- function(n, colors = grey.colors(4, start = 1, end = 0)) {
 
     # Make the quarter matrix whole:
     if (n > 3L) {
-        pile <- cbind(pile, rotate(pile)[, -1])
+        pile <- cbind(pile, rotate(pile, -1)[, -1])
         pile <- rbind(pile, mirror(pile, "vertical")[-1, ])
     }
 

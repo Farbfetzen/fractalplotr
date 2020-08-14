@@ -8,6 +8,7 @@
 ## notes
 - Make a NEWS.md file
 - remove the wikipedia links. only include non-trivial references
+- add function to convert from degrees to radians
 
 # some interesting L-systems
 axiom = "FX"

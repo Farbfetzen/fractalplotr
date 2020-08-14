@@ -4,24 +4,23 @@
 \alias{dragon_curve}
 \title{Dragon Curve}
 \usage{
-dragon_curve(order)
+dragon_curve(n)
 }
 \arguments{
-\item{order}{The order of the dragon curve, i.e. how many times it will be
-folded.}
+\item{n}{How often the curve will be folded. Must be at least 1.}
 }
 \value{
-A matrix with two columns for the x and y coordinates of the folds.
+A matrix of class "dragon_curve" with two columns for the x and y
+coordinates of the folds.
 }
 \description{
 Repeatedly fold a line to create a space-filling curve.
 }
 \examples{
-d <- dragon_curve(4)
-d
+d <- dragon_curve(9)
 plot(d)
 
 }
-\references{
-\url{https://en.wikipedia.org/wiki/Dragon_curve}
+\seealso{
+\code{\link[=plot.dragon_curve]{plot.dragon_curve()}}
 }

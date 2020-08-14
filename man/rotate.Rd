@@ -8,30 +8,28 @@
 \usage{
 rotate(fractal, n)
 
-\method{rotate}{default}(fractal, n = 1)
+\method{rotate}{default}(fractal, n)
 
-\method{rotate}{dragon_curve}(fractal, n = 1)
+\method{rotate}{dragon_curve}(fractal, n)
 }
 \arguments{
 \item{fractal}{The fractal to be rotated.}
 
-\item{n}{A positive or negative integer specifying the number and direction
-of 90 degree turns. A positive value turns clockwise and a negative value
-turns counterclockwise.}
+\item{n}{An integer specifying the number and direction of turns. A positive
+value turns counterclockwise and a negative value turns clockwise.}
 }
 \value{
 The rotated fractal.
 }
 \description{
-Rotate a fractal either clockwise or counterclockwise by multiples of 90
-degrees.
+Rotate a fractal by multiples of 90 degrees.
 }
 \examples{
 d <- dragon_curve(10)
-d_r <- rotate(d, 1)  # rotate once to the right
-d_l <- rotate(d, -1)  # rotate once to the left
+d_l <- rotate(d, 1)  # rotate once to the left
+d_r <- rotate(d, -2)  # rotate twice to the right
 plot(d)
-plot(d_r)
 plot(d_l)
+plot(d_r)
 
 }

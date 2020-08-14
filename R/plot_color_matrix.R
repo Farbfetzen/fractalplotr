@@ -14,33 +14,18 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-#' Plot fractals
+#' Plot color matrices
 #'
-#' @name plot_fractal
+#' Plot objects of class "color_matrix" as returned from e.g. [mandelbrot()] or
+#' [sandpile()].
 #'
-#' @param x A fractal object.
-#' @param ... Futher arguments passed on to \code{plot()}. Only used for dragon
-#'   curves.
+#' @param x A matrix of color values.
+#' @param ... Not used.
 #'
-#' @examples
-#' plot(dragon_curve(12), col = "orange")
-NULL
-
-
-#' @rdname plot_fractal
-#' @param pretty TODO: Explain what this does exactly. Ant to set it to false if
-#'   the user wants to customize the plot.
-#' @export
-plot.dragon_curve <- function(x, pretty = TRUE, ...) {
-    if (pretty) {
-        plot.default(x, type = "l", asp = 1, axes = FALSE, ann = FALSE, ...)
-    } else {
-        plot.default(x, ...)
-    }
-}
-
-
-#' @rdname plot_fractal
+#' @return None
+#'
+#' @examples plot(mandelbrot(width = 200, height = 150))
+#'
 #' @export
 plot.color_matrix <- function(x, ...) {
     grid.newpage()

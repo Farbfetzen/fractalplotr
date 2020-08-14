@@ -35,24 +35,18 @@ in regular intervals to check for updates from those sources.
 ### L-system plant
 
 ``` r
-l_system <- grow_l_system(
+plant <- l_system(
     axiom = "X",
     rules = list(
         `X` = "F+[[X]-X]-F[-FX]+X",
         `F` = "FF"
     ),
-    n = 7
-)
-plant_lines <- convert_l_system(
-    l_system,
+    n = 7,
     angle = pi * 0.15,
     initial_angle = pi * 0.45
 )
 par(mar = rep(0, 4))
-plot_l_system(
-    plant_lines,
-    col = colorRampPalette(c("#008000", "#00FF00"))(100)
-)
+plot(plant, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 ```
 
 ![](readme_figures/README-l_plant-1.png)<!-- -->

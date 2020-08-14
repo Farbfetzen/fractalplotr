@@ -7,6 +7,7 @@
 * Renamed `rotate.default()` to `rotate.matrix()` to make it more generally applicable for matrices and prevent unintended usage with wrong classes.
 * Condensed the functions `grow_l_system()` and `convert_l_system()` into `l_system()`.
 * `l_system()` optionally returns additional information for all lines: length, angle, and stack depth. This is useful for plotting, maybe change the color depending on line length.
+* Added `radians()` to conveniently convert from degrees to radians.
 
 # fractalplotr (0.3.0)
 

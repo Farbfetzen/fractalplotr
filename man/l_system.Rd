@@ -92,8 +92,8 @@ l_triangle <- l_system(
         `G` = "GG"
     ),
     n = 6,
-    angle = 2 * pi / 3,
-    initial_angle = pi / 3,
+    angle = radians(120),
+    initial_angle = radians(60),
     draw_f = "G"
 )
 plot(l_triangle)
@@ -104,7 +104,7 @@ l_tree <- l_system(
     axiom = "X",
     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
     n = 10,
-    angle = pi * 0.125,
+    angle = radians(22.5),
     extra_info = TRUE
 )
 plot(

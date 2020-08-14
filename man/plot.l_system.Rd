@@ -19,12 +19,18 @@ None
 Plot L-systems as line segments.
 }
 \examples{
-L <- l_system(
-    "X",
-    list(`X` = "[@.7071-FX][@.7071+FX]"),
+l_tree <- l_system(
+    axiom = "X",
+    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
     n = 10,
-    angle = pi * 0.2
+    angle = pi * 0.125,
+    extra_info = TRUE
 )
-plot(L)
+# using the extra_info argument to vary color and line thickness:
+plot(
+    l_tree,
+    col = ifelse(l_tree$depth < 6, "sienna", "forestgreen"),
+    lwd = l_tree$depth / max(l_tree$depth) * -2 + 3
+)
 
 }

@@ -14,13 +14,6 @@
 # along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-# TODO:
-# - Optional: For every line save the current angle, length, and stack depth and
-#   return those. Maybe useful for plotting (col, lwd, etc.). Color tree
-#   branches differently than leaves.
-# - Combine these two functions into one.
-
-
 #' L-system
 #'
 #' Generate L-systems.
@@ -43,14 +36,16 @@
 #' @param initial_angle The initial angle of the first line in radians.
 #' @param draw_f A character vector of symbols the replace with "F" in the
 #'   instructions.
-#' @param return_string Logical, defaults to `FALSE`. If `TRUE` the function
-#'   returns the string of instructions after `n` iterations. Otherwise they are
-#'   converted to line segments.
+#' @param return_string Logical. If `TRUE` the function returns the string of
+#'   instructions after `n` iterations. Otherwise they are converted to line
+#'   segments.
+#' @param extra_info Logical. If `TRUE` return additional information for all
+#'   lines: length, angle, stack depth.
 #'
 #' @return Depending on the value of `return_string` either the string of
 #'   instructions after `n` iterations or a data frame of class "l_system" with
 #'   the columns x0, y0, x1, and y1 determining the endpoints of the line
-#'   segments.
+#'   segments. Includes additional columns if `extra_info` is `TRUE`.
 #'
 #' @seealso [plot.l_system()]
 #'
@@ -95,14 +90,20 @@
 #' )
 #' plot(l_triangle)
 #'
-#' # changing line length and flipping angle:ex
+#' # changing line length and flipping angle and using the extra_info argument
+#' # to vary color and line thickness:
 #' l_tree <- l_system(
 #'     axiom = "X",
 #'     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-#'     n = 9,
-#'     angle = pi * 0.125
+#'     n = 10,
+#'     angle = pi * 0.125,
+#'     extra_info = TRUE
 #' )
-#' plot(l_tree)
+#' plot(
+#'     l_tree,
+#'     col = ifelse(l_tree$depth < 6, "sienna", "forestgreen"),
+#'     lwd = l_tree$depth / max(l_tree$depth) * -2 + 3
+#' )
 #'
 #' @export
 l_system <- function(axiom,
@@ -111,7 +112,9 @@ l_system <- function(axiom,
                      angle,
                      initial_angle = pi / 2,
                      draw_f = NULL,
-                     return_string = FALSE) {
+                     return_string = FALSE,
+                     extra_info = FALSE) {
+    stopifnot(n > 0)
     rule_chars <- names(rules)
     for (i in seq_len(n)) {
         new <- axiom <- strsplit(axiom, "")[[1]]
@@ -131,6 +134,9 @@ l_system <- function(axiom,
         stop("Instructions do not contain any 'F'.")
     }
     x0 <- y0 <- x1 <- y1 <- numeric(n_lines)
+    if (extra_info) {
+        extra_len <- extra_angle <- extra_depth <- numeric(n_lines)
+    }
     position <- c(0, 0)
     current_angle <- initial_angle
     line_idx <- 0
@@ -162,6 +168,12 @@ l_system <- function(axiom,
                     c(cos(current_angle), sin(current_angle)) * line_length
                 x1[line_idx] <- position[1]
                 y1[line_idx] <- position[2]
+
+                if (extra_info) {
+                    extra_len[line_idx] <- line_length
+                    extra_angle[line_idx] <- current_angle
+                    extra_depth[line_idx] <- save_idx
+                }
             },
             `+` = {
                 # change line angle
@@ -210,6 +222,14 @@ l_system <- function(axiom,
         )
     }
     result <- data.frame(x0 = x0, y0 = y0, x1 = x1, y1 = y1)
+    if (extra_info) {
+        result <- cbind(
+            result,
+            length = extra_len,
+            angle = extra_angle,
+            depth = extra_depth
+        )
+    }
     class(result) <- c("l_system", class(result))
     result[!duplicated(result), ]
 }
@@ -226,13 +246,19 @@ l_system <- function(axiom,
 #' @return None
 #'
 #' @examples
-#' L <- l_system(
-#'     "X",
-#'     list(`X` = "[@.7071-FX][@.7071+FX]"),
+#' l_tree <- l_system(
+#'     axiom = "X",
+#'     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
 #'     n = 10,
-#'     angle = pi * 0.2
+#'     angle = pi * 0.125,
+#'     extra_info = TRUE
 #' )
-#' plot(L)
+#' # using the extra_info argument to vary color and line thickness:
+#' plot(
+#'     l_tree,
+#'     col = ifelse(l_tree$depth < 6, "sienna", "forestgreen"),
+#'     lwd = l_tree$depth / max(l_tree$depth) * -2 + 3
+#' )
 #'
 #' @export
 plot.l_system <- function(x, ...) {

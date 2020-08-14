@@ -11,7 +11,8 @@ l_system(
   angle,
   initial_angle = pi/2,
   draw_f = NULL,
-  return_string = FALSE
+  return_string = FALSE,
+  extra_info = FALSE
 )
 }
 \arguments{
@@ -30,15 +31,18 @@ for every "+" or "-".}
 \item{draw_f}{A character vector of symbols the replace with "F" in the
 instructions.}
 
-\item{return_string}{Logical, defaults to \code{FALSE}. If \code{TRUE} the function
-returns the string of instructions after \code{n} iterations. Otherwise they are
-converted to line segments.}
+\item{return_string}{Logical. If \code{TRUE} the function returns the string of
+instructions after \code{n} iterations. Otherwise they are converted to line
+segments.}
+
+\item{extra_info}{Logical. If \code{TRUE} return additional information for all
+lines: length, angle, stack depth.}
 }
 \value{
 Depending on the value of \code{return_string} either the string of
 instructions after \code{n} iterations or a data frame of class "l_system" with
 the columns x0, y0, x1, and y1 determining the endpoints of the line
-segments.
+segments. Includes additional columns if \code{extra_info} is \code{TRUE}.
 }
 \description{
 Generate L-systems.
@@ -94,14 +98,20 @@ l_triangle <- l_system(
 )
 plot(l_triangle)
 
-# changing line length and flipping angle:ex
+# changing line length and flipping angle and using the extra_info argument
+# to vary color and line thickness:
 l_tree <- l_system(
     axiom = "X",
     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-    n = 9,
-    angle = pi * 0.125
+    n = 10,
+    angle = pi * 0.125,
+    extra_info = TRUE
 )
-plot(l_tree)
+plot(
+    l_tree,
+    col = ifelse(l_tree$depth < 6, "sienna", "forestgreen"),
+    lwd = l_tree$depth / max(l_tree$depth) * -2 + 3
+)
 
 }
 \seealso{

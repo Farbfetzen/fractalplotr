@@ -41,41 +41,28 @@ axiom <- "X"
 rules <- list(`X` = "[@.7071-FX][@.7071+FX]")
 angle <- pi * 0.2  # Change between 0 and pi
 n <- 10
-plot_l_system(convert_l_system(grow_l_system(axiom, rules, n), angle))
-
-
-Example for "modify line length" and "flip direction":
-axiom <- "X"
-rules <- list(`X` = "F[+@.7X]F![-@.6X]F")
-angle <- pi * 0.125
-n <- 10
-plot_l_system(convert_l_system(grow_l_system(axiom, rules, n), angle))
-
+plot(l_system(axiom, rules, n, angle))
 
 https://www.reddit.com/r/generative/comments/i58xim/120%C2%BA_fractal_tree_lsystem/g0nfm17/
 axiom <- "[FX]++[FX]"
 rules <- list(`X` = "[@.7071+[FX]++[FX]]")
 angle <- pi * 2 / 3
 n <- 13
-foo <- convert_l_system(grow_l_system(axiom, rules, n), angle, 0)
+foo <- l_system(axiom, rules, n, angle, 0)
 col <- terrain.colors(1000)
-plot_l_system(foo, col = col)
+plot(foo, col = col)
 
 
-l_system <- grow_l_system(
-    axiom = "X",
-    rules = list(
-        `X` = "F+[[X]-X]-F[-FX]+X",
-        `F` = "FF"
+tree <- l_system(
+    "F",
+    list(
+        `F` = "FF+[+F-F-F]-[-F+F+F]"
     ),
-    n = 7
+    4,
+    radians(25),
+    extra_info = TRUE
 )
-l_lines <- convert_l_system(
-    instructions = l_system,
-    angle = pi * 0.15,
-    initial_angle = pi * 0.45
-)
-plot_l_system(
-    l_lines = l_lines,
-    col = terrain.colors(100)
+plot(
+    tree,
+    col = hsv(BastiHzR::linear_map(tree$angle))
 )

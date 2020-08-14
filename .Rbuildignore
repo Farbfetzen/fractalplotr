@@ -7,5 +7,5 @@
 ^LICENSE\.txt$
 ^\.directory$
 ^readme_figures$
-^dev_notes\.md$
+^dev_notes\.txt$
 ^data-raw$

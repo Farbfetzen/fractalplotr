@@ -40,9 +40,8 @@ rotate <- function(fractal, n) {
 
 #' @rdname rotate
 #' @export
-rotate.default <- function(fractal, n) {
-    # For class color_matrix or any other matrix that is not of class
-    # dragon_curve.
+rotate.matrix <- function(fractal, n) {
+    # Also valid for class "color_matrix", of course.
     clockwise <- n < 0
     cls <- class(fractal)
     for (i in seq_len(abs(n))) {

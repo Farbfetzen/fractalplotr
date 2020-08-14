@@ -2,13 +2,13 @@
 % Please edit documentation in R/rotate.R
 \name{rotate}
 \alias{rotate}
-\alias{rotate.default}
+\alias{rotate.matrix}
 \alias{rotate.dragon_curve}
 \title{Rotate Fractals}
 \usage{
 rotate(fractal, n)
 
-\method{rotate}{default}(fractal, n)
+\method{rotate}{matrix}(fractal, n)
 
 \method{rotate}{dragon_curve}(fractal, n)
 }

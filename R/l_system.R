@@ -41,6 +41,9 @@
 #'   segments.
 #' @param extra_info Logical. If `TRUE` return additional information for all
 #'   lines: length, angle, stack depth.
+#' @param remove_duplicates Logical. If `TRUE` remove duplicated lines from the
+#'   result. Does not consider the direction of the lines, so a line from
+#'   (0, 0) to (1, 1) is not a duplicate of a line from (1, 1) to (0, 0).
 #'
 #' @return Depending on the value of `return_string` either the string of
 #'   instructions after `n` iterations or a data frame of class "l_system" with
@@ -113,7 +116,8 @@ l_system <- function(axiom,
                      initial_angle = pi / 2,
                      draw_f = NULL,
                      return_string = FALSE,
-                     extra_info = FALSE) {
+                     extra_info = FALSE,
+                     remove_duplicates = TRUE) {
     stopifnot(n > 0)
     rule_chars <- names(rules)
     for (i in seq_len(n)) {
@@ -231,7 +235,10 @@ l_system <- function(axiom,
         )
     }
     class(result) <- c("l_system", class(result))
-    result[!duplicated(result), ]
+    if (remove_duplicates) {
+        result <- result[!duplicated(result), ]
+    }
+    result
 }
 
 

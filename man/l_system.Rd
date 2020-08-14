@@ -12,7 +12,8 @@ l_system(
   initial_angle = pi/2,
   draw_f = NULL,
   return_string = FALSE,
-  extra_info = FALSE
+  extra_info = FALSE,
+  remove_duplicates = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,10 @@ segments.}
 
 \item{extra_info}{Logical. If \code{TRUE} return additional information for all
 lines: length, angle, stack depth.}
+
+\item{remove_duplicates}{Logical. If \code{TRUE} remove duplicated lines from the
+result. Does not consider the direction of the lines, so a line from
+(0, 0) to (1, 1) is not a duplicate of a line from (1, 1) to (0, 0).}
 }
 \value{
 Depending on the value of \code{return_string} either the string of

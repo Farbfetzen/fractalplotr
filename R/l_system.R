@@ -20,11 +20,12 @@
 #   branches differently than leaves.
 # - Combine these two functions into one.
 
+
 #' L-system
 #'
 #' Generate L-systems.
 #'
-#' List of instructions:
+#' List of valid instructions for converting the string into lines:
 #' \describe{
 #'   \item{`F`}{Draw a line in the current direction.}
 #'   \item{`+` or `-`}{Turn by angle.}
@@ -33,94 +34,84 @@
 #'   \item{`!`}{Flip the angle direction.}
 #' }
 #'
-#' @name l_system
-#'
 #' @param axiom A string of symbols representing the initial state of the
 #'   system.
 #' @param rules A list of named strings forming the rules.
 #' @param n The number of iterations.
-#' @param instructions A string of symbols to convert to line segments.
 #' @param angle The angle in radians which determines the change in direction
 #'   for every "+" or "-".
-#' @param initial_angle The initial direction of the first line in radians.
+#' @param initial_angle The initial angle of the first line in radians.
 #' @param draw_f A character vector of symbols the replace with "F" in the
 #'   instructions.
+#' @param return_string Logical, defaults to `FALSE`. If `TRUE` the function
+#'   returns the string of instructions after `n` iterations. Otherwise they are
+#'   converted to line segments.
 #'
-#' @return `grow_l_system()` returns a string of instructions after `n`
-#'   iterations of the system.
-#'
-#'   `convert_l_system()` returns a data frame of class "l_system" with the
-#'   columns x0, y0, x1, and y1 determining the endpoints of the line segments.
+#' @return Depending on the value of `return_string` either the string of
+#'   instructions after `n` iterations or a data frame of class "l_system" with
+#'   the columns x0, y0, x1, and y1 determining the endpoints of the line
+#'   segments.
 #'
 #' @seealso [plot.l_system()]
 #'
 #' @examples
 #' # plant:
-#' l_system <- grow_l_system(
+#' l_plant <- l_system(
 #'     axiom = "X",
 #'     rules = list(
 #'         `X` = "F+[[X]-X]-F[-FX]+X",
 #'         `F` = "FF"
 #'     ),
-#'     n = 7
-#' )
-#' l_lines <- convert_l_system(
-#'     instructions = l_system,
+#'     n = 7,
 #'     angle = pi * 0.15,
 #'     initial_angle = pi * 0.45
 #' )
-#' plot(l_lines, col = colorRampPalette(c("#008000", "#00FF00"))(100))
+#' plot(l_plant, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 #'
 #' # dragon curve:
-#' l_system <- grow_l_system(
+#' l_dragon <- l_system(
 #'     axiom = "FX",
 #'     rules = list(
 #'         `X` = "X+YF+",
 #'         `Y` = "-FX-Y"
 #'     ),
-#'     n = 12
-#' )
-#' l_lines <- convert_l_system(
-#'     instructions = l_system,
+#'     n = 12,
 #'     angle = pi / 2,
 #'     initial_angle = 0
 #' )
-#' plot(l_lines, col = rainbow(nrow(l_lines)))
+#' plot(l_dragon, col = rainbow(nrow(l_dragon)))
 #'
 #' # sierpinski triangle:
-#' l_system <- grow_l_system(
+#' l_triangle <- l_system(
 #'     axiom = "F-G-G",
 #'     rules = list(
 #'         `F` = "F-G+F+G-F",
 #'         `G` = "GG"
 #'     ),
-#'     n = 6
-#' )
-#' l_lines <- convert_l_system(
-#'     instructions = l_system,
+#'     n = 6,
 #'     angle = 2 * pi / 3,
 #'     initial_angle = pi / 3,
 #'     draw_f = "G"
 #' )
-#' plot(l_lines)
+#' plot(l_triangle)
 #'
-#' # changing line length and flipping angle:
-#' l_system <- grow_l_system(
+#' # changing line length and flipping angle:ex
+#' l_tree <- l_system(
 #'     axiom = "X",
 #'     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-#'     n = 9
-#' )
-#' l_lines <- convert_l_system(
-#'     instructions = l_system,
+#'     n = 9,
 #'     angle = pi * 0.125
 #' )
-#' plot(l_lines)
-NULL
-
-
-#' @rdname l_system
+#' plot(l_tree)
+#'
 #' @export
-grow_l_system <- function(axiom, rules, n = 1) {
+l_system <- function(axiom,
+                     rules,
+                     n = 1,
+                     angle,
+                     initial_angle = pi / 2,
+                     draw_f = NULL,
+                     return_string = FALSE) {
     rule_chars <- names(rules)
     for (i in seq_len(n)) {
         new <- axiom <- strsplit(axiom, "")[[1]]
@@ -129,19 +120,12 @@ grow_l_system <- function(axiom, rules, n = 1) {
         }
         axiom <- paste0(new, collapse = "")
     }
-    axiom
-}
+    if (return_string) return(axiom)
 
-
-#' @rdname l_system
-#' @export
-convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
-                             draw_f = NULL) {
-    # angles: 0 = right, pi/2 = up, pi = left, pi*3/2 = down
     for (char in draw_f) {
-        instructions <- gsub(char, "F", instructions, fixed = TRUE)
+        axiom <- gsub(char, "F", axiom, fixed = TRUE)
     }
-    instructions <- strsplit(instructions, "")[[1]]
+    instructions <- strsplit(axiom, "")[[1]]
     n_lines <- sum(instructions == "F")
     if (n_lines == 0) {
         stop("Instructions do not contain any 'F'.")
@@ -236,14 +220,18 @@ convert_l_system <- function(instructions, angle, initial_angle = pi / 2,
 #' Plot L-systems as line segments.
 #'
 #' @param x A data frame of class "l_system" as returned from
-#'   [convert_l_system()] with the columns x0, y0, x1, and y1.
+#'   [l_system()] with the columns x0, y0, x1, and y1.
 #' @param ... Other parameters passed on to [graphics::segments()].
 #'
 #' @return None
 #'
 #' @examples
-#' L <- grow_l_system("X", list(`X` = "[@.7071-FX][@.7071+FX]"), 10)
-#' L <- convert_l_system(L, pi * 0.2)
+#' L <- l_system(
+#'     "X",
+#'     list(`X` = "[@.7071-FX][@.7071+FX]"),
+#'     n = 10,
+#'     angle = pi * 0.2
+#' )
 #' plot(L)
 #'
 #' @export

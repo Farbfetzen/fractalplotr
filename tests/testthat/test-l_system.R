@@ -15,16 +15,13 @@
 
 
 test_that("L-system plant generates correctly", {
-    l_system <- grow_l_system(
+    l_plant <- l_system(
         axiom = "X",
         rules = list(
             `X` = "F+[[X]-X]-F[-FX]+X",
             `F` = "FF"
         ),
-        n = 7
-    )
-    l_plant <- convert_l_system(
-        instructions = l_system,
+        n = 7,
         angle = pi * 0.15,
         initial_angle = pi * 0.45
     )
@@ -33,16 +30,13 @@ test_that("L-system plant generates correctly", {
 
 
 test_that("L-system dragon curve generates correctly", {
-    l_system <- grow_l_system(
+    l_dragon <- l_system(
         axiom = "FX",
         rules = list(
             `X` = "X+YF+",
             `Y` = "-FX-Y"
         ),
-        n = 12
-    )
-    l_dragon <- convert_l_system(
-        instructions = l_system,
+        n = 12,
         angle = pi / 2
     )
     expect_identical(l_dragon, test_l_dragon)
@@ -50,15 +44,13 @@ test_that("L-system dragon curve generates correctly", {
 
 
 test_that("L-system sierpinski triangle generates correctly", {
-    l_system <- grow_l_system(
+    l_triangle <- l_system(
         axiom = "F-G-G",
         rules = list(
             `F` = "F-G+F+G-F",
             `G` = "GG"
         ),
-        n = 6)
-    l_triangle <- convert_l_system(
-        instructions = l_system,
+        n = 6,
         angle = 2 * pi / 3,
         initial_angle = pi / 3
     )
@@ -67,12 +59,10 @@ test_that("L-system sierpinski triangle generates correctly", {
 
 
 test_that("L-system line length change and angle flip work", {
-    l_system <- grow_l_system(
+    l_line_length_angle_flip <- l_system(
         axiom = "X",
         rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-        n = 9)
-    l_line_length_angle_flip <- convert_l_system(
-        instructions = l_system,
+        n = 9,
         angle = pi * 0.125
     )
     expect_identical(l_line_length_angle_flip, test_l_line_length_angle_flip)

@@ -18,56 +18,48 @@
 
 
 # L-system plant
-test_l_plant <- convert_l_system(
-    instructions = grow_l_system(
-        axiom = "X",
-        rules = list(
-            `X` = "F+[[X]-X]-F[-FX]+X",
-            `F` = "FF"
-        ),
-        n = 7
+test_l_plant <- l_system(
+    axiom = "X",
+    rules = list(
+        `X` = "F+[[X]-X]-F[-FX]+X",
+        `F` = "FF"
     ),
+    n = 7,
     angle = pi * 0.15,
     initial_angle = pi * 0.45
 )
 
 
 # L-system dragon curve
-test_l_dragon <- convert_l_system(
-    instructions = grow_l_system(
-        axiom = "FX",
-        rules = list(
-            `X` = "X+YF+",
-            `Y` = "-FX-Y"
-        ),
-        n = 12
+test_l_dragon <- l_system(
+    axiom = "FX",
+    rules = list(
+        `X` = "X+YF+",
+        `Y` = "-FX-Y"
     ),
+    n = 12,
     angle = pi / 2
 )
 
 
 # L-system sierpinski triangle
-test_l_triangle <- convert_l_system(
-    instructions = grow_l_system(
-        axiom = "F-G-G",
-        rules = list(
-            `F` = "F-G+F+G-F",
-            `G` = "GG"
-        ),
-        n = 6
+test_l_triangle <- l_system(
+    axiom = "F-G-G",
+    rules = list(
+        `F` = "F-G+F+G-F",
+        `G` = "GG"
     ),
+    n = 6,
     angle = 2 * pi / 3,
     initial_angle = pi / 3
 )
 
 
 # L-system with changing line length and flipping angle
-test_l_line_length_angle_flip <- convert_l_system(
-    instructions = grow_l_system(
-        axiom = "X",
-        rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-        n = 9
-    ),
+test_l_line_length_angle_flip <- l_system(
+    axiom = "X",
+    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+    n = 9,
     angle = pi * 0.125
 )
 

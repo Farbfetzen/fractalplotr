@@ -2,13 +2,17 @@
 % Please edit documentation in R/l_system.R
 \name{l_system}
 \alias{l_system}
-\alias{grow_l_system}
-\alias{convert_l_system}
 \title{L-system}
 \usage{
-grow_l_system(axiom, rules, n = 1)
-
-convert_l_system(instructions, angle, initial_angle = pi/2, draw_f = NULL)
+l_system(
+  axiom,
+  rules,
+  n = 1,
+  angle,
+  initial_angle = pi/2,
+  draw_f = NULL,
+  return_string = FALSE
+)
 }
 \arguments{
 \item{axiom}{A string of symbols representing the initial state of the
@@ -18,28 +22,29 @@ system.}
 
 \item{n}{The number of iterations.}
 
-\item{instructions}{A string of symbols to convert to line segments.}
-
 \item{angle}{The angle in radians which determines the change in direction
 for every "+" or "-".}
 
-\item{initial_angle}{The initial direction of the first line in radians.}
+\item{initial_angle}{The initial angle of the first line in radians.}
 
 \item{draw_f}{A character vector of symbols the replace with "F" in the
 instructions.}
+
+\item{return_string}{Logical, defaults to \code{FALSE}. If \code{TRUE} the function
+returns the string of instructions after \code{n} iterations. Otherwise they are
+converted to line segments.}
 }
 \value{
-\code{grow_l_system()} returns a string of instructions after \code{n}
-iterations of the system.
-
-\code{convert_l_system()} returns a data frame of class "l_system" with the
-columns x0, y0, x1, and y1 determining the endpoints of the line segments.
+Depending on the value of \code{return_string} either the string of
+instructions after \code{n} iterations or a data frame of class "l_system" with
+the columns x0, y0, x1, and y1 determining the endpoints of the line
+segments.
 }
 \description{
 Generate L-systems.
 }
 \details{
-List of instructions:
+List of valid instructions for converting the string into lines:
 \describe{
 \item{\code{F}}{Draw a line in the current direction.}
 \item{\code{+} or \code{-}}{Turn by angle.}
@@ -50,65 +55,54 @@ List of instructions:
 }
 \examples{
 # plant:
-l_system <- grow_l_system(
+l_plant <- l_system(
     axiom = "X",
     rules = list(
         `X` = "F+[[X]-X]-F[-FX]+X",
         `F` = "FF"
     ),
-    n = 7
-)
-l_lines <- convert_l_system(
-    instructions = l_system,
+    n = 7,
     angle = pi * 0.15,
     initial_angle = pi * 0.45
 )
-plot(l_lines, col = colorRampPalette(c("#008000", "#00FF00"))(100))
+plot(l_plant, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 
 # dragon curve:
-l_system <- grow_l_system(
+l_dragon <- l_system(
     axiom = "FX",
     rules = list(
         `X` = "X+YF+",
         `Y` = "-FX-Y"
     ),
-    n = 12
-)
-l_lines <- convert_l_system(
-    instructions = l_system,
+    n = 12,
     angle = pi / 2,
     initial_angle = 0
 )
-plot(l_lines, col = rainbow(nrow(l_lines)))
+plot(l_dragon, col = rainbow(nrow(l_dragon)))
 
 # sierpinski triangle:
-l_system <- grow_l_system(
+l_triangle <- l_system(
     axiom = "F-G-G",
     rules = list(
         `F` = "F-G+F+G-F",
         `G` = "GG"
     ),
-    n = 6
-)
-l_lines <- convert_l_system(
-    instructions = l_system,
+    n = 6,
     angle = 2 * pi / 3,
     initial_angle = pi / 3,
     draw_f = "G"
 )
-plot(l_lines)
+plot(l_triangle)
 
-# changing line length and flipping angle:
-l_system <- grow_l_system(
+# changing line length and flipping angle:ex
+l_tree <- l_system(
     axiom = "X",
     rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
-    n = 9
-)
-l_lines <- convert_l_system(
-    instructions = l_system,
+    n = 9,
     angle = pi * 0.125
 )
-plot(l_lines)
+plot(l_tree)
+
 }
 \seealso{
 \code{\link[=plot.l_system]{plot.l_system()}}

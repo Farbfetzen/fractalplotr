@@ -21,7 +21,7 @@ Plot L-systems as line segments.
 \examples{
 l_tree <- l_system(
     axiom = "X",
-    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+    rules = list(X = "F[+@.7X]F![-@.6X]F"),
     n = 10,
     angle = radians(22.5),
     extra_info = TRUE

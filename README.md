@@ -7,10 +7,10 @@ This package lets you create and plot fractals.
 
 currently implemented:
 
-  - [Dragon curve](https://en.wikipedia.org/wiki/Dragon_curve)
-  - [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
-  - [Sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model)
-  - [L-systems](https://en.wikipedia.org/wiki/L-system)
+-   [Dragon curve](https://en.wikipedia.org/wiki/Dragon_curve)
+-   [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
+-   [Sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model)
+-   [L-systems](https://en.wikipedia.org/wiki/L-system)
 
 ## Installation
 
@@ -38,8 +38,8 @@ in regular intervals to check for updates from those sources.
 plant <- l_system(
     axiom = "X",
     rules = list(
-        `X` = "F+[[X]-X]-F[-FX]+X",
-        `F` = "FF"
+        X = "F+[[X]-X]-F[-FX]+X",
+        F = "FF"
     ),
     n = 7,
     angle = pi * 0.15,

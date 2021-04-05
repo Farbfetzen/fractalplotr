@@ -53,12 +53,12 @@ segments. Includes additional columns if \code{extra_info} is \code{TRUE}.
 Generate L-systems.
 }
 \details{
-List of valid instructions for converting the string into lines:
+List of valid instructions:
 \describe{
 \item{\code{F}}{Draw a line in the current direction.}
 \item{\code{+} or \code{-}}{Turn by angle.}
 \item{\code{[} or \verb{]}}{Save or load current state.}
-\item{\code{@}}{Multiply line length by following numerical argument.}
+\item{\code{@}}{Multiply the line length by the following numerical argument.}
 \item{\code{!}}{Flip the angle direction.}
 }
 }
@@ -67,8 +67,8 @@ List of valid instructions for converting the string into lines:
 l_plant <- l_system(
     axiom = "X",
     rules = list(
-        `X` = "F+[[X]-X]-F[-FX]+X",
-        `F` = "FF"
+        X = "F+[[X]-X]-F[-FX]+X",
+        F = "FF"
     ),
     n = 7,
     angle = pi * 0.15,
@@ -80,8 +80,8 @@ plot(l_plant, col = colorRampPalette(c("#008000", "#00FF00"))(100))
 l_dragon <- l_system(
     axiom = "FX",
     rules = list(
-        `X` = "X+YF+",
-        `Y` = "-FX-Y"
+        X = "X+YF+",
+        Y = "-FX-Y"
     ),
     n = 12,
     angle = pi / 2,
@@ -93,8 +93,8 @@ plot(l_dragon, col = rainbow(nrow(l_dragon)))
 l_triangle <- l_system(
     axiom = "F-G-G",
     rules = list(
-        `F` = "F-G+F+G-F",
-        `G` = "GG"
+        F = "F-G+F+G-F",
+        G = "GG"
     ),
     n = 6,
     angle = radians(120),
@@ -103,11 +103,11 @@ l_triangle <- l_system(
 )
 plot(l_triangle)
 
-# changing line length and flipping angle and using the extra_info argument
+# changing line length, flipping angle, and using extra_info = TRUE
 # to vary color and line thickness:
 l_tree <- l_system(
     axiom = "X",
-    rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+    rules = list(X = "F[+@.7X]F![-@.6X]F"),
     n = 10,
     angle = radians(22.5),
     extra_info = TRUE

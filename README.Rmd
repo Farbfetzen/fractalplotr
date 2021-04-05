@@ -48,8 +48,8 @@ in regular intervals to check for updates from those sources.
 plant <- l_system(
     axiom = "X",
     rules = list(
-        `X` = "F+[[X]-X]-F[-FX]+X",
-        `F` = "FF"
+        X = "F+[[X]-X]-F[-FX]+X",
+        F = "FF"
     ),
     n = 7,
     angle = pi * 0.15,

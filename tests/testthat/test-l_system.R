@@ -18,8 +18,8 @@ test_that("L-system plant generates correctly", {
     l_plant <- l_system(
         axiom = "X",
         rules = list(
-            `X` = "F+[[X]-X]-F[-FX]+X",
-            `F` = "FF"
+            X = "F+[[X]-X]-F[-FX]+X",
+            F = "FF"
         ),
         n = 7,
         angle = pi * 0.15,
@@ -33,8 +33,8 @@ test_that("L-system dragon curve generates correctly", {
     l_dragon <- l_system(
         axiom = "FX",
         rules = list(
-            `X` = "X+YF+",
-            `Y` = "-FX-Y"
+            X = "X+YF+",
+            Y = "-FX-Y"
         ),
         n = 12,
         angle = pi / 2
@@ -47,8 +47,8 @@ test_that("L-system sierpinski triangle generates correctly", {
     l_triangle <- l_system(
         axiom = "F-G-G",
         rules = list(
-            `F` = "F-G+F+G-F",
-            `G` = "GG"
+            F = "F-G+F+G-F",
+            G = "GG"
         ),
         n = 6,
         angle = 2 * pi / 3,
@@ -61,7 +61,7 @@ test_that("L-system sierpinski triangle generates correctly", {
 test_that("L-system line length change and angle flip work", {
     l_line_length_angle_flip <- l_system(
         axiom = "X",
-        rules = list(`X` = "F[+@.7X]F![-@.6X]F"),
+        rules = list(X = "F[+@.7X]F![-@.6X]F"),
         n = 9,
         angle = pi * 0.125
     )

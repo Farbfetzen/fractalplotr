@@ -107,13 +107,16 @@ mandelbrot_iterate <- function(complex_plane, max_iterations, threshold) {
         ncol = ncol(complex_plane)
     )
 
-    # Check which points are inside the cardioid or the period-2 bulb:
+    # Check which points are inside the cardioid:
     x <- Re(complex_plane)
     y <- Im(complex_plane)
     q <- (x - 0.25)^2 + y^2
-    inside <- q * (q + (x - 0.25)) < 0.25 * y^2
+    inside <- q * (q + (x - 0.25)) <= 0.25 * y^2
     n_steps[inside] <- as.integer(max_iterations)
     todo <- !inside
+
+    # TODO: Also check the period-2 bulb:
+    # (x + 1)^2 + y^2 <= 0.0625
 
     # Note to future me: I tried to implement periodicity checking but
     # it didn't improve performance.
